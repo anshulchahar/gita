@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.schepor.gita.presentation.auth.LoginScreen
 import com.schepor.gita.presentation.home.HomeScreen
+import com.schepor.gita.presentation.lesson.LessonScreen
 import com.schepor.gita.util.Constants
 
 /**
@@ -59,8 +60,11 @@ fun GitaNavigation(
             val chapterId = backStackEntry.arguments?.getString("chapterId") ?: ""
             val lessonId = backStackEntry.arguments?.getString("lessonId") ?: ""
             
-            // TODO: Implement LessonScreen
-            // LessonScreen(chapterId, lessonId, onNavigateBack = { navController.popBackStack() })
+            LessonScreen(
+                chapterId = chapterId,
+                lessonId = lessonId,
+                onNavigateBack = { navController.popBackStack() }
+            )
         }
     }
 }
