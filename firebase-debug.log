@@ -2,3 +2,63 @@
 [debug] [2025-10-08T14:04:28.609Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
 [debug] [2025-10-08T14:04:28.610Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
 [debug] [2025-10-08T14:04:28.610Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:05:08.284Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:05:08.289Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:05:15.186Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:05:15.187Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:05:15.191Z] Checked if tokens are valid: false, expires at: 1759934101018
+[debug] [2025-10-08T15:05:15.191Z] Checked if tokens are valid: false, expires at: 1759934101018
+[debug] [2025-10-08T15:05:15.192Z] > refreshing access token with scopes: []
+[debug] [2025-10-08T15:05:15.199Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2025-10-08T15:05:15.200Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-08T15:05:15.301Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2025-10-08T15:05:15.301Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2025-10-08T15:05:15.311Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/gita-58861/services/cloudresourcemanager.googleapis.com [none]
+[debug] [2025-10-08T15:05:15.311Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/gita-58861/services/cloudresourcemanager.googleapis.com x-goog-quota-user=projects/gita-58861
+[debug] [2025-10-08T15:05:15.688Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/gita-58861/services/cloudresourcemanager.googleapis.com 200
+[debug] [2025-10-08T15:05:15.689Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/gita-58861/services/cloudresourcemanager.googleapis.com [omitted]
+[debug] [2025-10-08T15:05:15.694Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:05:15.694Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:05:15.694Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 [none]
+[debug] [2025-10-08T15:05:15.936Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 200
+[debug] [2025-10-08T15:05:15.936Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 {"projectNumber":"130647293969","projectId":"gita-58861","lifecycleState":"ACTIVE","name":"gita","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-10-08T13:35:55.403960Z"}
+[info] Now using project gita-58861
+[debug] [2025-10-08T15:05:20.709Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:05:20.710Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[info] ✔  Wrote configuration info to firebase.json 
+[info] ✔  Wrote project information to .firebaserc 
+[debug] [2025-10-08T15:05:24.123Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:05:24.123Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:05:24.123Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:05:24.123Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:05:24.124Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/releases pageSize=10&pageToken=
+[debug] [2025-10-08T15:05:24.864Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/releases 200
+[debug] [2025-10-08T15:05:24.864Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/releases {"releases":[{"name":"projects/gita-58861/releases/cloud.firestore","rulesetName":"projects/gita-58861/rulesets/7077d908-f8c7-488e-9bb0-2f0cc785220b","createTime":"2025-10-08T14:53:15.796157Z","updateTime":"2025-10-08T14:53:15.796157Z"}]}
+[debug] [2025-10-08T15:06:11.014Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:06:11.015Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:06:11.015Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:06:11.015Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:06:11.015Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 [none]
+[debug] [2025-10-08T15:06:11.244Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 200
+[debug] [2025-10-08T15:06:11.244Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 {"projectNumber":"130647293969","projectId":"gita-58861","lifecycleState":"ACTIVE","name":"gita","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-10-08T13:35:55.403960Z"}
+[debug] [2025-10-08T15:16:50.308Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:16:50.309Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:16:53.590Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:16:53.590Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:16:53.590Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:16:53.590Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:16:53.591Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 [none]
+[debug] [2025-10-08T15:16:54.349Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 200
+[debug] [2025-10-08T15:16:54.350Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/gita-58861 {"projectNumber":"130647293969","projectId":"gita-58861","lifecycleState":"ACTIVE","name":"gita","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2025-10-08T13:35:55.403960Z"}
+[debug] [2025-10-08T15:16:57.854Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:16:57.854Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:16:57.854Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:16:57.854Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:16:57.855Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/releases pageSize=10&pageToken=
+[debug] [2025-10-08T15:16:58.564Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/releases 200
+[debug] [2025-10-08T15:16:58.564Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/releases {"releases":[{"name":"projects/gita-58861/releases/cloud.firestore","rulesetName":"projects/gita-58861/rulesets/7077d908-f8c7-488e-9bb0-2f0cc785220b","createTime":"2025-10-08T14:53:15.796157Z","updateTime":"2025-10-08T14:53:15.796157Z"}]}
+[debug] [2025-10-08T15:16:58.565Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:16:58.565Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:16:58.565Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/rulesets/7077d908-f8c7-488e-9bb0-2f0cc785220b [none]
+[debug] [2025-10-08T15:16:59.264Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/rulesets/7077d908-f8c7-488e-9bb0-2f0cc785220b 200
+[debug] [2025-10-08T15:16:59.264Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/rulesets/7077d908-f8c7-488e-9bb0-2f0cc785220b [omitted]
