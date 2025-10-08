@@ -11,21 +11,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.schepor.gita.presentation.theme.Spacing
 
 /**
- * Login Screen
- * Allows users to sign in with email/password or Google
+ * Signup Screen
+ * Allows users to create a new account
  */
 @Composable
-fun LoginScreen(
-    onNavigateToSignup: () -> Unit,
+fun SignupScreen(
+    onNavigateToLogin: () -> Unit,
     onNavigateToHome: () -> Unit,
     viewModel: AuthViewModel = hiltViewModel()
 ) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
     
     val authState by viewModel.authState.collectAsState()
     
-    // Navigate to home when login is successful
+    // Navigate to home when signup is successful
     LaunchedEffect(authState.isSuccess) {
         if (authState.isSuccess && authState.user != null) {
             onNavigateToHome()
@@ -41,7 +42,7 @@ fun LoginScreen(
     ) {
         // Title
         Text(
-            text = "Gita - Wisdom for Life",
+            text = "Create Account",
             style = MaterialTheme.typography.displayMedium,
             color = MaterialTheme.colorScheme.primary
         )
@@ -49,7 +50,7 @@ fun LoginScreen(
         Spacer(modifier = Modifier.height(Spacing.space8))
         
         Text(
-            text = "जीवन की राह पर ज्ञान की ज्योति",
+            text = "Join the journey of wisdom",
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground
         )
@@ -87,13 +88,25 @@ fun LoginScreen(
             singleLine = true
         )
         
+        Spacer(modifier = Modifier.height(Spacing.space16))
+        
+        // Confirm Password Field
+        OutlinedTextField(
+            value = confirmPassword,
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm Password") },
+            modifier = Modifier.fillMaxWidth(),
+            visualTransformation = PasswordVisualTransformation(),
+            singleLine = true
+        )
+        
         Spacer(modifier = Modifier.height(Spacing.space24))
         
-        // Login Button
+        // Signup Button
         Button(
             onClick = { 
                 viewModel.clearError()
-                viewModel.signIn(email, password)
+                viewModel.signUp(email, password, confirmPassword)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -106,15 +119,15 @@ fun LoginScreen(
                     color = MaterialTheme.colorScheme.onPrimary
                 )
             } else {
-                Text("Login")
+                Text("Sign Up")
             }
         }
         
         Spacer(modifier = Modifier.height(Spacing.space16))
         
-        // Signup Link
-        TextButton(onClick = onNavigateToSignup) {
-            Text("Don't have an account? Sign Up")
+        // Login Link
+        TextButton(onClick = onNavigateToLogin) {
+            Text("Already have an account? Login")
         }
     }
 }

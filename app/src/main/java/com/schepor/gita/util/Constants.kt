@@ -36,6 +36,7 @@ object Constants {
     const val ROUTE_LESSON = "lesson/{chapterId}/{lessonId}"
     const val ROUTE_PROFILE = "profile"
     const val ROUTE_LEADERBOARD = "leaderboard"
+    const val ROUTE_ADMIN = "admin"
     
     // Animation
     const val ANIMATION_DURATION_SHORT = 200

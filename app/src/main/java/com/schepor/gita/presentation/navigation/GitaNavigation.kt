@@ -5,7 +5,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.schepor.gita.presentation.admin.AdminScreen
 import com.schepor.gita.presentation.auth.LoginScreen
+import com.schepor.gita.presentation.auth.SignupScreen
 import com.schepor.gita.presentation.home.HomeScreen
 import com.schepor.gita.presentation.lesson.LessonScreen
 import com.schepor.gita.util.Constants
@@ -36,9 +38,10 @@ fun GitaNavigation(
         }
         
         composable(Constants.ROUTE_SIGNUP) {
-            // TODO: Implement SignupScreen
-            LoginScreen(
-                onNavigateToSignup = { },
+            SignupScreen(
+                onNavigateToLogin = {
+                    navController.popBackStack()
+                },
                 onNavigateToHome = {
                     navController.navigate(Constants.ROUTE_HOME) {
                         popUpTo(Constants.ROUTE_SIGNUP) { inclusive = true }
@@ -52,6 +55,9 @@ fun GitaNavigation(
             HomeScreen(
                 onNavigateToLesson = { chapterId, lessonId ->
                     navController.navigate("lesson/$chapterId/$lessonId")
+                },
+                onNavigateToAdmin = {
+                    navController.navigate(Constants.ROUTE_ADMIN)
                 }
             )
         }
@@ -65,6 +71,11 @@ fun GitaNavigation(
                 lessonId = lessonId,
                 onNavigateBack = { navController.popBackStack() }
             )
+        }
+        
+        // Admin Panel
+        composable(Constants.ROUTE_ADMIN) {
+            AdminScreen()
         }
     }
 }
