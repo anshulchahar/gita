@@ -23,7 +23,7 @@ object GoogleSignInModule {
     @Singleton
     fun provideGoogleSignInOptions(): GoogleSignInOptions {
         return GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("1091827331036-s76h7kefpj9spt9o3ug6d4cebedtc0n1.apps.googleusercontent.com") // Firebase OAuth client ID
+            .requestIdToken("130647293969-h9homid4an61g9ih6ngd1one2b1n785a.apps.googleusercontent.com") // Web OAuth client ID from google-services.json
             .requestEmail()
             .requestProfile()
             .build()
