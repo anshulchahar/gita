@@ -141,6 +141,79 @@ class UserRepository @Inject constructor(
     }
 
     /**
+     * Save lesson completion with full progress tracking
+     */
+    suspend fun saveLessonCompletion(
+        userId: String,
+        chapterId: String,
+        lessonId: String,
+        score: Int,
+        totalQuestions: Int,
+        xpReward: Int
+    ): Resource<Unit> {
+        return try {
+            val userDoc = usersCollection.document(userId).get().await()
+            val user = userDoc.toObject(User::class.java)
+            
+            if (user == null) {
+                return Resource.Error("User not found")
+            }
+            
+            val now = com.google.firebase.Timestamp.now()
+            val scorePercentage = if (totalQuestions > 0) (score * 100) / totalQuestions else 0
+            
+            // Calculate XP based on score percentage
+            val xpEarned = (xpReward * scorePercentage) / 100
+            
+            // Calculate streak
+            val lastActiveMillis = user.lastActiveAt.toDate().time
+            val nowMillis = now.toDate().time
+            val oneDayMillis = 24 * 60 * 60 * 1000
+            val daysSinceLastActive = (nowMillis - lastActiveMillis) / oneDayMillis
+            
+            val newStreak = when {
+                daysSinceLastActive < 1 -> user.gamification.currentStreak // Same day
+                daysSinceLastActive < 2 -> user.gamification.currentStreak + 1 // Next day
+                else -> 1 // Streak broken, reset to 1
+            }
+            
+            val longestStreak = maxOf(user.gamification.longestStreak, newStreak)
+            
+            // Check if perfect score
+            val isPerfectScore = score == totalQuestions
+            val perfectScores = if (isPerfectScore) {
+                user.gamification.perfectScores + 1
+            } else {
+                user.gamification.perfectScores
+            }
+            
+            // Get existing progress for this lesson (if any)
+            val existingProgress = user.progress["${chapterId}_$lessonId"]
+            val attempts = (existingProgress?.attempts ?: 0) + 1
+            
+            // Build update map
+            val updates = mapOf(
+                "progress.${chapterId}_$lessonId.completedAt" to now,
+                "progress.${chapterId}_$lessonId.score" to scorePercentage,
+                "progress.${chapterId}_$lessonId.attempts" to attempts,
+                "progress.${chapterId}_$lessonId.timeSpent" to 0, // TODO: Track actual time
+                "gamification.wisdomPoints" to user.gamification.wisdomPoints + xpEarned,
+                "gamification.currentStreak" to newStreak,
+                "gamification.longestStreak" to longestStreak,
+                "gamification.totalLessonsCompleted" to user.gamification.totalLessonsCompleted + 1,
+                "gamification.perfectScores" to perfectScores,
+                "gamification.lastCompletedDate" to now.toDate().toString(),
+                "lastActiveAt" to now
+            )
+            
+            usersCollection.document(userId).update(updates).await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Failed to save lesson completion")
+        }
+    }
+
+    /**
      * Delete user
      */
     suspend fun deleteUser(userId: String): Resource<Unit> {

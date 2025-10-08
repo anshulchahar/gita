@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.schepor.gita.presentation.theme.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,9 +28,18 @@ fun LessonScreen(
     viewModel: LessonViewModel = hiltViewModel()
 ) {
     val lessonState by viewModel.lessonState.collectAsState()
+    val auth = FirebaseAuth.getInstance()
+    val userId = auth.currentUser?.uid ?: ""
     
     LaunchedEffect(chapterId, lessonId) {
         viewModel.loadLesson(chapterId, lessonId)
+    }
+    
+    // Save progress when results are shown
+    LaunchedEffect(lessonState.showResults) {
+        if (lessonState.showResults && !lessonState.progressSaved && userId.isNotEmpty()) {
+            viewModel.saveLessonCompletion(userId, chapterId, lessonId)
+        }
     }
     
     Scaffold(
@@ -95,6 +105,9 @@ fun LessonScreen(
                     ResultsScreen(
                         score = lessonState.score,
                         totalQuestions = lessonState.questions.size,
+                        xpEarned = lessonState.xpEarned,
+                        isSavingProgress = lessonState.isSavingProgress,
+                        progressSaved = lessonState.progressSaved,
                         onRetry = { viewModel.resetLesson() },
                         onFinish = onNavigateBack
                     )
@@ -320,6 +333,9 @@ fun OptionItem(
 fun ResultsScreen(
     score: Int,
     totalQuestions: Int,
+    xpEarned: Int,
+    isSavingProgress: Boolean,
+    progressSaved: Boolean,
     onRetry: () -> Unit,
     onFinish: () -> Unit
 ) {
@@ -364,6 +380,47 @@ fun ResultsScreen(
                     text = "${(score * 100) / totalQuestions}% Correct",
                     style = MaterialTheme.typography.titleMedium
                 )
+                
+                if (progressSaved && xpEarned > 0) {
+                    Spacer(modifier = Modifier.height(Spacing.space16))
+                    Divider()
+                    Spacer(modifier = Modifier.height(Spacing.space16))
+                    
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Check,
+                            contentDescription = "XP Earned",
+                            tint = MaterialTheme.colorScheme.primary
+                        )
+                        Spacer(modifier = Modifier.width(Spacing.space8))
+                        Text(
+                            text = "+$xpEarned Wisdom Points",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
+                }
+                
+                if (isSavingProgress) {
+                    Spacer(modifier = Modifier.height(Spacing.space16))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(16.dp),
+                            strokeWidth = 2.dp
+                        )
+                        Spacer(modifier = Modifier.width(Spacing.space8))
+                        Text(
+                            text = "Saving progress...",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    }
+                }
             }
         }
         

@@ -25,7 +25,10 @@ data class LessonState(
     val answeredQuestions: Set<String> = emptySet(), // Set of answered question IDs
     val score: Int = 0,
     val showResults: Boolean = false,
-    val error: String? = null
+    val error: String? = null,
+    val isSavingProgress: Boolean = false,
+    val progressSaved: Boolean = false,
+    val xpEarned: Int = 0
 )
 
 /**
@@ -200,10 +203,48 @@ class LessonViewModel @Inject constructor(
     fun saveLessonCompletion(userId: String, chapterId: String, lessonId: String) {
         viewModelScope.launch {
             val currentState = _lessonState.value
-            val scorePercentage = getScorePercentage()
+            val lesson = currentState.lesson
+            val totalQuestions = currentState.questions.size
+            val score = currentState.score
+            val xpReward = lesson?.xpReward ?: 0
             
-            // TODO: Implement progress tracking
-            // This will be implemented in the next task (Lesson Progress Tracking)
+            if (lesson == null || totalQuestions == 0) {
+                _lessonState.value = currentState.copy(
+                    error = "Cannot save progress: lesson data missing"
+                )
+                return@launch
+            }
+            
+            _lessonState.value = currentState.copy(isSavingProgress = true)
+            
+            when (val result = userRepository.saveLessonCompletion(
+                userId = userId,
+                chapterId = chapterId,
+                lessonId = lessonId,
+                score = score,
+                totalQuestions = totalQuestions,
+                xpReward = xpReward
+            )) {
+                is Resource.Success -> {
+                    val scorePercentage = if (totalQuestions > 0) (score * 100) / totalQuestions else 0
+                    val xpEarned = (xpReward * scorePercentage) / 100
+                    
+                    _lessonState.value = currentState.copy(
+                        isSavingProgress = false,
+                        progressSaved = true,
+                        xpEarned = xpEarned
+                    )
+                }
+                is Resource.Error -> {
+                    _lessonState.value = currentState.copy(
+                        isSavingProgress = false,
+                        error = result.message ?: "Failed to save progress"
+                    )
+                }
+                is Resource.Loading -> {
+                    _lessonState.value = currentState.copy(isSavingProgress = true)
+                }
+            }
         }
     }
     
