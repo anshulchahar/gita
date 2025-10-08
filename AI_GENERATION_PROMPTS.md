@@ -5,8 +5,9 @@
 This document contains detailed prompts for generating Baby Krishna mascot assets using AI tools.
 
 **Tools to Use:**
-- **Static SVGs:** Nana Banana (https://nanabanana.ai/)
+- **Static Images (PNG):** Midjourney, DALL-E 3, or Leonardo.ai
 - **Animations:** LottieFiles Creator + Midjourney/DALL-E for frames
+- **Image Format:** PNG with transparent background (1024x1024px)
 - **Animation Format:** Lottie JSON files (.json)
 
 ---
@@ -20,11 +21,11 @@ This document contains detailed prompts for generating Baby Krishna mascot asset
 - Peacock feather in hair/crown (signature element)
 - Yellow dhoti (traditional garment)
 - Large expressive eyes
-- Simple, clean vector art style
+- Simple, clean art style
 - Flat design, minimal shadows
-- Transparent background
+- **Transparent background (PNG)**
 - Facing forward (front view)
-- 512x512px canvas size
+- **1024x1024px resolution**
 
 **Color Palette:**
 - Skin: Light blue (#64B5F6 or similar)
@@ -35,7 +36,7 @@ This document contains detailed prompts for generating Baby Krishna mascot asset
 
 ---
 
-## 🖼️ Static SVG Poses - Nana Banana Prompts
+## 🖼️ Static PNG Poses - AI Generation Prompts
 
 ### Pose 1: Neutral/Idle ⭐ (Priority: HIGH)
 
@@ -43,18 +44,20 @@ This document contains detailed prompts for generating Baby Krishna mascot asset
 Cute baby Krishna character mascot, chibi style, standing in neutral idle pose, 
 2-3 years old appearance, blue skin, large expressive eyes looking forward, 
 small smile, peacock feather in hair, yellow dhoti garment, arms at sides relaxed, 
-simple clean vector art, flat design style, minimal details, friendly and welcoming, 
-app mascot design, transparent background, centered composition, front view, 
-educational app character, soft rounded shapes, professional vector illustration
+simple clean illustration, flat design style, minimal details, friendly and welcoming, 
+app mascot design, isolated on transparent background, centered composition, front view, 
+educational app character, soft rounded shapes, professional digital illustration, 
+high quality, 1024x1024 resolution
 ```
 
 **Alternative/Variation:**
 ```
 Baby Krishna app mascot in idle standing position, chibi cartoon style, 
 blue-skinned toddler, peacock feather crown, golden yellow dhoti, 
-neutral friendly expression, simple vector design, flat colors, 
-minimal shadows, transparent PNG background, cute and approachable, 
-educational app icon style, clean lines, modern flat illustration
+neutral friendly expression, simple digital art, flat colors, 
+minimal shadows, transparent background PNG, cute and approachable, 
+educational app icon style, clean lines, modern flat illustration,
+high resolution 1024x1024
 ```
 
 ---
@@ -677,13 +680,14 @@ blue skin, peacock feather, yellow dhoti, frame 3
 
 ## 📐 Technical Specifications Summary
 
-### SVG Requirements (Nana Banana):
-- **Size:** 512x512px canvas
-- **Format:** SVG export
-- **Background:** Transparent
-- **Style:** Flat vector, minimal shadows
+### PNG Requirements (Midjourney/DALL-E/Leonardo):
+- **Size:** 1024x1024px (high resolution)
+- **Format:** PNG with transparent background
+- **Background:** Transparent/alpha channel
+- **Style:** Flat design, minimal shadows, chibi/cartoon
 - **Colors:** Consistent palette across all poses
-- **Naming:** krishna_[pose_name].svg
+- **Naming:** krishna_[pose_name].png
+- **Target file size:** 50-200KB per image
 
 ### Lottie Animation Requirements:
 - **Format:** Lottie JSON (.json files)
@@ -698,15 +702,16 @@ blue skin, peacock feather, yellow dhoti, frame 3
 
 Before finalizing each asset:
 
-**SVGs:**
-- [ ] Transparent background
+**PNG Images:**
+- [ ] Transparent background (alpha channel)
+- [ ] 1024x1024px resolution
 - [ ] Consistent character design
 - [ ] Peacock feather visible
 - [ ] Blue skin tone consistent
 - [ ] Yellow dhoti clear
 - [ ] Centered on canvas
-- [ ] Clean vector paths
-- [ ] Appropriate file size (<100KB)
+- [ ] File size reasonable (50-200KB)
+- [ ] No compression artifacts
 
 **Animations:**
 - [ ] Smooth frame transitions
@@ -722,16 +727,34 @@ Before finalizing each asset:
 
 ## 🚀 Generation Workflow
 
-### For SVGs (Nana Banana):
+### For PNG Images (Midjourney/DALL-E/Leonardo):
 
-1. **Go to:** https://nanabanana.ai/
-2. **Paste prompt** from this document
-3. **Generate** and review
-4. **Adjust** if needed (regenerate with tweaks)
-5. **Download** as SVG
-6. **Optimize** with SVGO if needed
-7. **Rename** following convention: `krishna_neutral.svg`
-8. **Place in:** `/app/src/main/res/drawable/`
+**Recommended Tool: Midjourney or DALL-E 3** (easiest, best quality)
+
+1. **Choose your AI tool:**
+   - **Midjourney** (Discord-based, $10/month): Best quality, most control
+   - **DALL-E 3** (ChatGPT Plus, $20/month): Easy to use, good consistency
+   - **Leonardo.ai** (Free tier available): Good for testing, transparency support
+
+2. **Generate:**
+   - Paste prompt from this document
+   - Add `--v 6.0` for Midjourney (latest version)
+   - For DALL-E: Specify "transparent background PNG" explicitly
+   - Generate and review
+
+3. **Download:**
+   - Download highest resolution available
+   - Ensure it has transparent background
+   - Should be 1024x1024 or larger
+
+4. **Prepare for Android:**
+   - If larger than 1024px, resize to 1024x1024
+   - Optimize with TinyPNG or ImageOptim if >200KB
+   - Rename: `krishna_neutral.png`
+
+5. **Place in project:**
+   - Location: `/app/src/main/res/drawable/`
+   - Use directly in Compose: `painterResource(R.drawable.krishna_neutral)`
 
 ### For Animations:
 
@@ -761,30 +784,47 @@ Before finalizing each asset:
 ## 💡 Pro Tips
 
 **For Consistent Character:**
-- Save your first good generation as reference
+- Save your first good generation as reference image
 - Use same base prompt structure for all poses
-- Mention "same character as before" if platform supports it
-- Keep color values consistent
+- In Midjourney: Use `--cref [image_url]` for character consistency
+- In DALL-E: Upload reference and say "same character as this image"
+- Keep color values consistent across all generations
 
 **For Better Quality:**
-- Generate multiple variations, pick best
-- Use upscaler for sharper images if needed
-- Test on actual device screens
-- Get feedback before finalizing all poses
+- Generate multiple variations (4-5), pick best
+- Use upscaler for sharper images if needed (Midjourney has built-in upscale)
+- Request "transparent background" explicitly in prompt
+- Test on actual device screens before finalizing
+- Get feedback before generating all poses
+
+**For Transparent Backgrounds:**
+- **Midjourney:** Add `--no background` or use background removal tool
+- **DALL-E 3:** Say "isolated on transparent background" in prompt
+- **Leonardo.ai:** Use "Transparent Background" option in settings
+- **Fallback:** Use remove.bg or Photoshop to remove background
+
+**For File Size Optimization:**
+- Use TinyPNG.com for compression (maintains transparency)
+- ImageOptim (Mac) or PNGGauntlet (Windows)
+- Target: 50-150KB per image for good balance
 
 **For Animations:**
 - Start with high-priority animations first
 - Test on low-end device for performance
 - Use fewer frames if file size is too large
-- Consider static SVG with Compose animation as fallback
+- Consider static PNG with Compose animation as fallback
 
 ---
 
 ## 📝 Notes
 
-- **Nana Banana** is specifically designed for vector/SVG generation
+- **Midjourney** requires Discord and subscription ($10/month basic)
+- **DALL-E 3** is available via ChatGPT Plus ($20/month)
+- **Leonardo.ai** has free tier (150 tokens/day) - good for testing
 - **LottieFiles Creator** is web-based, no software installation needed
-- All animations should maintain the same character style as SVGs
+- All animations should maintain the same character style as static PNGs
+- PNG format is easier to generate and works perfectly in Jetpack Compose
+- Use `painterResource(R.drawable.krishna_[pose])` to load in Compose
 - Consider cultural sensitivity in all depictions
 - Test all assets on actual Android devices before finalizing
 
@@ -795,8 +835,13 @@ Before finalizing each asset:
 Start with the 4 HIGH priority static poses and 2-3 HIGH priority animations. You can add more later based on user feedback and app needs.
 
 **Estimated Time:**
-- SVG Generation: 2-4 hours (12 poses)
+- PNG Generation: 2-4 hours (12 poses)
 - Animation Generation: 4-8 hours (keyframes + animation)
 - Total: 1-2 days of generation work
+
+**Estimated Cost:**
+- Midjourney ($10/month): ~$10 for all poses
+- DALL-E via ChatGPT Plus ($20/month): ~$20 for all poses
+- Leonardo.ai Free Tier: $0 (but limited daily generations)
 
 Good luck with your AI generations! 🎨✨

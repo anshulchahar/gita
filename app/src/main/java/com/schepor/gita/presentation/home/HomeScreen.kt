@@ -1,5 +1,6 @@
 package com.schepor.gita.presentation.home
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -22,8 +23,10 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.schepor.gita.R
 import com.schepor.gita.presentation.auth.AuthViewModel
 import com.schepor.gita.presentation.theme.Spacing
 import com.schepor.gita.presentation.tree.TreeVisualizationScreen
