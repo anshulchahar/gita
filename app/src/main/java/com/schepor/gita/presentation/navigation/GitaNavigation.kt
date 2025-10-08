@@ -1,10 +1,13 @@
 package com.schepor.gita.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.schepor.gita.presentation.admin.AdminScreen
 import com.schepor.gita.presentation.auth.LoginScreen
 import com.schepor.gita.presentation.auth.SignupScreen
@@ -19,6 +22,17 @@ import com.schepor.gita.util.Constants
 fun GitaNavigation(
     navController: NavHostController = rememberNavController()
 ) {
+    val context = LocalContext.current
+    
+    // Create GoogleSignInClient
+    val googleSignInOptions = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken("1091827331036-s76h7kefpj9spt9o3ug6d4cebedtc0n1.apps.googleusercontent.com")
+        .requestEmail()
+        .requestProfile()
+        .build()
+    
+    val googleSignInClient = GoogleSignIn.getClient(context, googleSignInOptions)
+    
     NavHost(
         navController = navController,
         startDestination = Constants.ROUTE_LOGIN
@@ -33,7 +47,8 @@ fun GitaNavigation(
                     navController.navigate(Constants.ROUTE_HOME) {
                         popUpTo(Constants.ROUTE_LOGIN) { inclusive = true }
                     }
-                }
+                },
+                googleSignInClient = googleSignInClient
             )
         }
         
@@ -46,7 +61,8 @@ fun GitaNavigation(
                     navController.navigate(Constants.ROUTE_HOME) {
                         popUpTo(Constants.ROUTE_SIGNUP) { inclusive = true }
                     }
-                }
+                },
+                googleSignInClient = googleSignInClient
             )
         }
         
@@ -58,6 +74,11 @@ fun GitaNavigation(
                 },
                 onNavigateToAdmin = {
                     navController.navigate(Constants.ROUTE_ADMIN)
+                },
+                onNavigateToLogin = {
+                    navController.navigate(Constants.ROUTE_LOGIN) {
+                        popUpTo(Constants.ROUTE_HOME) { inclusive = true }
+                    }
                 }
             )
         }

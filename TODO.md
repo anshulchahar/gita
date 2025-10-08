@@ -1,16 +1,16 @@
 # Bhagavad Gita Learning App - Development Tasks
 
-**Project Progress: 20/30 tasks completed (67%)**
+**Project Progress: 21/30 tasks completed (70%)**
 
 ---
 
 ## 📊 Progress Summary
 
-- ✅ **Completed:** 20 tasks (Foundation + MVP Core)
+- ✅ **Completed:** 21 tasks (Foundation + MVP Core)
 - 🔨 **In Progress:** 0 tasks
-- ❌ **Not Started:** 10 tasks
+- ❌ **Not Started:** 9 tasks
 - **Total Story Points:** 208 SP
-- **Completed Story Points:** 151 SP (73%)
+- **Completed Story Points:** 156 SP (75%)
 
 ---
 
@@ -200,7 +200,7 @@
 
 ---
 
-## 🚀 Phase 1: MVP - NEXT CRITICAL TASKS (10 tasks)
+## 🚀 Phase 1: MVP - NEXT CRITICAL TASKS (9 tasks)
 
 ### 21. ❌ Build Lesson ViewModel & State Management
 - **Phase:** Phase 1: MVP
@@ -274,14 +274,21 @@
 - **Status:** ❌ Not Started
 - **Next:** Initial loading screen with branding
 
-### 29. ❌ Implement Google Sign-In Authentication
+### 29. ✅ Implement Google Sign-In Authentication
 - **Phase:** Phase 1: MVP
 - **Category:** Auth, Backend
 - **Priority:** High
 - **Story Points:** 5
 - **Dependencies:** Firebase Email Auth
-- **Status:** ❌ Not Started
-- **Next:** Add Google Sign-In as alternative auth method
+- **Status:** ✅ Completed
+- **Implementation:**
+  - Created GoogleSignInModule with Hilt DI for GoogleSignInClient
+  - Added signInWithGoogle() to AuthViewModel (converts Google token to Firebase credential)
+  - Updated LoginScreen with Google Sign-In button and activity result launcher
+  - Updated SignupScreen with Google Sign-In button and activity result launcher
+  - Integrated GoogleSignInClient into navigation flow
+  - User profile photo from Google account saved to Firestore
+- **Next Steps:** Configure OAuth client ID in Firebase Console, add SHA-1 fingerprint, test flow
 
 ### 30. ❌ MVP Testing & Bug Fixes
 - **Phase:** Phase 1: MVP

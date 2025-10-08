@@ -2,8 +2,10 @@ package com.schepor.gita.presentation.auth
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
 import com.schepor.gita.data.repository.UserRepository
 import com.schepor.gita.domain.model.User
 import com.schepor.gita.util.Resource
@@ -145,6 +147,60 @@ class AuthViewModel @Inject constructor(
         }
     }
 
+    fun signInWithGoogle(account: GoogleSignInAccount) {
+        viewModelScope.launch {
+            try {
+                _authState.value = _authState.value.copy(isLoading = true, error = null)
+                
+                val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+                val result = auth.signInWithCredential(credential).await()
+                
+                // Create or update user in Firestore
+                result.user?.let { firebaseUser ->
+                    val user = User(
+                        userId = firebaseUser.uid,
+                        email = firebaseUser.email ?: "",
+                        displayName = firebaseUser.displayName ?: "User",
+                        photoUrl = firebaseUser.photoUrl?.toString()
+                    )
+                    
+                    when (val userResult = userRepository.createUser(user)) {
+                        is Resource.Error -> {
+                            // Log error but don't fail auth
+                            _authState.value = _authState.value.copy(
+                                isLoading = false,
+                                isSuccess = true,
+                                user = firebaseUser,
+                                error = null
+                            )
+                        }
+                        is Resource.Success -> {
+                            _authState.value = _authState.value.copy(
+                                isLoading = false,
+                                isSuccess = true,
+                                user = firebaseUser,
+                                error = null
+                            )
+                        }
+                        is Resource.Loading -> {}
+                    }
+                } ?: run {
+                    _authState.value = _authState.value.copy(
+                        isLoading = false,
+                        isSuccess = false,
+                        error = "Failed to sign in with Google"
+                    )
+                }
+            } catch (e: Exception) {
+                _authState.value = _authState.value.copy(
+                    isLoading = false,
+                    isSuccess = false,
+                    error = e.message ?: "Google sign in failed"
+                )
+            }
+        }
+    }
+
     fun signOut() {
         auth.signOut()
         _authState.value = AuthState()
@@ -152,6 +208,13 @@ class AuthViewModel @Inject constructor(
 
     fun clearError() {
         _authState.value = _authState.value.copy(error = null)
+    }
+    
+    fun setError(message: String) {
+        _authState.value = _authState.value.copy(
+            isLoading = false,
+            error = message
+        )
     }
 
     fun resetAuthState() {
