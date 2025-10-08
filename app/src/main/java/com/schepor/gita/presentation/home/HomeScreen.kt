@@ -1,18 +1,11 @@
 package com.schepor.gita.presentation.home
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
-import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,19 +17,14 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.schepor.gita.R
 import com.schepor.gita.presentation.auth.AuthViewModel
 import com.schepor.gita.presentation.components.KrishnaAnimation
 import com.schepor.gita.presentation.components.KrishnaEmotion
 import com.schepor.gita.presentation.components.KrishnaMascot
 import com.schepor.gita.presentation.components.KrishnaMessages
 import com.schepor.gita.presentation.theme.Spacing
-import com.schepor.gita.presentation.tree.TreeVisualizationScreen
 import kotlinx.coroutines.launch
 
 /**
@@ -56,9 +44,8 @@ fun HomeScreen(
     val authState by authViewModel.authState.collectAsState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
-    var showTreeView by remember { mutableStateOf(true) } // Default to tree view
     
-    // Admin access via long press on title (hidden feature for development)
+    // Admin access via long press on menu icon (hidden feature for development)
     var clickCount by remember { mutableStateOf(0) }
     
     LaunchedEffect(clickCount) {
@@ -136,15 +123,60 @@ fun HomeScreen(
             topBar = {
                 TopAppBar(
                     title = { 
-                        Text(
-                            text = "Wisdom Tree",
-                            modifier = Modifier.clickable(
-                                indication = null,
-                                interactionSource = remember { MutableInteractionSource() }
+                        // User stats row instead of title
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            // Streak
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
                             ) {
-                                clickCount++
+                                Text(
+                                    text = "🔥",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = "${homeState.currentStreak}",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
                             }
-                        )
+                            
+                            // Gems
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(
+                                    text = "💎",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = "${homeState.gems}",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                            
+                            // Energy
+                            Row(
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.spacedBy(4.dp)
+                            ) {
+                                Text(
+                                    text = "⚡",
+                                    style = MaterialTheme.typography.titleMedium
+                                )
+                                Text(
+                                    text = "${homeState.energy}",
+                                    style = MaterialTheme.typography.titleMedium,
+                                    color = MaterialTheme.colorScheme.onSurface
+                                )
+                            }
+                        }
                     },
                     navigationIcon = {
                         IconButton(onClick = { 
@@ -158,223 +190,208 @@ fun HomeScreen(
                             )
                         }
                     },
-                    actions = {
-                        IconButton(onClick = { showTreeView = !showTreeView }) {
-                            Icon(
-                                imageVector = if (showTreeView) Icons.Default.ViewList else Icons.Default.Menu,
-                                contentDescription = if (showTreeView) "Switch to List View" else "Switch to Tree View"
-                            )
-                        }
-                    },
                     colors = TopAppBarDefaults.topAppBarColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer,
-                        titleContentColor = MaterialTheme.colorScheme.primary
+                        containerColor = MaterialTheme.colorScheme.surface,
+                        titleContentColor = MaterialTheme.colorScheme.onSurface
                     )
                 )
             }
         ) { paddingValues ->
-            Column(
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(horizontal = Spacing.space24)
-                    .padding(top = Spacing.space16),
-                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // Krishna Mascot Welcome
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    KrishnaMascot(
-                        emotion = KrishnaEmotion.NEUTRAL,
-                        animation = KrishnaAnimation.IDLE_FLOAT,
-                        size = 100.dp
-                    )
-                    Spacer(modifier = Modifier.height(Spacing.space12))
-                    Text(
-                        text = KrishnaMessages.WELCOME.random(),
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-                }
-                
-                Spacer(modifier = Modifier.height(Spacing.space16))
-                
                 // Loading state
                 if (homeState.isLoading) {
                     CircularProgressIndicator(
-                        modifier = Modifier.padding(Spacing.space24)
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(Spacing.space24)
                     )
                 }
                 
                 // Error state
                 homeState.error?.let { error ->
-                    Text(
-                        text = error,
-                        style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.error,
-                        modifier = Modifier.padding(Spacing.space16)
-                    )
-                }
-                
-                // Chapters list or tree view
-                if (homeState.chapters.isEmpty() && !homeState.isLoading) {
                     Column(
                         modifier = Modifier
-                            .fillMaxWidth()
+                            .align(Alignment.Center)
                             .padding(Spacing.space16),
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            text = "No chapters available yet.",
-                            style = MaterialTheme.typography.titleMedium,
-                            color = MaterialTheme.colorScheme.onSurface
+                            text = "⚠️",
+                            style = MaterialTheme.typography.displayMedium
                         )
                         Spacer(modifier = Modifier.height(Spacing.space8))
                         Text(
-                            text = "Content will be available soon!",
+                            text = error,
                             style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
-                        )
-                        Spacer(modifier = Modifier.height(Spacing.space16))
-                        Text(
-                            text = "💡 Developer tip: Tap the title 5 times to access admin panel",
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
+                            color = MaterialTheme.colorScheme.error,
+                            textAlign = androidx.compose.ui.text.style.TextAlign.Center
                         )
                     }
-                } else if (showTreeView) {
-                    // Tree visualization view
-                    TreeVisualizationScreen(
-                        chapters = homeState.chapters,
-                        unlockedChapters = homeState.unlockedChapters,
-                        chapterProgress = emptyMap(), // TODO: Calculate from user progress
-                        onChapterClick = { chapter ->
-                            val firstLessonId = homeState.chapterFirstLessons[chapter.chapterId]
-                            val isUnlocked = homeState.unlockedChapters.contains(chapter.chapterId)
-                            val isFirstLessonUnlocked = firstLessonId?.let { 
-                                homeState.unlockedLessons.contains(it)
-                            } ?: false
-                            
-                            if (isUnlocked && isFirstLessonUnlocked && firstLessonId != null) {
-                                onNavigateToLesson(chapter.chapterId, firstLessonId)
+                }
+                
+                // Duolingo-style progression view
+                if (!homeState.isLoading && homeState.error == null) {
+                    if (homeState.chapters.isEmpty()) {
+                        // Empty state
+                        Column(
+                            modifier = Modifier
+                                .align(Alignment.Center)
+                                .padding(Spacing.space24),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            KrishnaMascot(
+                                emotion = KrishnaEmotion.NEUTRAL,
+                                animation = KrishnaAnimation.IDLE_FLOAT,
+                                size = 120.dp
+                            )
+                            Spacer(modifier = Modifier.height(Spacing.space16))
+                            Text(
+                                text = "No chapters available yet",
+                                style = MaterialTheme.typography.titleLarge,
+                                color = MaterialTheme.colorScheme.onSurface
+                            )
+                            Spacer(modifier = Modifier.height(Spacing.space8))
+                            Text(
+                                text = "Content will be available soon!",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                            )
+                        }
+                    } else {
+                        // Main progression list
+                        LazyColumn(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .padding(horizontal = Spacing.space16),
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            verticalArrangement = Arrangement.spacedBy(Spacing.space4)
+                        ) {
+                            // Welcome message at top
+                            item {
+                                Spacer(modifier = Modifier.height(Spacing.space8))
+                                KrishnaMascot(
+                                    emotion = KrishnaEmotion.HAPPY,
+                                    animation = KrishnaAnimation.IDLE_FLOAT,
+                                    size = 80.dp
+                                )
+                                Spacer(modifier = Modifier.height(Spacing.space8))
+                                Text(
+                                    text = KrishnaMessages.WELCOME.random(),
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    color = MaterialTheme.colorScheme.onSurface,
+                                    textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                                )
+                                Spacer(modifier = Modifier.height(Spacing.space16))
                             }
-                        },
-                        modifier = Modifier.weight(1f)
-                    )
-                } else {
-                    // List view
-                    LazyColumn(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalArrangement = Arrangement.spacedBy(Spacing.space12)
-                    ) {
-                        items(homeState.chapters) { chapter ->
-                            val isUnlocked = homeState.unlockedChapters.contains(chapter.chapterId)
-                            val firstLessonId = homeState.chapterFirstLessons[chapter.chapterId]
-                            val isFirstLessonUnlocked = firstLessonId?.let { 
-                                homeState.unlockedLessons.contains(it)
-                            } ?: false
                             
-                            ChapterCard(
-                                chapter = chapter,
-                                isUnlocked = isUnlocked && isFirstLessonUnlocked,
-                                onClick = {
-                                    // Navigate to first lesson of this chapter only if unlocked
-                                    if (isUnlocked && isFirstLessonUnlocked && firstLessonId != null) {
-                                        onNavigateToLesson(chapter.chapterId, firstLessonId)
+                            // Iterate through chapters and their lessons
+                            homeState.chapters.forEachIndexed { chapterIndex, chapter ->
+                                val isChapterUnlocked = homeState.unlockedChapters.contains(chapter.chapterId)
+                                val lessons = homeState.chapterLessons[chapter.chapterId] ?: emptyList()
+                                
+                                // Section header for each chapter
+                                item(key = "header_${chapter.chapterId}") {
+                                    SectionHeader(
+                                        sectionNumber = chapter.chapterNumber,
+                                        unitNumber = chapter.chapterNumber,
+                                        description = chapter.chapterNameEn
+                                    )
+                                }
+                                
+                                // Lessons in this chapter
+                                lessons.forEachIndexed { lessonIndex, lesson ->
+                                    val isUnlocked = homeState.unlockedLessons.contains(lesson.lessonId)
+                                    val isCompleted = homeState.completedLessons.contains(lesson.lessonId)
+                                    
+                                    // Determine if this is the current lesson (first uncompleted unlocked lesson)
+                                    val isCurrent = isUnlocked && !isCompleted && 
+                                        lessons.take(lessonIndex).all { homeState.completedLessons.contains(it.lessonId) }
+                                    
+                                    // Progress path before lesson (except for first)
+                                    if (lessonIndex > 0) {
+                                        item(key = "path_before_${lesson.lessonId}") {
+                                            ProgressPath(
+                                                isUnlocked = isUnlocked,
+                                                height = 32
+                                            )
+                                        }
+                                    }
+                                    
+                                    // Lesson node
+                                    item(key = "lesson_${lesson.lessonId}") {
+                                        LessonNode(
+                                            lessonNumber = lesson.lessonNumber,
+                                            isUnlocked = isUnlocked,
+                                            isCompleted = isCompleted,
+                                            isCurrent = isCurrent,
+                                            description = lesson.lessonNameEn,
+                                            onClick = {
+                                                onNavigateToLesson(chapter.chapterId, lesson.lessonId)
+                                            }
+                                        )
+                                    }
+                                    
+                                    // Add milestone after every 3 lessons
+                                    if ((lessonIndex + 1) % 3 == 0 && lessonIndex < lessons.size - 1) {
+                                        item(key = "path_after_${lesson.lessonId}") {
+                                            ProgressPath(
+                                                isUnlocked = isUnlocked,
+                                                height = 32
+                                            )
+                                        }
+                                        item(key = "milestone_${lesson.lessonId}") {
+                                            ChapterMilestone(
+                                                type = when ((lessonIndex + 1) / 3 % 3) {
+                                                    0 -> MilestoneType.TREASURE
+                                                    1 -> MilestoneType.CHARACTER
+                                                    else -> MilestoneType.KRISHNA
+                                                },
+                                                isUnlocked = isCompleted
+                                            )
+                                        }
                                     }
                                 }
-                            )
+                                
+                                // Chapter completion trophy
+                                if (lessons.isNotEmpty()) {
+                                    val allLessonsCompleted = lessons.all { 
+                                        homeState.completedLessons.contains(it.lessonId) 
+                                    }
+                                    
+                                    item(key = "path_chapter_end_${chapter.chapterId}") {
+                                        ProgressPath(
+                                            isUnlocked = allLessonsCompleted,
+                                            height = 40
+                                        )
+                                    }
+                                    
+                                    item(key = "trophy_${chapter.chapterId}") {
+                                        ChapterMilestone(
+                                            type = MilestoneType.TROPHY,
+                                            isUnlocked = allLessonsCompleted
+                                        )
+                                    }
+                                    
+                                    // Add spacing between chapters
+                                    if (chapterIndex < homeState.chapters.size - 1) {
+                                        item(key = "spacing_${chapter.chapterId}") {
+                                            Spacer(modifier = Modifier.height(Spacing.space24))
+                                        }
+                                    }
+                                }
+                            }
+                            
+                            // Bottom spacing
+                            item {
+                                Spacer(modifier = Modifier.height(Spacing.space32))
+                            }
                         }
                     }
                 }
-            }
-        }
-    }
-}
-
-@Composable
-fun ChapterCard(
-    chapter: com.schepor.gita.domain.model.Chapter,
-    isUnlocked: Boolean,
-    onClick: () -> Unit
-) {
-    val cardColors = if (isUnlocked) {
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
-    } else {
-        CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-        )
-    }
-    
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clickable(enabled = isUnlocked, onClick = onClick),
-        colors = cardColors
-    ) {
-        Row(
-            modifier = Modifier.padding(Spacing.space16),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.Top
-        ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text = "Chapter ${chapter.chapterNumber}",
-                    style = MaterialTheme.typography.labelMedium,
-                    color = if (isUnlocked) 
-                        MaterialTheme.colorScheme.primary 
-                    else 
-                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-                )
-                Spacer(modifier = Modifier.height(Spacing.space4))
-                Text(
-                    text = chapter.chapterNameEn,
-                    style = MaterialTheme.typography.headlineSmall,
-                    color = if (isUnlocked)
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    else
-                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
-                )
-                Spacer(modifier = Modifier.height(Spacing.space4))
-                Text(
-                    text = chapter.chapterName,
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = if (isUnlocked)
-                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
-                    else
-                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
-                )
-                Spacer(modifier = Modifier.height(Spacing.space8))
-                Text(
-                    text = chapter.descriptionEn,
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = if (isUnlocked)
-                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
-                    else
-                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
-                )
-                Spacer(modifier = Modifier.height(Spacing.space8))
-                Text(
-                    text = "${chapter.shlokaCount} verses",
-                    style = MaterialTheme.typography.labelSmall,
-                    color = if (isUnlocked)
-                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
-                    else
-                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
-                )
-            }
-            
-            if (!isUnlocked) {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = "Locked",
-                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
-                    modifier = Modifier.size(32.dp)
-                )
             }
         }
     }

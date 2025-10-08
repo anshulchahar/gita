@@ -17,10 +17,18 @@ import javax.inject.Inject
 data class HomeState(
     val isLoading: Boolean = false,
     val chapters: List<Chapter> = emptyList(),
+    val chapterLessons: Map<String, List<com.schepor.gita.domain.model.Lesson>> = emptyMap(), // chapterId to lessons
     val chapterFirstLessons: Map<String, String> = emptyMap(), // chapterId to first lessonId
     val unlockedChapters: Set<String> = emptySet(), // Set of unlocked chapter IDs
     val unlockedLessons: Set<String> = emptySet(), // Set of unlocked lesson IDs
-    val error: String? = null
+    val completedLessons: Set<String> = emptySet(), // Set of completed lesson IDs
+    val error: String? = null,
+    // User stats for header
+    val wisdomPoints: Int = 0,
+    val gems: Int = 0,
+    val energy: Int = 5,
+    val maxEnergy: Int = 5,
+    val currentStreak: Int = 0
 )
 
 @HiltViewModel
@@ -34,6 +42,32 @@ class HomeViewModel @Inject constructor(
 
     init {
         loadChapters()
+        loadUserStats()
+    }
+
+    fun loadUserStats() {
+        viewModelScope.launch {
+            val userId = FirebaseAuth.getInstance().currentUser?.uid ?: return@launch
+            
+            when (val result = userRepository.getUser(userId)) {
+                is Resource.Success -> {
+                    val user = result.data
+                    if (user != null) {
+                        _homeState.value = _homeState.value.copy(
+                            wisdomPoints = user.gamification.wisdomPoints,
+                            gems = user.gamification.gems,
+                            energy = user.gamification.energy,
+                            maxEnergy = user.gamification.maxEnergy,
+                            currentStreak = user.gamification.currentStreak
+                        )
+                    }
+                }
+                is Resource.Error -> {
+                    // Silently fail for stats - not critical
+                }
+                is Resource.Loading -> {}
+            }
+        }
     }
 
     fun loadChapters() {
@@ -46,10 +80,20 @@ class HomeViewModel @Inject constructor(
                 is Resource.Success -> {
                     val chapters = result.data ?: emptyList()
                     
-                    // Load first lesson for each chapter and check unlock status
+                    // Load lessons for each chapter and check unlock status
+                    val lessonsMap = mutableMapOf<String, List<com.schepor.gita.domain.model.Lesson>>()
                     val firstLessonsMap = mutableMapOf<String, String>()
                     val unlockedChaptersSet = mutableSetOf<String>()
                     val unlockedLessonsSet = mutableSetOf<String>()
+                    val completedLessonsSet = mutableSetOf<String>()
+                    
+                    // Get user data for progress tracking
+                    val user = if (userId.isNotEmpty()) {
+                        when (val userResult = userRepository.getUser(userId)) {
+                            is Resource.Success -> userResult.data
+                            else -> null
+                        }
+                    } else null
                     
                     chapters.forEach { chapter ->
                         // Check if chapter is unlocked
@@ -78,6 +122,7 @@ class HomeViewModel @Inject constructor(
                             when (val lessonsResult = contentRepository.getLessons(chapter.chapterId)) {
                                 is Resource.Success -> {
                                     val lessons = lessonsResult.data ?: emptyList()
+                                    lessonsMap[chapter.chapterId] = lessons
                                     val firstLesson = lessons.firstOrNull()
                                     
                                     if (firstLesson != null) {
@@ -85,6 +130,13 @@ class HomeViewModel @Inject constructor(
                                         
                                         // Check unlock status for each lesson
                                         lessons.forEach { lesson ->
+                                            val lessonKey = "${chapter.chapterId}_${lesson.lessonId}"
+                                            
+                                            // Check if completed
+                                            if (user?.progress?.containsKey(lessonKey) == true) {
+                                                completedLessonsSet.add(lesson.lessonId)
+                                            }
+                                            
                                             if (userId.isNotEmpty()) {
                                                 when (val lessonUnlockResult = userRepository.isLessonUnlocked(
                                                     userId = userId,
@@ -118,9 +170,11 @@ class HomeViewModel @Inject constructor(
                     _homeState.value = _homeState.value.copy(
                         isLoading = false,
                         chapters = chapters,
+                        chapterLessons = lessonsMap,
                         chapterFirstLessons = firstLessonsMap,
                         unlockedChapters = unlockedChaptersSet,
-                        unlockedLessons = unlockedLessonsSet
+                        unlockedLessons = unlockedLessonsSet,
+                        completedLessons = completedLessonsSet
                     )
                 }
                 is Resource.Error -> {

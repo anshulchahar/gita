@@ -24,6 +24,10 @@ data class User(
  */
 data class Gamification(
     val wisdomPoints: Int = 0,
+    val gems: Int = 0, // In-game currency
+    val energy: Int = 5, // Hearts/lives system
+    val maxEnergy: Int = 5, // Maximum energy capacity
+    val lastEnergyRefill: Timestamp = Timestamp.now(), // Last time energy was refilled
     val currentStreak: Int = 0,
     val longestStreak: Int = 0,
     val lastCompletedDate: String = "",

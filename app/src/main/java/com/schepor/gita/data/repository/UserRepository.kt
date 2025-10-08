@@ -308,4 +308,56 @@ class UserRepository @Inject constructor(
             Resource.Error(e.message ?: "Failed to delete user")
         }
     }
+
+    /**
+     * Update gems (in-game currency)
+     */
+    suspend fun updateGems(userId: String, amount: Int): Resource<Unit> {
+        return try {
+            usersCollection.document(userId).update(
+                "gamification.gems",
+                com.google.firebase.firestore.FieldValue.increment(amount.toLong())
+            ).await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Failed to update gems")
+        }
+    }
+
+    /**
+     * Update energy (hearts/lives)
+     */
+    suspend fun updateEnergy(userId: String, amount: Int): Resource<Unit> {
+        return try {
+            val userDoc = usersCollection.document(userId).get().await()
+            val user = userDoc.toObject(User::class.java)
+            
+            if (user != null) {
+                val newEnergy = (user.gamification.energy + amount).coerceIn(0, user.gamification.maxEnergy)
+                usersCollection.document(userId).update(
+                    "gamification.energy", newEnergy
+                ).await()
+            }
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Failed to update energy")
+        }
+    }
+
+    /**
+     * Refill energy to maximum
+     */
+    suspend fun refillEnergy(userId: String): Resource<Unit> {
+        return try {
+            val now = com.google.firebase.Timestamp.now()
+            val updates = mapOf(
+                "gamification.energy" to 5,
+                "gamification.lastEnergyRefill" to now
+            )
+            usersCollection.document(userId).update(updates).await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Failed to refill energy")
+        }
+    }
 }
