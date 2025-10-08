@@ -34,11 +34,14 @@ local.properties
 *.jks
 *.keystore
 
-# Firebase
-google-services.json
+# Firebase - Keep app/google-services.json, ignore others
+/google-services.json
+**/debug/google-services.json
+**/release/google-services.json
 
-# API Keys
-*.properties
+# API Keys (but keep gradle.properties, ignore local.properties)
+local.properties
+**/keystore.properties
 
 # Logs
 *.log

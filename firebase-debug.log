@@ -62,3 +62,11 @@
 [debug] [2025-10-08T15:16:58.565Z] >>> [apiv2][query] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/rulesets/7077d908-f8c7-488e-9bb0-2f0cc785220b [none]
 [debug] [2025-10-08T15:16:59.264Z] <<< [apiv2][status] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/rulesets/7077d908-f8c7-488e-9bb0-2f0cc785220b 200
 [debug] [2025-10-08T15:16:59.264Z] <<< [apiv2][body] GET https://firebaserules.googleapis.com/v1/projects/gita-58861/rulesets/7077d908-f8c7-488e-9bb0-2f0cc785220b [omitted]
+[debug] [2025-10-08T15:17:47.645Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-10-08T15:17:47.646Z] > authorizing via signed-in user (rohitchahar0987@gmail.com)
+[debug] [2025-10-08T15:17:47.647Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:17:47.647Z] Checked if tokens are valid: true, expires at: 1759939514301
+[debug] [2025-10-08T15:17:47.647Z] >>> [apiv2][query] POST https://firestore.googleapis.com/v1/projects/gita-58861/databases/(default)/documents:listCollectionIds [none]
+[debug] [2025-10-08T15:17:47.647Z] >>> [apiv2][body] POST https://firestore.googleapis.com/v1/projects/gita-58861/databases/(default)/documents:listCollectionIds {"pageSize":2147483647}
+[debug] [2025-10-08T15:17:50.165Z] <<< [apiv2][status] POST https://firestore.googleapis.com/v1/projects/gita-58861/databases/(default)/documents:listCollectionIds 200
+[debug] [2025-10-08T15:17:50.165Z] <<< [apiv2][body] POST https://firestore.googleapis.com/v1/projects/gita-58861/databases/(default)/documents:listCollectionIds {}
