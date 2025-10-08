@@ -24,6 +24,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.firebase.auth.FirebaseAuth
+import com.schepor.gita.presentation.components.KrishnaAnimation
+import com.schepor.gita.presentation.components.KrishnaEmotion
+import com.schepor.gita.presentation.components.KrishnaMascot
+import com.schepor.gita.presentation.components.KrishnaMessages
 import com.schepor.gita.presentation.theme.Spacing
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -377,12 +381,60 @@ fun ResultsScreen(
     onRetry: () -> Unit,
     onFinish: () -> Unit
 ) {
+    val scorePercentage = (score * 100) / totalQuestions
+    val krishnaEmotion = when {
+        scorePercentage >= 90 -> KrishnaEmotion.CELEBRATING
+        scorePercentage >= 70 -> KrishnaEmotion.HAPPY
+        scorePercentage >= 50 -> KrishnaEmotion.ENCOURAGING
+        else -> KrishnaEmotion.SAD
+    }
+    val krishnaAnimation = when {
+        scorePercentage >= 90 -> KrishnaAnimation.BOUNCE
+        scorePercentage >= 70 -> KrishnaAnimation.PULSE
+        else -> KrishnaAnimation.IDLE_FLOAT
+    }
+    val krishnaMessage = when {
+        scorePercentage >= 90 -> KrishnaMessages.HIGH_SCORE.random()
+        scorePercentage >= 70 -> KrishnaMessages.MEDIUM_SCORE.random()
+        else -> KrishnaMessages.LOW_SCORE.random()
+    }
+    
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(Spacing.space24),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        item {
+            // Krishna mascot with congratulations
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                KrishnaMascot(
+                    emotion = krishnaEmotion,
+                    animation = krishnaAnimation,
+                    size = 150.dp
+                )
+                Spacer(modifier = Modifier.height(Spacing.space16))
+                Card(
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.secondaryContainer
+                    )
+                ) {
+                    Text(
+                        text = krishnaMessage,
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer,
+                        modifier = Modifier.padding(Spacing.space16),
+                        fontWeight = FontWeight.Medium
+                    )
+                }
+            }
+        }
+        
+        item { Spacer(modifier = Modifier.height(Spacing.space24)) }
+        
         item {
             Text(
                 text = "Lesson Complete!",
@@ -560,30 +612,57 @@ fun AnswerFeedbackCard(
         Column(
             modifier = Modifier.padding(Spacing.space16)
         ) {
-            // Result header
+            // Krishna mascot with feedback
             Row(
                 verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(Spacing.space12),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Icon(
-                    imageVector = if (result.isCorrect) Icons.Default.Check else Icons.Default.Close,
-                    contentDescription = if (result.isCorrect) "Correct" else "Incorrect",
-                    tint = if (result.isCorrect) 
-                        MaterialTheme.colorScheme.primary
-                    else 
-                        MaterialTheme.colorScheme.error,
-                    modifier = Modifier.size(32.dp)
+                // Krishna mascot
+                KrishnaMascot(
+                    emotion = if (result.isCorrect) KrishnaEmotion.CELEBRATING else KrishnaEmotion.SAD,
+                    animation = if (result.isCorrect) KrishnaAnimation.BOUNCE else KrishnaAnimation.NONE,
+                    size = 80.dp
                 )
-                Spacer(modifier = Modifier.width(Spacing.space12))
-                Text(
-                    text = if (result.isCorrect) "Correct! 🎉" else "Not quite right",
-                    style = MaterialTheme.typography.titleLarge,
-                    fontWeight = FontWeight.Bold,
-                    color = if (result.isCorrect) 
-                        MaterialTheme.colorScheme.onPrimaryContainer
-                    else 
-                        MaterialTheme.colorScheme.onErrorContainer
-                )
+                
+                // Feedback message
+                Column(modifier = Modifier.weight(1f)) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Icon(
+                            imageVector = if (result.isCorrect) Icons.Default.Check else Icons.Default.Close,
+                            contentDescription = if (result.isCorrect) "Correct" else "Incorrect",
+                            tint = if (result.isCorrect) 
+                                MaterialTheme.colorScheme.primary
+                            else 
+                                MaterialTheme.colorScheme.error,
+                            modifier = Modifier.size(24.dp)
+                        )
+                        Spacer(modifier = Modifier.width(Spacing.space8))
+                        Text(
+                            text = if (result.isCorrect) "Correct! 🎉" else "Not quite right",
+                            style = MaterialTheme.typography.titleMedium,
+                            fontWeight = FontWeight.Bold,
+                            color = if (result.isCorrect) 
+                                MaterialTheme.colorScheme.onPrimaryContainer
+                            else 
+                                MaterialTheme.colorScheme.onErrorContainer
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(Spacing.space8))
+                    Text(
+                        text = if (result.isCorrect) 
+                            KrishnaMessages.CORRECT_ANSWER.random()
+                        else 
+                            KrishnaMessages.WRONG_ANSWER.random(),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = if (result.isCorrect) 
+                            MaterialTheme.colorScheme.onPrimaryContainer
+                        else 
+                            MaterialTheme.colorScheme.onErrorContainer
+                    )
+                }
             }
             
             Spacer(modifier = Modifier.height(Spacing.space16))

@@ -1,6 +1,7 @@
 package com.schepor.gita.presentation.home
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
@@ -23,11 +24,17 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.schepor.gita.R
 import com.schepor.gita.presentation.auth.AuthViewModel
+import com.schepor.gita.presentation.components.KrishnaAnimation
+import com.schepor.gita.presentation.components.KrishnaEmotion
+import com.schepor.gita.presentation.components.KrishnaMascot
+import com.schepor.gita.presentation.components.KrishnaMessages
 import com.schepor.gita.presentation.theme.Spacing
 import com.schepor.gita.presentation.tree.TreeVisualizationScreen
 import kotlinx.coroutines.launch
@@ -174,6 +181,26 @@ fun HomeScreen(
                     .padding(top = Spacing.space16),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+                // Krishna Mascot Welcome
+                Column(
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    KrishnaMascot(
+                        emotion = KrishnaEmotion.NEUTRAL,
+                        animation = KrishnaAnimation.IDLE_FLOAT,
+                        size = 100.dp
+                    )
+                    Spacer(modifier = Modifier.height(Spacing.space12))
+                    Text(
+                        text = KrishnaMessages.WELCOME.random(),
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onSurface
+                    )
+                }
+                
+                Spacer(modifier = Modifier.height(Spacing.space16))
+                
                 // Loading state
                 if (homeState.isLoading) {
                     CircularProgressIndicator(
