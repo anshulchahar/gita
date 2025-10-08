@@ -112,8 +112,8 @@ fun LessonScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(Spacing.medium),
-            verticalArrangement = Arrangement.spacedBy(Spacing.medium)
+                .padding(Spacing.space16),
+            verticalArrangement = Arrangement.spacedBy(Spacing.space16)
         ) {
             // Lesson Content
             item {
@@ -124,7 +124,7 @@ fun LessonScreen(
                     )
                 ) {
                     Column(
-                        modifier = Modifier.padding(Spacing.medium)
+                        modifier = Modifier.padding(Spacing.space16)
                     ) {
                         Text(
                             text = "Lesson Content",
@@ -132,7 +132,7 @@ fun LessonScreen(
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
-                        Spacer(modifier = Modifier.height(Spacing.small))
+                        Spacer(modifier = Modifier.height(Spacing.space8))
                         Text(
                             text = lessonContent,
                             style = MaterialTheme.typography.bodyMedium,
@@ -152,7 +152,7 @@ fun LessonScreen(
                 Text(
                     text = "Question ${currentQuestionIndex + 1} of ${questions.size}",
                     style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = Spacing.extraSmall)
+                    modifier = Modifier.padding(top = Spacing.space4)
                 )
             }
             
@@ -233,7 +233,7 @@ fun QuestionCard(
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.padding(Spacing.medium)
+            modifier = Modifier.padding(Spacing.space16)
         ) {
             Text(
                 text = question.text,
@@ -241,7 +241,7 @@ fun QuestionCard(
                 fontWeight = FontWeight.Bold
             )
             
-            Spacer(modifier = Modifier.height(Spacing.medium))
+            Spacer(modifier = Modifier.height(Spacing.space16))
             
             question.options.forEachIndexed { index, option ->
                 AnswerOption(
@@ -250,7 +250,7 @@ fun QuestionCard(
                     onClick = { onAnswerSelected(index) }
                 )
                 if (index < question.options.size - 1) {
-                    Spacer(modifier = Modifier.height(Spacing.small))
+                    Spacer(modifier = Modifier.height(Spacing.space8))
                 }
             }
         }
@@ -283,14 +283,14 @@ fun AnswerOption(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Spacing.medium),
+                .padding(Spacing.space16),
             verticalAlignment = Alignment.CenterVertically
         ) {
             RadioButton(
                 selected = isSelected,
                 onClick = onClick
             )
-            Spacer(modifier = Modifier.width(Spacing.small))
+            Spacer(modifier = Modifier.width(Spacing.space8))
             Text(
                 text = text,
                 style = MaterialTheme.typography.bodyLarge
@@ -319,7 +319,7 @@ fun ResultsCard(
         )
     ) {
         Column(
-            modifier = Modifier.padding(Spacing.large),
+            modifier = Modifier.padding(Spacing.space24),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Icon(
@@ -329,7 +329,7 @@ fun ResultsCard(
                 tint = MaterialTheme.colorScheme.primary
             )
             
-            Spacer(modifier = Modifier.height(Spacing.medium))
+            Spacer(modifier = Modifier.height(Spacing.space16))
             
             Text(
                 text = "Lesson Complete!",
@@ -337,7 +337,7 @@ fun ResultsCard(
                 fontWeight = FontWeight.Bold
             )
             
-            Spacer(modifier = Modifier.height(Spacing.small))
+            Spacer(modifier = Modifier.height(Spacing.space8))
             
             Text(
                 text = "Your Score",
@@ -357,7 +357,7 @@ fun ResultsCard(
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             
-            Spacer(modifier = Modifier.height(Spacing.medium))
+            Spacer(modifier = Modifier.height(Spacing.space16))
             
             // Feedback message
             Text(
@@ -370,11 +370,11 @@ fun ResultsCard(
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             
-            Spacer(modifier = Modifier.height(Spacing.large))
+            Spacer(modifier = Modifier.height(Spacing.space24))
             
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Spacing.small)
+                horizontalArrangement = Arrangement.spacedBy(Spacing.space8)
             ) {
                 OutlinedButton(
                     onClick = onRetry,
