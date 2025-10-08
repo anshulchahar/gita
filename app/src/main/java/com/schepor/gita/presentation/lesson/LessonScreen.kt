@@ -1,9 +1,15 @@
 package com.schepor.gita.presentation.lesson
 
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -13,6 +19,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -108,6 +115,8 @@ fun LessonScreen(
                         xpEarned = lessonState.xpEarned,
                         isSavingProgress = lessonState.isSavingProgress,
                         progressSaved = lessonState.progressSaved,
+                        questions = lessonState.questions,
+                        questionResults = lessonState.questionResults,
                         onRetry = { viewModel.resetLesson() },
                         onFinish = onNavigateBack
                     )
@@ -195,6 +204,23 @@ fun LessonContent(
                 )
             }
             
+            // Show feedback after answer is submitted
+            if (lessonState.showFeedback) {
+                item {
+                    val currentQuestion = lessonState.questions[lessonState.currentQuestionIndex]
+                    val result = lessonState.questionResults[currentQuestion.questionId]
+                    
+                    if (result != null) {
+                        AnswerFeedbackCard(
+                            result = result,
+                            onContinue = {
+                                viewModel.hideFeedback()
+                            }
+                        )
+                    }
+                }
+            }
+            
             item {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -202,12 +228,22 @@ fun LessonContent(
                 ) {
                     OutlinedButton(
                         onClick = { viewModel.previousQuestion() },
-                        enabled = lessonState.currentQuestionIndex > 0
+                        enabled = lessonState.currentQuestionIndex > 0 && !lessonState.showFeedback
                     ) {
                         Text("Previous")
                     }
                     
-                    if (viewModel.isCurrentQuestionAnswered()) {
+                    if (lessonState.showFeedback) {
+                        Button(onClick = { 
+                            viewModel.hideFeedback()
+                            viewModel.nextQuestion() 
+                        }) {
+                            Text(
+                                if (lessonState.currentQuestionIndex < lessonState.questions.size - 1)
+                                    "Next Question" else "View Results"
+                            )
+                        }
+                    } else if (viewModel.isCurrentQuestionAnswered()) {
                         Button(onClick = { viewModel.nextQuestion() }) {
                             Text(
                                 if (lessonState.currentQuestionIndex < lessonState.questions.size - 1)
@@ -336,110 +372,346 @@ fun ResultsScreen(
     xpEarned: Int,
     isSavingProgress: Boolean,
     progressSaved: Boolean,
+    questions: List<com.schepor.gita.domain.model.Question>,
+    questionResults: Map<String, QuestionResult>,
     onRetry: () -> Unit,
     onFinish: () -> Unit
 ) {
-    Column(
+    LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(Spacing.space24),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(
-            text = "Lesson Complete!",
-            style = MaterialTheme.typography.displaySmall,
-            fontWeight = FontWeight.Bold
-        )
-        
-        Spacer(modifier = Modifier.height(Spacing.space24))
-        
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
+        item {
+            Text(
+                text = "Lesson Complete!",
+                style = MaterialTheme.typography.displaySmall,
+                fontWeight = FontWeight.Bold
             )
-        ) {
-            Column(
-                modifier = Modifier.padding(Spacing.space24),
-                horizontalAlignment = Alignment.CenterHorizontally
+        }
+        
+        item { Spacer(modifier = Modifier.height(Spacing.space24)) }
+        
+        item {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
             ) {
-                Text(
-                    text = "Your Score",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Spacer(modifier = Modifier.height(Spacing.space8))
-                Text(
-                    text = "$score / $totalQuestions",
-                    style = MaterialTheme.typography.displayMedium,
-                    fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Spacer(modifier = Modifier.height(Spacing.space8))
-                Text(
-                    text = "${(score * 100) / totalQuestions}% Correct",
-                    style = MaterialTheme.typography.titleMedium
-                )
-                
-                if (progressSaved && xpEarned > 0) {
-                    Spacer(modifier = Modifier.height(Spacing.space16))
-                    Divider()
-                    Spacer(modifier = Modifier.height(Spacing.space16))
+                Column(
+                    modifier = Modifier.padding(Spacing.space24),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        text = "Your Score",
+                        style = MaterialTheme.typography.titleMedium
+                    )
+                    Spacer(modifier = Modifier.height(Spacing.space8))
+                    Text(
+                        text = "$score / $totalQuestions",
+                        style = MaterialTheme.typography.displayMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Spacer(modifier = Modifier.height(Spacing.space8))
+                    Text(
+                        text = "${(score * 100) / totalQuestions}% Correct",
+                        style = MaterialTheme.typography.titleMedium
+                    )
                     
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = "XP Earned",
-                            tint = MaterialTheme.colorScheme.primary
-                        )
-                        Spacer(modifier = Modifier.width(Spacing.space8))
-                        Text(
-                            text = "+$xpEarned Wisdom Points",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.primary
-                        )
+                    if (progressSaved && xpEarned > 0) {
+                        Spacer(modifier = Modifier.height(Spacing.space16))
+                        Divider()
+                        Spacer(modifier = Modifier.height(Spacing.space16))
+                        
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Check,
+                                contentDescription = "XP Earned",
+                                tint = MaterialTheme.colorScheme.primary
+                            )
+                            Spacer(modifier = Modifier.width(Spacing.space8))
+                            Text(
+                                text = "+$xpEarned Wisdom Points",
+                                style = MaterialTheme.typography.titleMedium,
+                                fontWeight = FontWeight.Bold,
+                                color = MaterialTheme.colorScheme.primary
+                            )
+                        }
                     }
-                }
-                
-                if (isSavingProgress) {
-                    Spacer(modifier = Modifier.height(Spacing.space16))
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(16.dp),
-                            strokeWidth = 2.dp
-                        )
-                        Spacer(modifier = Modifier.width(Spacing.space8))
-                        Text(
-                            text = "Saving progress...",
-                            style = MaterialTheme.typography.bodyMedium
-                        )
+                    
+                    if (isSavingProgress) {
+                        Spacer(modifier = Modifier.height(Spacing.space16))
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(16.dp),
+                                strokeWidth = 2.dp
+                            )
+                            Spacer(modifier = Modifier.width(Spacing.space8))
+                            Text(
+                                text = "Saving progress...",
+                                style = MaterialTheme.typography.bodyMedium
+                            )
+                        }
                     }
                 }
             }
         }
         
-        Spacer(modifier = Modifier.height(Spacing.space32))
-        
-        Button(
-            onClick = onRetry,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("Retry Lesson")
+        // Per-question breakdown
+        if (questionResults.isNotEmpty()) {
+            item { Spacer(modifier = Modifier.height(Spacing.space24)) }
+            
+            item {
+                Text(
+                    text = "Question Breakdown",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+            
+            item { Spacer(modifier = Modifier.height(Spacing.space16)) }
+            
+            items(questions.size) { index ->
+                val question = questions[index]
+                val result = questionResults[question.questionId]
+                
+                if (result != null) {
+                    QuestionBreakdownItem(
+                        questionNumber = index + 1,
+                        question = question,
+                        result = result
+                    )
+                    
+                    if (index < questions.size - 1) {
+                        Spacer(modifier = Modifier.height(Spacing.space12))
+                    }
+                }
+            }
         }
         
-        Spacer(modifier = Modifier.height(Spacing.space12))
+        item { Spacer(modifier = Modifier.height(Spacing.space32)) }
         
-        OutlinedButton(
-            onClick = onFinish,
-            modifier = Modifier.fillMaxWidth()
+        item {
+            Button(
+                onClick = onRetry,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Retry Lesson")
+            }
+        }
+        
+        item { Spacer(modifier = Modifier.height(Spacing.space12)) }
+        
+        item {
+            OutlinedButton(
+                onClick = onFinish,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text("Back to Home")
+            }
+        }
+    }
+}
+
+@Composable
+fun AnswerFeedbackCard(
+    result: QuestionResult,
+    onContinue: () -> Unit
+) {
+    // Animated appearance
+    val animatedAlpha by animateFloatAsState(
+        targetValue = 1f,
+        animationSpec = tween(durationMillis = 500),
+        label = "Feedback alpha"
+    )
+    
+    val animatedScale by animateFloatAsState(
+        targetValue = 1f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "Feedback scale"
+    )
+    
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .graphicsLayer {
+                alpha = animatedAlpha
+                scaleX = animatedScale
+                scaleY = animatedScale
+            },
+        colors = CardDefaults.cardColors(
+            containerColor = if (result.isCorrect) 
+                MaterialTheme.colorScheme.primaryContainer
+            else 
+                MaterialTheme.colorScheme.errorContainer
+        )
+    ) {
+        Column(
+            modifier = Modifier.padding(Spacing.space16)
         ) {
-            Text("Back to Home")
+            // Result header
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Icon(
+                    imageVector = if (result.isCorrect) Icons.Default.Check else Icons.Default.Close,
+                    contentDescription = if (result.isCorrect) "Correct" else "Incorrect",
+                    tint = if (result.isCorrect) 
+                        MaterialTheme.colorScheme.primary
+                    else 
+                        MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(32.dp)
+                )
+                Spacer(modifier = Modifier.width(Spacing.space12))
+                Text(
+                    text = if (result.isCorrect) "Correct! 🎉" else "Not quite right",
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold,
+                    color = if (result.isCorrect) 
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    else 
+                        MaterialTheme.colorScheme.onErrorContainer
+                )
+            }
+            
+            Spacer(modifier = Modifier.height(Spacing.space16))
+            Divider()
+            Spacer(modifier = Modifier.height(Spacing.space16))
+            
+            // Explanation section
+            if (result.explanation.isNotEmpty()) {
+                Text(
+                    text = "📖 Explanation",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = if (result.isCorrect) 
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    else 
+                        MaterialTheme.colorScheme.onErrorContainer
+                )
+                Spacer(modifier = Modifier.height(Spacing.space8))
+                Text(
+                    text = result.explanation,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (result.isCorrect) 
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    else 
+                        MaterialTheme.colorScheme.onErrorContainer
+                )
+            }
+            
+            // Real-life application section
+            if (result.realLifeApplication.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(Spacing.space16))
+                Text(
+                    text = "🌟 Real-Life Application",
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = if (result.isCorrect) 
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    else 
+                        MaterialTheme.colorScheme.onErrorContainer
+                )
+                Spacer(modifier = Modifier.height(Spacing.space8))
+                Text(
+                    text = result.realLifeApplication,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (result.isCorrect) 
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    else 
+                        MaterialTheme.colorScheme.onErrorContainer
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun QuestionBreakdownItem(
+    questionNumber: Int,
+    question: com.schepor.gita.domain.model.Question,
+    result: QuestionResult
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = if (result.isCorrect)
+                MaterialTheme.colorScheme.surfaceVariant
+            else
+                MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+        ),
+        border = BorderStroke(
+            width = 2.dp,
+            color = if (result.isCorrect)
+                MaterialTheme.colorScheme.primary
+            else
+                MaterialTheme.colorScheme.error
+        )
+    ) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(Spacing.space12),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Question number and status icon
+            Box(
+                modifier = Modifier
+                    .size(40.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = if (result.isCorrect) Icons.Default.Check else Icons.Default.Close,
+                    contentDescription = if (result.isCorrect) "Correct" else "Incorrect",
+                    tint = if (result.isCorrect)
+                        MaterialTheme.colorScheme.primary
+                    else
+                        MaterialTheme.colorScheme.error,
+                    modifier = Modifier.size(24.dp)
+                )
+            }
+            
+            Spacer(modifier = Modifier.width(Spacing.space12))
+            
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "Question $questionNumber",
+                    style = MaterialTheme.typography.titleSmall,
+                    fontWeight = FontWeight.Bold
+                )
+                Spacer(modifier = Modifier.height(Spacing.space4))
+                Text(
+                    text = question.content.questionText,
+                    style = MaterialTheme.typography.bodyMedium,
+                    maxLines = 2
+                )
+                
+                if (!result.isCorrect) {
+                    Spacer(modifier = Modifier.height(Spacing.space8))
+                    Text(
+                        text = "Your answer: ${question.content.options.getOrNull(result.selectedAnswer) ?: "N/A"}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                    Text(
+                        text = "Correct answer: ${question.content.options.getOrNull(result.correctAnswer) ?: "N/A"}",
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
         }
     }
 }

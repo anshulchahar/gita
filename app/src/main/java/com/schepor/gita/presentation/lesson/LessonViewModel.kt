@@ -28,7 +28,21 @@ data class LessonState(
     val error: String? = null,
     val isSavingProgress: Boolean = false,
     val progressSaved: Boolean = false,
-    val xpEarned: Int = 0
+    val xpEarned: Int = 0,
+    val showFeedback: Boolean = false, // Show feedback after answer is selected
+    val questionResults: Map<String, QuestionResult> = emptyMap() // Track each question's result
+)
+
+/**
+ * Result for a single question
+ */
+data class QuestionResult(
+    val questionId: String,
+    val selectedAnswer: Int,
+    val correctAnswer: Int,
+    val isCorrect: Boolean,
+    val explanation: String,
+    val realLifeApplication: String
 )
 
 /**
@@ -110,20 +124,43 @@ class LessonViewModel @Inject constructor(
         
         if (currentQuestion != null) {
             val selectedOption = currentState.selectedAnswers[currentQuestion.questionId]
-            val isCorrect = selectedOption == currentQuestion.content.correctAnswerIndex
             
-            // Mark question as answered
-            val updatedAnsweredQuestions = currentState.answeredQuestions.toMutableSet()
-            updatedAnsweredQuestions.add(currentQuestion.questionId)
-            
-            // Update score if correct
-            val newScore = if (isCorrect) currentState.score + 1 else currentState.score
-            
-            _lessonState.value = currentState.copy(
-                answeredQuestions = updatedAnsweredQuestions,
-                score = newScore
-            )
+            if (selectedOption != null) {
+                val isCorrect = selectedOption == currentQuestion.content.correctAnswerIndex
+                
+                // Mark question as answered
+                val updatedAnsweredQuestions = currentState.answeredQuestions.toMutableSet()
+                updatedAnsweredQuestions.add(currentQuestion.questionId)
+                
+                // Update score if correct
+                val newScore = if (isCorrect) currentState.score + 1 else currentState.score
+                
+                // Store question result
+                val updatedResults = currentState.questionResults.toMutableMap()
+                updatedResults[currentQuestion.questionId] = QuestionResult(
+                    questionId = currentQuestion.questionId,
+                    selectedAnswer = selectedOption,
+                    correctAnswer = currentQuestion.content.correctAnswerIndex,
+                    isCorrect = isCorrect,
+                    explanation = currentQuestion.content.explanation,
+                    realLifeApplication = currentQuestion.content.realLifeApplication
+                )
+                
+                _lessonState.value = currentState.copy(
+                    answeredQuestions = updatedAnsweredQuestions,
+                    score = newScore,
+                    showFeedback = true,
+                    questionResults = updatedResults
+                )
+            }
         }
+    }
+    
+    /**
+     * Hide feedback and prepare for next question
+     */
+    fun hideFeedback() {
+        _lessonState.value = _lessonState.value.copy(showFeedback = false)
     }
     
     /**

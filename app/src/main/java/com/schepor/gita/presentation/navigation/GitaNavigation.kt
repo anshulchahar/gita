@@ -15,6 +15,7 @@ import com.schepor.gita.presentation.auth.LoginScreen
 import com.schepor.gita.presentation.auth.SignupScreen
 import com.schepor.gita.presentation.home.HomeScreen
 import com.schepor.gita.presentation.lesson.LessonScreen
+import com.schepor.gita.presentation.splash.SplashScreen
 import com.schepor.gita.util.Constants
 
 /**
@@ -37,8 +38,24 @@ fun GitaNavigation(
     
     NavHost(
         navController = navController,
-        startDestination = Constants.ROUTE_LOGIN
+        startDestination = Constants.ROUTE_SPLASH
     ) {
+        // Splash Screen
+        composable(Constants.ROUTE_SPLASH) {
+            SplashScreen(
+                onNavigateToLogin = {
+                    navController.navigate(Constants.ROUTE_LOGIN) {
+                        popUpTo(Constants.ROUTE_SPLASH) { inclusive = true }
+                    }
+                },
+                onNavigateToHome = {
+                    navController.navigate(Constants.ROUTE_HOME) {
+                        popUpTo(Constants.ROUTE_SPLASH) { inclusive = true }
+                    }
+                }
+            )
+        }
+        
         // Authentication Flow
         composable(Constants.ROUTE_LOGIN) {
             LoginScreen(
