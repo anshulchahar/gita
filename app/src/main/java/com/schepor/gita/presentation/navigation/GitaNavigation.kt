@@ -72,7 +72,6 @@ fun GitaNavigation(
         composable(Constants.ROUTE_HOME) {
             HomeScreen(
                 onNavigateToLesson = { chapterId, lessonId ->
-                    println("DEBUG Navigation: Navigating to lesson/$chapterId/$lessonId")
                     navController.navigate("lesson/$chapterId/$lessonId")
                 },
                 onNavigateToAdmin = {
@@ -95,8 +94,6 @@ fun GitaNavigation(
         ) { backStackEntry ->
             val chapterId = backStackEntry.arguments?.getString("chapterId") ?: ""
             val lessonId = backStackEntry.arguments?.getString("lessonId") ?: ""
-            
-            println("DEBUG Navigation: LessonScreen composable - chapterId: $chapterId, lessonId: $lessonId")
             
             LessonScreen(
                 chapterId = chapterId,

@@ -86,27 +86,17 @@ class ContentRepository @Inject constructor(
      */
     suspend fun getLessons(chapterId: String): Resource<List<Lesson>> {
         return try {
-            println("DEBUG Repository: getLessons called with chapterId: $chapterId")
             val snapshot = lessonsCollection
                 .whereEqualTo("chapterId", chapterId)
                 .get()
                 .await()
             
-            println("DEBUG Repository: Query returned ${snapshot.documents.size} documents")
-            snapshot.documents.forEach { doc ->
-                println("DEBUG Repository: Document ${doc.id}: ${doc.data}")
-            }
-            
             val lessons = snapshot.documents.mapNotNull { doc ->
                 doc.toObject(Lesson::class.java)?.copy(lessonId = doc.id)
-            }.sortedBy { it.lessonNumber } // Sort in code instead of query
-            
-            println("DEBUG Repository: Mapped to ${lessons.size} Lesson objects")
+            }.sortedBy { it.lessonNumber }
             
             Resource.Success(lessons)
         } catch (e: Exception) {
-            println("DEBUG Repository: ERROR - ${e.message}")
-            e.printStackTrace()
             Resource.Error(e.message ?: "Failed to get lessons")
         }
     }
@@ -157,24 +147,17 @@ class ContentRepository @Inject constructor(
      */
     suspend fun getQuestions(lessonId: String): Resource<List<Question>> {
         return try {
-            println("DEBUG Repository: getQuestions called with lessonId: $lessonId")
             val snapshot = questionsCollection
                 .whereEqualTo("lessonId", lessonId)
                 .get()
                 .await()
             
-            println("DEBUG Repository: Query returned ${snapshot.documents.size} question documents")
-            
             val questions = snapshot.documents.mapNotNull { doc ->
                 doc.toObject(Question::class.java)?.copy(questionId = doc.id)
-            }.sortedBy { it.order } // Sort in code instead of Firestore query
-            
-            println("DEBUG Repository: Mapped to ${questions.size} Question objects")
+            }.sortedBy { it.order }
             
             Resource.Success(questions)
         } catch (e: Exception) {
-            println("DEBUG Repository: ERROR getting questions - ${e.message}")
-            e.printStackTrace()
             Resource.Error(e.message ?: "Failed to get questions")
         }
     }
