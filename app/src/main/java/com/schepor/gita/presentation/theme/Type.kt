@@ -2,22 +2,14 @@ package com.schepor.gita.presentation.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.schepor.gita.R
 
-// Font Families
-val InterFontFamily = FontFamily(
-    Font(R.font.inter_regular, FontWeight.Normal),
-    Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_semibold, FontWeight.SemiBold),
-    Font(R.font.inter_bold, FontWeight.Bold)
-)
-
-// For now, using Inter for Hindi until we add Noto Sans Devanagari
-val HindiFontFamily = InterFontFamily
+// Using system fonts temporarily until actual font files are added
+// TODO: Replace with Inter and Noto Sans Devanagari fonts
+val InterFontFamily = FontFamily.SansSerif
+val HindiFontFamily = FontFamily.SansSerif
 
 // Typography configuration
 val GitaTypography = Typography(
