@@ -49,6 +49,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     packaging {
@@ -111,6 +112,9 @@ dependencies {
 
     // Lottie for animations
     implementation("com.airbnb.android:lottie-compose:6.5.2")
+    
+    // Gemini AI
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
 
     // Testing
     testImplementation("junit:junit:4.13.2")
