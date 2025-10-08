@@ -50,6 +50,58 @@ class AdminViewModel @Inject constructor(
             }
         }
     }
+    
+    fun clearAllData() {
+        viewModelScope.launch {
+            try {
+                _seedState.value = _seedState.value.copy(
+                    isLoading = true,
+                    error = null,
+                    message = "Clearing all data..."
+                )
+                
+                contentSeeder.clearAllContent()
+                
+                _seedState.value = _seedState.value.copy(
+                    isLoading = false,
+                    isSuccess = true,
+                    message = "All data cleared!"
+                )
+            } catch (e: Exception) {
+                _seedState.value = _seedState.value.copy(
+                    isLoading = false,
+                    isSuccess = false,
+                    error = e.message ?: "Failed to clear data"
+                )
+            }
+        }
+    }
+    
+    fun forceSeed() {
+        viewModelScope.launch {
+            try {
+                _seedState.value = _seedState.value.copy(
+                    isLoading = true,
+                    error = null,
+                    message = "Clearing old data and re-seeding..."
+                )
+                
+                contentSeeder.forceSeed()
+                
+                _seedState.value = _seedState.value.copy(
+                    isLoading = false,
+                    isSuccess = true,
+                    message = "Data cleared and re-seeded successfully!"
+                )
+            } catch (e: Exception) {
+                _seedState.value = _seedState.value.copy(
+                    isLoading = false,
+                    isSuccess = false,
+                    error = e.message ?: "Failed to force seed"
+                )
+            }
+        }
+    }
 
     fun clearState() {
         _seedState.value = SeedState()

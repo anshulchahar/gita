@@ -1,0 +1,52 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Helper function to check if user is the owner
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    // Chapters - Public read, only authenticated users can write (for admin seeding)
+    match /chapters/{chapterId} {
+      allow read: if true; // Everyone can read chapters
+      allow write: if isAuthenticated(); // Only authenticated users can seed/update
+    }
+    
+    // Lessons - Public read, authenticated write
+    match /lessons/{lessonId} {
+      allow read: if true; // Everyone can read lessons
+      allow write: if isAuthenticated(); // Only authenticated users can seed/update
+    }
+    
+    // Questions - Public read, authenticated write
+    match /questions/{questionId} {
+      allow read: if true; // Everyone can read questions
+      allow write: if isAuthenticated(); // Only authenticated users can seed/update
+    }
+    
+    // Users - Users can only read/write their own data
+    match /users/{userId} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+    }
+    
+    // User Progress - Users can only read/write their own progress
+    match /users/{userId}/progress/{progressId} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+    }
+    
+    // Achievements - Users can only read/write their own achievements
+    match /users/{userId}/achievements/{achievementId} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+    }
+  }
+}

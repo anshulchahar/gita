@@ -60,6 +60,34 @@ fun AdminScreen(
                 ) {
                     Text("Seed Initial Content")
                 }
+                
+                Spacer(modifier = Modifier.height(Spacing.space12))
+                
+                OutlinedButton(
+                    onClick = { viewModel.forceSeed() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Spacing.space32),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.primary
+                    )
+                ) {
+                    Text("🔄 Force Re-Seed (Clear & Seed)")
+                }
+                
+                Spacer(modifier = Modifier.height(Spacing.space12))
+                
+                OutlinedButton(
+                    onClick = { viewModel.clearAllData() },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = Spacing.space32),
+                    colors = ButtonDefaults.outlinedButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error
+                    )
+                ) {
+                    Text("🗑️ Clear All Data")
+                }
             }
 
             Spacer(modifier = Modifier.height(Spacing.space24))
@@ -86,9 +114,17 @@ fun AdminScreen(
             Spacer(modifier = Modifier.height(Spacing.space32))
 
             Text(
-                text = "⚠️ Warning: Only use this once to seed initial content",
+                text = "💡 Tip: Use 'Force Re-Seed' if chapters aren't showing",
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+            )
+            
+            Spacer(modifier = Modifier.height(Spacing.space8))
+            
+            Text(
+                text = "⚠️ 'Clear All Data' removes all content from Firestore",
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.error.copy(alpha = 0.7f)
             )
         }
     }

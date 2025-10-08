@@ -1,85 +1,36 @@
 package com.schepor.gita.presentation.lesson
 
-import androidx.compose.foundation.background
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.schepor.gita.presentation.theme.Spacing
 
-/**
- * Lesson Screen - Displays a lesson with multiple choice questions
- * This is a placeholder implementation until we connect to Firebase
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LessonScreen(
     chapterId: String,
     lessonId: String,
-    onNavigateBack: () -> Unit
+    onNavigateBack: () -> Unit,
+    viewModel: LessonViewModel = hiltViewModel()
 ) {
-    // Sample data for now (will be replaced with Firebase data)
-    val lessonTitle = "Understanding Dharma"
-    val lessonContent = """
-        Dharma is one of the most important concepts in the Bhagavad Gita. It represents 
-        righteous duty, moral law, and the path of righteousness.
-        
-        In Chapter 1, Arjuna faces a dilemma about his dharma as a warrior. Should he fight 
-        his own relatives, or should he refuse to participate in the war?
-        
-        This lesson explores the nature of dharma and how to apply it in real life.
-    """.trimIndent()
+    val lessonState by viewModel.lessonState.collectAsState()
     
-    val questions = listOf(
-        Question(
-            id = "1",
-            text = "What is the primary meaning of Dharma?",
-            options = listOf(
-                "Religious duty only",
-                "Righteous duty and moral law",
-                "Fighting in battles",
-                "Following traditions blindly"
-            ),
-            correctAnswer = 1
-        ),
-        Question(
-            id = "2",
-            text = "In the Gita, who is facing a dilemma about dharma?",
-            options = listOf(
-                "Krishna",
-                "Arjuna",
-                "Duryodhana",
-                "Bhishma"
-            ),
-            correctAnswer = 1
-        ),
-        Question(
-            id = "3",
-            text = "What should guide our understanding of dharma?",
-            options = listOf(
-                "Personal desires",
-                "Social pressure",
-                "Inner wisdom and righteousness",
-                "Material gain"
-            ),
-            correctAnswer = 2
-        )
-    )
-    
-    var currentQuestionIndex by remember { mutableStateOf(0) }
-    var selectedAnswers by remember { mutableStateOf(mutableMapOf<Int, Int>()) }
-    var showResults by remember { mutableStateOf(false) }
-    
-    val currentQuestion = questions.getOrNull(currentQuestionIndex)
+    LaunchedEffect(chapterId, lessonId) {
+        viewModel.loadLesson(chapterId, lessonId)
+    }
     
     Scaffold(
         topBar = {
@@ -87,11 +38,11 @@ fun LessonScreen(
                 title = {
                     Column {
                         Text(
-                            text = lessonTitle,
+                            text = lessonState.lesson?.lessonNameEn ?: "Loading...",
                             style = MaterialTheme.typography.titleMedium
                         )
                         Text(
-                            text = "Chapter $chapterId - Lesson $lessonId",
+                            text = "Chapter $chapterId - Lesson ${lessonState.lesson?.lessonNumber ?: ""}",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -108,115 +59,156 @@ fun LessonScreen(
             )
         }
     ) { paddingValues ->
-        LazyColumn(
+        Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
-                .padding(Spacing.space16),
-            verticalArrangement = Arrangement.spacedBy(Spacing.space16)
         ) {
-            // Lesson Content
-            item {
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    )
-                ) {
-                    Column(
-                        modifier = Modifier.padding(Spacing.space16)
-                    ) {
-                        Text(
-                            text = "Lesson Content",
-                            style = MaterialTheme.typography.titleMedium,
-                            fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                        Spacer(modifier = Modifier.height(Spacing.space8))
-                        Text(
-                            text = lessonContent,
-                            style = MaterialTheme.typography.bodyMedium,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
-                        )
-                    }
-                }
-            }
-            
-            // Progress Indicator
-            item {
-                LinearProgressIndicator(
-                    progress = (currentQuestionIndex + 1).toFloat() / questions.size,
-                    modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.primary
-                )
-                Text(
-                    text = "Question ${currentQuestionIndex + 1} of ${questions.size}",
-                    style = MaterialTheme.typography.bodySmall,
-                    modifier = Modifier.padding(top = Spacing.space4)
-                )
-            }
-            
-            // Question
-            if (currentQuestion != null && !showResults) {
-                item {
-                    QuestionCard(
-                        question = currentQuestion,
-                        selectedAnswer = selectedAnswers[currentQuestionIndex],
-                        onAnswerSelected = { answerIndex ->
-                            selectedAnswers[currentQuestionIndex] = answerIndex
-                        }
+            when {
+                lessonState.isLoading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier.align(Alignment.Center)
                     )
                 }
                 
-                // Navigation Buttons
-                item {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
+                lessonState.error != null -> {
+                    Column(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .padding(Spacing.space24),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-                        // Previous Button
-                        if (currentQuestionIndex > 0) {
-                            OutlinedButton(
-                                onClick = { currentQuestionIndex-- }
-                            ) {
-                                Text("Previous")
-                            }
-                        } else {
-                            Spacer(modifier = Modifier.width(1.dp))
-                        }
-                        
-                        // Next/Submit Button
-                        Button(
-                            onClick = {
-                                if (currentQuestionIndex < questions.size - 1) {
-                                    currentQuestionIndex++
-                                } else {
-                                    showResults = true
-                                }
-                            },
-                            enabled = selectedAnswers.containsKey(currentQuestionIndex)
-                        ) {
-                            Text(
-                                if (currentQuestionIndex < questions.size - 1) "Next" else "Submit"
-                            )
-                        }
+                        Text(
+                            text = "Error",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = MaterialTheme.colorScheme.error
+                        )
+                        Spacer(modifier = Modifier.height(Spacing.space8))
+                        Text(
+                            text = lessonState.error ?: "",
+                            style = MaterialTheme.typography.bodyMedium
+                        )
                     }
+                }
+                
+                lessonState.showResults -> {
+                    ResultsScreen(
+                        score = lessonState.score,
+                        totalQuestions = lessonState.questions.size,
+                        onRetry = { viewModel.resetLesson() },
+                        onFinish = onNavigateBack
+                    )
+                }
+                
+                lessonState.lesson != null -> {
+                    LessonContent(
+                        lessonState = lessonState,
+                        viewModel = viewModel
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun LessonContent(
+    lessonState: LessonState,
+    viewModel: LessonViewModel
+) {
+    LazyColumn(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(Spacing.space16),
+        verticalArrangement = Arrangement.spacedBy(Spacing.space16)
+    ) {
+        item {
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                )
+            ) {
+                Column(modifier = Modifier.padding(Spacing.space16)) {
+                    Text(
+                        text = "Lesson ${lessonState.lesson?.lessonNumber ?: ""}",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                    Spacer(modifier = Modifier.height(Spacing.space4))
+                    Text(
+                        text = lessonState.lesson?.lessonNameEn ?: "",
+                        style = MaterialTheme.typography.bodyLarge,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                    Spacer(modifier = Modifier.height(Spacing.space8))
+                    Text(
+                        text = "Answer all questions to complete this lesson",
+                        style = MaterialTheme.typography.bodyMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+        }
+        
+        if (lessonState.questions.isNotEmpty()) {
+            item {
+                Column {
+                    LinearProgressIndicator(
+                        progress = { (lessonState.currentQuestionIndex + 1).toFloat() / lessonState.questions.size },
+                        modifier = Modifier.fillMaxWidth(),
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = "Question ${lessonState.currentQuestionIndex + 1} of ${lessonState.questions.size}",
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(top = Spacing.space4)
+                    )
                 }
             }
             
-            // Results
-            if (showResults) {
-                item {
-                    ResultsCard(
-                        questions = questions,
-                        selectedAnswers = selectedAnswers,
-                        onRetry = {
-                            currentQuestionIndex = 0
-                            selectedAnswers.clear()
-                            showResults = false
-                        },
-                        onContinue = onNavigateBack
-                    )
+            item {
+                val currentQuestion = lessonState.questions[lessonState.currentQuestionIndex]
+                QuestionCard(
+                    question = currentQuestion,
+                    selectedAnswer = viewModel.getSelectedOptionForCurrentQuestion(),
+                    isAnswered = viewModel.isCurrentQuestionAnswered(),
+                    correctAnswer = if (viewModel.isCurrentQuestionAnswered()) 
+                        viewModel.getCorrectOptionForCurrentQuestion() else null,
+                    onAnswerSelected = { optionIndex ->
+                        viewModel.selectAnswer(currentQuestion.questionId, optionIndex)
+                    }
+                )
+            }
+            
+            item {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    OutlinedButton(
+                        onClick = { viewModel.previousQuestion() },
+                        enabled = lessonState.currentQuestionIndex > 0
+                    ) {
+                        Text("Previous")
+                    }
+                    
+                    if (viewModel.isCurrentQuestionAnswered()) {
+                        Button(onClick = { viewModel.nextQuestion() }) {
+                            Text(
+                                if (lessonState.currentQuestionIndex < lessonState.questions.size - 1)
+                                    "Next" else "Finish"
+                            )
+                        }
+                    } else {
+                        Button(
+                            onClick = { viewModel.submitAnswer() },
+                            enabled = viewModel.getSelectedOptionForCurrentQuestion() != null
+                        ) {
+                            Text("Submit")
+                        }
+                    }
                 }
             }
         }
@@ -225,31 +217,38 @@ fun LessonScreen(
 
 @Composable
 fun QuestionCard(
-    question: Question,
+    question: com.schepor.gita.domain.model.Question,
     selectedAnswer: Int?,
+    isAnswered: Boolean,
+    correctAnswer: Int?,
     onAnswerSelected: (Int) -> Unit
 ) {
     Card(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant
+        )
     ) {
-        Column(
-            modifier = Modifier.padding(Spacing.space16)
-        ) {
+        Column(modifier = Modifier.padding(Spacing.space16)) {
             Text(
-                text = question.text,
+                text = question.content.questionText,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             
             Spacer(modifier = Modifier.height(Spacing.space16))
             
-            question.options.forEachIndexed { index, option ->
-                AnswerOption(
+            question.content.options.forEachIndexed { index, option ->
+                OptionItem(
                     text = option,
                     isSelected = selectedAnswer == index,
+                    isCorrect = isAnswered && correctAnswer == index,
+                    isWrong = isAnswered && selectedAnswer == index && correctAnswer != index,
+                    enabled = !isAnswered,
                     onClick = { onAnswerSelected(index) }
                 )
-                if (index < question.options.size - 1) {
+                
+                if (index < question.content.options.size - 1) {
                     Spacer(modifier = Modifier.height(Spacing.space8))
                 }
             }
@@ -258,146 +257,132 @@ fun QuestionCard(
 }
 
 @Composable
-fun AnswerOption(
+fun OptionItem(
     text: String,
     isSelected: Boolean,
+    isCorrect: Boolean,
+    isWrong: Boolean,
+    enabled: Boolean,
     onClick: () -> Unit
 ) {
+    val backgroundColor = when {
+        isCorrect -> MaterialTheme.colorScheme.primaryContainer
+        isWrong -> MaterialTheme.colorScheme.errorContainer
+        isSelected -> MaterialTheme.colorScheme.secondaryContainer
+        else -> MaterialTheme.colorScheme.surface
+    }
+    
+    val borderColor = when {
+        isCorrect -> MaterialTheme.colorScheme.primary
+        isWrong -> MaterialTheme.colorScheme.error
+        isSelected -> MaterialTheme.colorScheme.secondary
+        else -> MaterialTheme.colorScheme.outline
+    }
+    
     Card(
-        modifier = Modifier.fillMaxWidth(),
-        onClick = onClick,
-        colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) {
-                MaterialTheme.colorScheme.primaryContainer
-            } else {
-                MaterialTheme.colorScheme.surface
-            }
-        ),
-        border = if (isSelected) {
-            androidx.compose.foundation.BorderStroke(
-                2.dp,
-                MaterialTheme.colorScheme.primary
-            )
-        } else null
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable(enabled = enabled) { onClick() },
+        shape = RoundedCornerShape(8.dp),
+        colors = CardDefaults.cardColors(containerColor = backgroundColor),
+        border = BorderStroke(2.dp, borderColor)
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(Spacing.space16),
+                .padding(Spacing.space12),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            RadioButton(
-                selected = isSelected,
-                onClick = onClick
-            )
-            Spacer(modifier = Modifier.width(Spacing.space8))
             Text(
                 text = text,
-                style = MaterialTheme.typography.bodyLarge
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.weight(1f)
             )
+            
+            if (isCorrect) {
+                Icon(
+                    imageVector = Icons.Default.Check,
+                    contentDescription = "Correct",
+                    tint = MaterialTheme.colorScheme.primary
+                )
+            } else if (isWrong) {
+                Icon(
+                    imageVector = Icons.Default.Close,
+                    contentDescription = "Wrong",
+                    tint = MaterialTheme.colorScheme.error
+                )
+            }
         }
     }
 }
 
 @Composable
-fun ResultsCard(
-    questions: List<Question>,
-    selectedAnswers: Map<Int, Int>,
+fun ResultsScreen(
+    score: Int,
+    totalQuestions: Int,
     onRetry: () -> Unit,
-    onContinue: () -> Unit
+    onFinish: () -> Unit
 ) {
-    val correctCount = questions.indices.count { index ->
-        selectedAnswers[index] == questions[index].correctAnswer
-    }
-    val totalQuestions = questions.size
-    val percentage = (correctCount * 100) / totalQuestions
-    
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer
-        )
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(Spacing.space24),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        Column(
-            modifier = Modifier.padding(Spacing.space24),
-            horizontalAlignment = Alignment.CenterHorizontally
+        Text(
+            text = "Lesson Complete!",
+            style = MaterialTheme.typography.displaySmall,
+            fontWeight = FontWeight.Bold
+        )
+        
+        Spacer(modifier = Modifier.height(Spacing.space24))
+        
+        Card(
+            modifier = Modifier.fillMaxWidth(),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.primaryContainer
+            )
         ) {
-            Icon(
-                imageVector = Icons.Default.Check,
-                contentDescription = null,
-                modifier = Modifier.size(64.dp),
-                tint = MaterialTheme.colorScheme.primary
-            )
-            
-            Spacer(modifier = Modifier.height(Spacing.space16))
-            
-            Text(
-                text = "Lesson Complete!",
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
-            )
-            
-            Spacer(modifier = Modifier.height(Spacing.space8))
-            
-            Text(
-                text = "Your Score",
-                style = MaterialTheme.typography.titleMedium
-            )
-            
-            Text(
-                text = "$correctCount / $totalQuestions",
-                style = MaterialTheme.typography.displayMedium,
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.primary
-            )
-            
-            Text(
-                text = "$percentage%",
-                style = MaterialTheme.typography.titleLarge,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
-            
-            Spacer(modifier = Modifier.height(Spacing.space16))
-            
-            // Feedback message
-            Text(
-                text = when {
-                    percentage >= 80 -> "Excellent work! You've mastered this lesson."
-                    percentage >= 60 -> "Good job! Review the content to improve further."
-                    else -> "Keep practicing! Review the lesson and try again."
-                },
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
-            
-            Spacer(modifier = Modifier.height(Spacing.space24))
-            
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(Spacing.space8)
+            Column(
+                modifier = Modifier.padding(Spacing.space24),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                OutlinedButton(
-                    onClick = onRetry,
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("Retry")
-                }
-                
-                Button(
-                    onClick = onContinue,
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text("Continue")
-                }
+                Text(
+                    text = "Your Score",
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.height(Spacing.space8))
+                Text(
+                    text = "$score / $totalQuestions",
+                    style = MaterialTheme.typography.displayMedium,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(Spacing.space8))
+                Text(
+                    text = "${(score * 100) / totalQuestions}% Correct",
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
+        }
+        
+        Spacer(modifier = Modifier.height(Spacing.space32))
+        
+        Button(
+            onClick = onRetry,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Retry Lesson")
+        }
+        
+        Spacer(modifier = Modifier.height(Spacing.space12))
+        
+        OutlinedButton(
+            onClick = onFinish,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Back to Home")
         }
     }
 }
-
-// Data class for questions
-data class Question(
-    val id: String,
-    val text: String,
-    val options: List<String>,
-    val correctAnswer: Int
-)

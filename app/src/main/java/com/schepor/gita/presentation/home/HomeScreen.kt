@@ -212,8 +212,17 @@ fun HomeScreen(
                                 chapter = chapter,
                                 onClick = {
                                     // Navigate to first lesson of this chapter
-                                    // For now, using placeholder IDs
-                                    onNavigateToLesson(chapter.chapterId, "lesson_1")
+                                    val firstLessonId = homeState.chapterFirstLessons[chapter.chapterId]
+                                    println("DEBUG: Chapter clicked: ${chapter.chapterId}")
+                                    println("DEBUG: Chapter name: ${chapter.chapterNameEn}")
+                                    println("DEBUG: First lesson ID: $firstLessonId")
+                                    println("DEBUG: All first lessons map: ${homeState.chapterFirstLessons}")
+                                    if (firstLessonId != null) {
+                                        println("DEBUG: Navigating to lesson/${chapter.chapterId}/$firstLessonId")
+                                        onNavigateToLesson(chapter.chapterId, firstLessonId)
+                                    } else {
+                                        println("DEBUG: ERROR - No first lesson found for chapter ${chapter.chapterId}")
+                                    }
                                 }
                             )
                         }

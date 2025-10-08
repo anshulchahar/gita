@@ -3,9 +3,11 @@ package com.schepor.gita.presentation.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.schepor.gita.presentation.admin.AdminScreen
@@ -70,6 +72,7 @@ fun GitaNavigation(
         composable(Constants.ROUTE_HOME) {
             HomeScreen(
                 onNavigateToLesson = { chapterId, lessonId ->
+                    println("DEBUG Navigation: Navigating to lesson/$chapterId/$lessonId")
                     navController.navigate("lesson/$chapterId/$lessonId")
                 },
                 onNavigateToAdmin = {
@@ -83,9 +86,17 @@ fun GitaNavigation(
             )
         }
         
-        composable(Constants.ROUTE_LESSON) { backStackEntry ->
+        composable(
+            route = Constants.ROUTE_LESSON,
+            arguments = listOf(
+                navArgument("chapterId") { type = NavType.StringType },
+                navArgument("lessonId") { type = NavType.StringType }
+            )
+        ) { backStackEntry ->
             val chapterId = backStackEntry.arguments?.getString("chapterId") ?: ""
             val lessonId = backStackEntry.arguments?.getString("lessonId") ?: ""
+            
+            println("DEBUG Navigation: LessonScreen composable - chapterId: $chapterId, lessonId: $lessonId")
             
             LessonScreen(
                 chapterId = chapterId,
