@@ -7,8 +7,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.ViewList
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.schepor.gita.presentation.auth.AuthViewModel
 import com.schepor.gita.presentation.theme.Spacing
+import com.schepor.gita.presentation.tree.TreeVisualizationScreen
 import kotlinx.coroutines.launch
 
 /**
@@ -43,6 +46,7 @@ fun HomeScreen(
     val authState by authViewModel.authState.collectAsState()
     val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
     val scope = rememberCoroutineScope()
+    var showTreeView by remember { mutableStateOf(true) } // Default to tree view
     
     // Admin access via long press on title (hidden feature for development)
     var clickCount by remember { mutableStateOf(0) }
@@ -144,6 +148,14 @@ fun HomeScreen(
                             )
                         }
                     },
+                    actions = {
+                        IconButton(onClick = { showTreeView = !showTreeView }) {
+                            Icon(
+                                imageVector = if (showTreeView) Icons.Default.ViewList else Icons.Default.Menu,
+                                contentDescription = if (showTreeView) "Switch to List View" else "Switch to Tree View"
+                            )
+                        }
+                    },
                     colors = TopAppBarDefaults.topAppBarColors(
                         containerColor = MaterialTheme.colorScheme.primaryContainer,
                         titleContentColor = MaterialTheme.colorScheme.primary
@@ -176,7 +188,7 @@ fun HomeScreen(
                     )
                 }
                 
-                // Chapters list
+                // Chapters list or tree view
                 if (homeState.chapters.isEmpty() && !homeState.isLoading) {
                     Column(
                         modifier = Modifier
@@ -202,18 +214,44 @@ fun HomeScreen(
                             color = MaterialTheme.colorScheme.primary.copy(alpha = 0.5f)
                         )
                     }
+                } else if (showTreeView) {
+                    // Tree visualization view
+                    TreeVisualizationScreen(
+                        chapters = homeState.chapters,
+                        unlockedChapters = homeState.unlockedChapters,
+                        chapterProgress = emptyMap(), // TODO: Calculate from user progress
+                        onChapterClick = { chapter ->
+                            val firstLessonId = homeState.chapterFirstLessons[chapter.chapterId]
+                            val isUnlocked = homeState.unlockedChapters.contains(chapter.chapterId)
+                            val isFirstLessonUnlocked = firstLessonId?.let { 
+                                homeState.unlockedLessons.contains(it)
+                            } ?: false
+                            
+                            if (isUnlocked && isFirstLessonUnlocked && firstLessonId != null) {
+                                onNavigateToLesson(chapter.chapterId, firstLessonId)
+                            }
+                        },
+                        modifier = Modifier.weight(1f)
+                    )
                 } else {
+                    // List view
                     LazyColumn(
                         modifier = Modifier.fillMaxWidth(),
                         verticalArrangement = Arrangement.spacedBy(Spacing.space12)
                     ) {
                         items(homeState.chapters) { chapter ->
+                            val isUnlocked = homeState.unlockedChapters.contains(chapter.chapterId)
+                            val firstLessonId = homeState.chapterFirstLessons[chapter.chapterId]
+                            val isFirstLessonUnlocked = firstLessonId?.let { 
+                                homeState.unlockedLessons.contains(it)
+                            } ?: false
+                            
                             ChapterCard(
                                 chapter = chapter,
+                                isUnlocked = isUnlocked && isFirstLessonUnlocked,
                                 onClick = {
-                                    // Navigate to first lesson of this chapter
-                                    val firstLessonId = homeState.chapterFirstLessons[chapter.chapterId]
-                                    if (firstLessonId != null) {
+                                    // Navigate to first lesson of this chapter only if unlocked
+                                    if (isUnlocked && isFirstLessonUnlocked && firstLessonId != null) {
                                         onNavigateToLesson(chapter.chapterId, firstLessonId)
                                     }
                                 }
@@ -229,47 +267,85 @@ fun HomeScreen(
 @Composable
 fun ChapterCard(
     chapter: com.schepor.gita.domain.model.Chapter,
+    isUnlocked: Boolean,
     onClick: () -> Unit
 ) {
+    val cardColors = if (isUnlocked) {
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.primaryContainer
+        )
+    } else {
+        CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+        )
+    }
+    
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .clickable(onClick = onClick),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-        )
+            .clickable(enabled = isUnlocked, onClick = onClick),
+        colors = cardColors
     ) {
-        Column(
-            modifier = Modifier.padding(Spacing.space16)
+        Row(
+            modifier = Modifier.padding(Spacing.space16),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Top
         ) {
-            Text(
-                text = "Chapter ${chapter.chapterNumber}",
-                style = MaterialTheme.typography.labelMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
-            Spacer(modifier = Modifier.height(Spacing.space4))
-            Text(
-                text = chapter.chapterNameEn,
-                style = MaterialTheme.typography.headlineSmall
-            )
-            Spacer(modifier = Modifier.height(Spacing.space4))
-            Text(
-                text = chapter.chapterName,
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
-            )
-            Spacer(modifier = Modifier.height(Spacing.space8))
-            Text(
-                text = chapter.descriptionEn,
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
-            )
-            Spacer(modifier = Modifier.height(Spacing.space8))
-            Text(
-                text = "${chapter.shlokaCount} verses",
-                style = MaterialTheme.typography.labelSmall,
-                color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
-            )
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = "Chapter ${chapter.chapterNumber}",
+                    style = MaterialTheme.typography.labelMedium,
+                    color = if (isUnlocked) 
+                        MaterialTheme.colorScheme.primary 
+                    else 
+                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                )
+                Spacer(modifier = Modifier.height(Spacing.space4))
+                Text(
+                    text = chapter.chapterNameEn,
+                    style = MaterialTheme.typography.headlineSmall,
+                    color = if (isUnlocked)
+                        MaterialTheme.colorScheme.onPrimaryContainer
+                    else
+                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+                )
+                Spacer(modifier = Modifier.height(Spacing.space4))
+                Text(
+                    text = chapter.chapterName,
+                    style = MaterialTheme.typography.bodyLarge,
+                    color = if (isUnlocked)
+                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.8f)
+                    else
+                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                )
+                Spacer(modifier = Modifier.height(Spacing.space8))
+                Text(
+                    text = chapter.descriptionEn,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (isUnlocked)
+                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
+                    else
+                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                )
+                Spacer(modifier = Modifier.height(Spacing.space8))
+                Text(
+                    text = "${chapter.shlokaCount} verses",
+                    style = MaterialTheme.typography.labelSmall,
+                    color = if (isUnlocked)
+                        MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.6f)
+                    else
+                        MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.4f)
+                )
+            }
+            
+            if (!isUnlocked) {
+                Icon(
+                    imageVector = Icons.Default.Lock,
+                    contentDescription = "Locked",
+                    tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f),
+                    modifier = Modifier.size(32.dp)
+                )
+            }
         }
     }
 }

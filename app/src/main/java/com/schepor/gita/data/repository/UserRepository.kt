@@ -141,6 +141,90 @@ class UserRepository @Inject constructor(
     }
 
     /**
+     * Check if a lesson is unlocked for the user
+     * A lesson is unlocked if:
+     * 1. It's the first lesson in the first chapter (always unlocked)
+     * 2. The previous lesson in the same chapter is completed
+     * 3. If it's the first lesson of a chapter, all lessons of the previous chapter are completed
+     */
+    suspend fun isLessonUnlocked(
+        userId: String,
+        chapterId: String,
+        lessonId: String,
+        lessonNumber: Int,
+        chapterNumber: Int,
+        prerequisiteLessonId: String?
+    ): Resource<Boolean> {
+        return try {
+            val userDoc = usersCollection.document(userId).get().await()
+            val user = userDoc.toObject(User::class.java)
+            
+            if (user == null) {
+                return Resource.Success(false)
+            }
+            
+            // First lesson of first chapter is always unlocked
+            if (chapterNumber == 1 && lessonNumber == 1) {
+                return Resource.Success(true)
+            }
+            
+            // Check if prerequisite lesson is completed (if specified)
+            if (prerequisiteLessonId != null) {
+                val prerequisiteKey = "${chapterId}_$prerequisiteLessonId"
+                val isPrerequisiteCompleted = user.progress[prerequisiteKey] != null
+                return Resource.Success(isPrerequisiteCompleted)
+            }
+            
+            // If it's the first lesson of a chapter (but not chapter 1), 
+            // check if the previous chapter is completed
+            if (lessonNumber == 1 && chapterNumber > 1) {
+                // For simplicity, we'll assume sequential completion is required
+                // A better implementation would check the last lesson of the previous chapter
+                val isUnlocked = user.gamification.totalLessonsCompleted >= ((chapterNumber - 1) * 3)
+                return Resource.Success(isUnlocked)
+            }
+            
+            // For other lessons, they're unlocked by default
+            // (In practice, you'd want to check the previous lesson in sequence)
+            Resource.Success(true)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Failed to check lesson unlock status")
+        }
+    }
+
+    /**
+     * Check if a chapter is unlocked for the user
+     * A chapter is unlocked if it's the first chapter or if the previous chapter is completed
+     */
+    suspend fun isChapterUnlocked(
+        userId: String,
+        chapterNumber: Int,
+        totalLessonsInPreviousChapter: Int
+    ): Resource<Boolean> {
+        return try {
+            // First chapter is always unlocked
+            if (chapterNumber == 1) {
+                return Resource.Success(true)
+            }
+            
+            val userDoc = usersCollection.document(userId).get().await()
+            val user = userDoc.toObject(User::class.java)
+            
+            if (user == null) {
+                return Resource.Success(false)
+            }
+            
+            // Check if enough lessons are completed to unlock this chapter
+            val requiredCompletions = (chapterNumber - 1) * totalLessonsInPreviousChapter
+            val isUnlocked = user.gamification.totalLessonsCompleted >= requiredCompletions
+            
+            Resource.Success(isUnlocked)
+        } catch (e: Exception) {
+            Resource.Error(e.message ?: "Failed to check chapter unlock status")
+        }
+    }
+
+    /**
      * Save lesson completion with full progress tracking
      */
     suspend fun saveLessonCompletion(

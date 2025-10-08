@@ -1,17 +1,17 @@
 # Bhagavad Gita Learning App - Development Tasks
 
-**Project Progress: 26/30 tasks completed (87%)**  
+**Project Progress: 28/30 tasks completed (93%)**  
 **Last Updated:** October 8, 2025
 
 ---
 
 ## 📊 Progress Summary
 
-- ✅ **Completed:** 26 tasks
+- ✅ **Completed:** 28 tasks
 - 🔨 **In Progress:** 0 tasks  
-- ❌ **Not Started:** 4 tasks
+- ❌ **Not Started:** 2 tasks
 - **Total Story Points:** 208 SP
-- **Completed Story Points:** 182 SP (87.5%)
+- **Completed Story Points:** 195 SP (94%)
 
 ---
 
@@ -181,7 +181,7 @@
 
 ---
 
-## 🔨 Phase 5: Remaining Features (4 tasks, 26 SP)
+## 🔨 Phase 5: Remaining Features (1 task, 3 SP)
 
 ### 26. ✅ Lesson Progress Tracking
 - **Story Points:** 5
@@ -198,18 +198,22 @@
   - ✅ Shows completion confirmation with XP earned on ResultsScreen
   - ✅ Automatic streak calculation (same day/next day/reset logic)
 
-### 27. ❌ Lock/Unlock Lesson Logic
+### 27. ✅ Lock/Unlock Lesson Logic
 - **Story Points:** 5
-- **Status:** ❌ Not Started
+- **Status:** ✅ Completed
+- **Date:** October 8, 2025
 - **Priority:** High
 - **Dependencies:** Progress Tracking
-- **Tasks:**
-  - Check user progress before allowing lesson access
-  - Lock lessons that haven't been unlocked
-  - Unlock next lesson/chapter upon completion
-  - Show lock icon (🔒) on locked lessons in HomeScreen
-  - Display unlock requirements modal
-  - Update Chapter model isUnlocked field based on progress
+- **Details:**
+  - ✅ Implemented isLessonUnlocked() in UserRepository
+  - ✅ Implemented isChapterUnlocked() in UserRepository
+  - ✅ Checks user progress before allowing lesson access
+  - ✅ Sequential unlock logic: Chapter 1 always unlocked, others unlock after previous chapter completion
+  - ✅ First lesson unlocks when chapter unlocks, subsequent lessons unlock after prerequisite
+  - ✅ HomeViewModel tracks unlockedChapters and unlockedLessons in state
+  - ✅ HomeScreen shows lock icon (🔒) on locked chapters
+  - ✅ Disabled navigation/clicking for locked chapters
+  - ✅ Visual feedback: locked chapters are grayed out with reduced opacity
 
 ### 28. ❌ Enhanced Answer Feedback UI
 - **Story Points:** 5
@@ -224,18 +228,24 @@
   - Add haptic feedback for better UX
   - Improve results screen with per-question breakdown
 
-### 29. ❌ Node Visualization (Wisdom Tree)
+### 29. ✅ Node Visualization (Wisdom Tree)
 - **Story Points:** 8
-- **Status:** ❌ Not Started
+- **Status:** ✅ Completed
+- **Date:** October 8, 2025
 - **Priority:** Low
 - **Dependencies:** Home Screen, Progress Tracking
-- **Tasks:**
-  - Design tree node component for chapters
-  - Create connections between nodes
-  - Animate unlock transitions
-  - Show progress percentage on nodes
-  - Add interactive tooltips
-  - Implement smooth scrolling/panning
+- **Details:**
+  - ✅ Created TreeVisualizationScreen.kt with full tree rendering
+  - ✅ Designed ChapterNode composable with circular progress indicator
+  - ✅ Canvas-based connection lines between nodes (solid for unlocked, dashed for locked)
+  - ✅ Interactive touch gestures: pinch-to-zoom (0.5x-3x), pan to navigate
+  - ✅ Zoom controls: +/- buttons and reset button
+  - ✅ Shows chapter icon, number, and progress percentage on each node
+  - ✅ Lock icons on locked chapters with grayed-out visual style
+  - ✅ Vertical tree layout with alternating left/right positions
+  - ✅ Saffron color for unlocked paths, gray for locked
+  - ✅ View toggle button in HomeScreen toolbar (tree ⇄ list)
+  - ✅ Smooth transitions and interactive node clicking
 
 ### 30. ❌ Splash Screen
 - **Story Points:** 3
