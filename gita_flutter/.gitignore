@@ -43,3 +43,23 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Firebase config (contains API keys)
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
+
+# Generated macOS files
+macos/Podfile
+
+# Flutter generated metadata
+.metadata
+
+# Generated Xcode configs
+ios/Flutter/Debug.xcconfig
+ios/Flutter/Release.xcconfig
+macos/Flutter/Flutter-Debug.xcconfig
+macos/Flutter/Flutter-Release.xcconfig
+
+# Podfile.lock (regenerated from Podfile)
+ios/Podfile.lock
+macos/Podfile.lock
