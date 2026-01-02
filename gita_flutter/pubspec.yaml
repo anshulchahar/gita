@@ -1,0 +1,46 @@
+name: gita
+description: "Gita - Wisdom for Life. A modern app for learning the Bhagavad Gita with interactive lessons, quizzes, and gamification."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # Firebase
+  firebase_core: ^3.8.0
+  firebase_auth: ^5.3.4
+  cloud_firestore: ^5.5.2
+  
+  # State Management
+  flutter_riverpod: ^2.5.1
+  
+  # Navigation
+  go_router: ^14.6.2
+  
+  # Google Sign-In
+  google_sign_in: ^6.2.2
+  
+  # UI
+  cupertino_icons: ^1.0.8
+  
+  # Utilities
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.13
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
