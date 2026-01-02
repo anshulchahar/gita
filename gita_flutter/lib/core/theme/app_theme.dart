@@ -5,135 +5,109 @@ import 'app_colors.dart';
 class AppTheme {
   /// Light theme color scheme
   static ColorScheme get lightColorScheme => ColorScheme.light(
-    primary: AppColors.saffron,
+    // 10% - Accent/CTA (Green)
+    primary: AppColors.tertiary, 
     onPrimary: AppColors.white,
-    primaryContainer: AppColors.lightSaffron,
-    onPrimaryContainer: AppColors.deepPurple,
+    primaryContainer: AppColors.tertiary, // Ensure containers are also green if used
+    onPrimaryContainer: AppColors.white,
     
-    secondary: AppColors.deepPurple,
+    // 30% - Secondary/Structure (Orange)
+    secondary: AppColors.secondary,
     onSecondary: AppColors.white,
-    secondaryContainer: const Color(0xFFE1BEE7),
-    onSecondaryContainer: AppColors.darkPurple,
+    secondaryContainer: AppColors.secondary,
+    onSecondaryContainer: AppColors.white,
     
-    tertiary: AppColors.sacredGold,
-    onTertiary: AppColors.gray900,
+    // 60% - Dominant/Background (Blue)
+    surface: AppColors.secondary, // Cards/Surfaces are Orange (30%)
+    onSurface: AppColors.white,
     
     error: AppColors.error,
     onError: AppColors.white,
     
-    surface: AppColors.lightSurface,
-    onSurface: AppColors.lightOnSurface,
+    // Background is handled by Scaffold in ThemeData, but setting these for completeness
+    surfaceContainerHighest: AppColors.primaryShade2, // Muted blue for variants
+    onSurfaceVariant: AppColors.white,
     
-    surfaceContainerHighest: AppColors.gray100,
-    onSurfaceVariant: AppColors.gray700,
-    
-    outline: AppColors.gray300,
-    outlineVariant: AppColors.gray100,
+    outline: AppColors.white.withOpacity(0.5),
+    outlineVariant: AppColors.white.withOpacity(0.2),
   );
 
-  /// Dark theme color scheme
-  static ColorScheme get darkColorScheme => ColorScheme.dark(
-    primary: AppColors.saffron,
-    onPrimary: AppColors.gray900,
-    primaryContainer: const Color(0xFFCC7A29),
-    onPrimaryContainer: AppColors.white,
-    
-    secondary: const Color(0xFF9C27B0),
-    onSecondary: AppColors.white,
-    secondaryContainer: AppColors.darkPurple,
-    onSecondaryContainer: const Color(0xFFE1BEE7),
-    
-    tertiary: AppColors.sacredGold,
-    onTertiary: AppColors.gray900,
-    
-    error: const Color(0xFFCF6679),
-    onError: AppColors.gray900,
-    
-    surface: AppColors.darkSurface,
-    onSurface: AppColors.darkOnSurface,
-    
-    surfaceContainerHighest: const Color(0xFF2C2C2C),
-    onSurfaceVariant: AppColors.gray300,
-    
-    outline: AppColors.gray700,
-    outlineVariant: const Color(0xFF3C3C3C),
-  );
+  /// Dark theme color scheme - reusing same vibrant palette for consistency
+  static ColorScheme get darkColorScheme => lightColorScheme;
 
   /// Light theme
   static ThemeData get lightTheme => ThemeData(
     useMaterial3: true,
     colorScheme: lightColorScheme,
-    scaffoldBackgroundColor: AppColors.lightBackground,
+    
+    // 60% - Dominant Background (Blue)
+    scaffoldBackgroundColor: AppColors.primary, 
+    
+    // 30% - Secondary Structure (Orange)
     appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.lightSurface,
-      foregroundColor: AppColors.lightOnSurface,
+      backgroundColor: AppColors.secondary,
+      foregroundColor: AppColors.white,
       elevation: 0,
     ),
+    
     cardTheme: const CardThemeData(
-      elevation: 2,
+      color: AppColors.secondary,
+      elevation: 4,
     ),
+    
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: AppColors.secondary,
+      selectedItemColor: AppColors.white,
+      unselectedItemColor: AppColors.white.withOpacity(0.7),
+    ),
+    
+    // 10% - Accent CTA (Green)
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.tertiary,
+        foregroundColor: AppColors.white,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
     ),
+    
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
+        foregroundColor: AppColors.white,
+        side: const BorderSide(color: AppColors.white),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
       ),
     ),
+    
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
+        borderSide: BorderSide.none,
       ),
       filled: true,
-      fillColor: AppColors.gray100,
+      fillColor: AppColors.white.withOpacity(0.1), // Translucent white on blue background
+      hintStyle: TextStyle(color: AppColors.white.withOpacity(0.7)),
+      labelStyle: const TextStyle(color: AppColors.white),
     ),
+    
+    textTheme: const TextTheme(
+      bodyLarge: TextStyle(color: AppColors.white),
+      bodyMedium: TextStyle(color: AppColors.white),
+      titleLarge: TextStyle(color: AppColors.white),
+      titleMedium: TextStyle(color: AppColors.white),
+      titleSmall: TextStyle(color: AppColors.white),
+    ),
+    
+    iconTheme: const IconThemeData(color: AppColors.white),
   );
 
-  /// Dark theme
-  static ThemeData get darkTheme => ThemeData(
-    useMaterial3: true,
-    colorScheme: darkColorScheme,
-    scaffoldBackgroundColor: AppColors.darkBackground,
-    appBarTheme: AppBarTheme(
-      backgroundColor: AppColors.darkSurface,
-      foregroundColor: AppColors.darkOnSurface,
-      elevation: 0,
-    ),
-    cardTheme: const CardThemeData(
-      elevation: 2,
-    ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    ),
-    outlinedButtonTheme: OutlinedButtonThemeData(
-      style: OutlinedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    ),
-    inputDecorationTheme: InputDecorationTheme(
-      border: OutlineInputBorder(
-        borderRadius: BorderRadius.circular(12),
-      ),
-      filled: true,
-      fillColor: const Color(0xFF2C2C2C),
-    ),
-  );
+  /// Dark theme - same as light for this specific design request
+  static ThemeData get darkTheme => lightTheme;
 }
 
 /// Spacing constants

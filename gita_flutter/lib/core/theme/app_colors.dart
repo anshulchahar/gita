@@ -2,16 +2,25 @@ import 'package:flutter/material.dart';
 
 /// App color palette - ported from Kotlin implementation
 class AppColors {
-  // Primary Colors
-  static const Color saffron = Color(0xFFFF9933);
-  static const Color deepPurple = Color(0xFF4A148C);
-  static const Color sacredGold = Color(0xFFFFD700);
+  // Primary Colors (Blue)
+  static const Color primary = Color(0xFF0599F3);
+  static const Color primaryShade1 = Color(0xFF8493DA);
+  static const Color primaryShade2 = Color(0xFF567B9D);
+  static const Color saffron = primary; // Alias for backward compatibility if needed, or remove if safe
+
+  // Secondary Colors (Warm/Orange)
+  static const Color secondary = Color(0xFFB36C3A);
   
-  // Secondary Colors
+  // Tertiary Colors (Green)
+  static const Color tertiary = Color(0xFF407961);
+
+  static const Color sacredGold = Color(0xFFFFD700); // Keeping as it seems semantic
+  
+  // Neutral/Base Colors
   static const Color white = Color(0xFFFFFFFF);
   static const Color offWhite = Color(0xFFFAF9F6);
-  static const Color lightSaffron = Color(0xFFFFE5B4);
-  static const Color darkPurple = Color(0xFF311B92);
+  static const Color lightSaffron = primaryShade1; // Mapping to new shade
+  static const Color darkPurple = Color(0xFF311B92); // Keep or map to new palette? Leaving for now.
   
   // Semantic Colors
   static const Color success = Color(0xFF4CAF50);

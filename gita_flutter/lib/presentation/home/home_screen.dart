@@ -349,7 +349,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 _adminClickCount++;
                 if (_adminClickCount >= 5) {
                   _adminClickCount = 0;
-                  context.go(Routes.admin);
+                  context.push(Routes.admin);
                 }
               },
               child: Container(
@@ -473,7 +473,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       isCurrent: isCurrent,
       description: lesson.lessonNameEn,
       onTap: () {
-        context.go(Routes.lessonPath(chapter.chapterId, lesson.lessonId));
+        context.push(Routes.lessonPath(chapter.chapterId, lesson.lessonId));
       },
     );
   }
