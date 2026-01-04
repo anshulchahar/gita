@@ -27,10 +27,12 @@ class SectionHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: Spacing.space16),
-      padding: const EdgeInsets.symmetric(
-        horizontal: Spacing.space16,
-        vertical: Spacing.space12,
+      margin: EdgeInsets.zero,
+      padding: const EdgeInsets.fromLTRB(
+        Spacing.space16,
+        Spacing.space24,
+        Spacing.space16,
+        Spacing.space16,
       ),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.primary,
@@ -121,11 +123,11 @@ class LessonNode extends StatelessWidget {
     return Column(
       children: [
         GestureDetector(
-          onTap: isUnlocked ? onTap : null,
+          onTap: onTap, 
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 300),
-            width: isCurrent ? 80 : 64,
-            height: isCurrent ? 80 : 64,
+            width: isCurrent ? 96 : 80,
+            height: isCurrent ? 96 : 80,
             decoration: BoxDecoration(
               color: _getBackgroundColor(context),
               shape: BoxShape.circle,
@@ -134,7 +136,12 @@ class LessonNode extends StatelessWidget {
                       color: Theme.of(context).colorScheme.primary,
                       width: 4,
                     )
-                  : null,
+                  : Border(
+                      bottom: BorderSide(
+                        color: _getShadowColor(context),
+                        width: 8,
+                      ),
+                    ),
               boxShadow: isCurrent
                   ? [
                       BoxShadow(
@@ -148,45 +155,77 @@ class LessonNode extends StatelessWidget {
                     ]
                   : null,
             ),
-            child: Center(
-              child: isCompleted
-                  ? Icon(
-                      Icons.check,
-                      color: Theme.of(context).colorScheme.onPrimary,
-                      size: 32,
-                    )
-                  : isUnlocked
-                      ? Text(
-                          '$lessonNumber',
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge
-                              ?.copyWith(
-                                color: isCompleted || isCurrent
-                                    ? Theme.of(context).colorScheme.onPrimary
-                                    : Theme.of(context).colorScheme.onSurface,
-                                fontWeight: FontWeight.bold,
-                              ),
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                // Inner highlight/shadow for 3D effect
+                if (!isCompleted && isUnlocked)
+                  Positioned(
+                    top: 10,
+                    left: 15,
+                    child: Container(
+                      width: 20,
+                      height: 10,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                    ),
+                  ),
+                
+                Center(
+                  child: isCompleted
+                      ? Icon(
+                          Icons.check_rounded,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                          size: 40,
                         )
-                      : Icon(
-                          Icons.lock,
-                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.5),
-                          size: 24,
-                        ),
+                      : isUnlocked
+                          ? Icon(
+                              Icons.star_rounded,
+                              color: isCompleted || isCurrent
+                                  ? Theme.of(context).colorScheme.onPrimary
+                                  : Theme.of(context).colorScheme.onSurface,
+                              size: 40,
+                            )
+                          : Icon(
+                              Icons.lock_rounded,
+                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+                              size: 32,
+                            ),
+                ),
+                
+                // Stars for completed/mastered lessons could go here
+                if (isCompleted)
+                  Positioned(
+                    bottom: 8,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: List.generate(3, (index) => Icon(
+                        Icons.star_rounded,
+                        size: 12,
+                        color: Colors.amber, // Or theme color
+                      )),
+                    ),
+                  ),
+              ],
             ),
           ),
         ),
-        if (description.isNotEmpty && (isCurrent || isCompleted))
-          Padding(
-            padding: const EdgeInsets.only(top: Spacing.space8),
-            child: Text(
-              description,
-              style: Theme.of(context).textTheme.bodySmall,
-              textAlign: TextAlign.center,
-            ),
-          ),
       ],
     );
+  }
+
+  Color _getShadowColor(BuildContext context) {
+    if (isCompleted) {
+      return Theme.of(context).colorScheme.primary.withOpacity(0.6); // Darker shade
+    } else if (isCurrent) {
+        return Theme.of(context).colorScheme.secondary.withOpacity(0.6);
+    } else if (isUnlocked) {
+      return Theme.of(context).colorScheme.outline;
+    } else {
+      return Colors.grey.shade400;
+    }
   }
 }
 

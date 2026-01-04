@@ -9,7 +9,7 @@ class AppColors {
   static const Color saffron = primary; // Alias for backward compatibility if needed, or remove if safe
 
   // Secondary Colors (Warm/Orange)
-  static const Color secondary = Color(0xFFB36C3A);
+  static const Color secondary = Color(0xFF0277BD); // Changed from Brown to Blue
   
   // Tertiary Colors (Green)
   static const Color tertiary = Color(0xFF407961);

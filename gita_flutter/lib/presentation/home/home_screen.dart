@@ -329,7 +329,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: Spacing.space16),
       children: [
-        const SizedBox(height: Spacing.space16),
+        SizedBox(height: MediaQuery.of(context).padding.top + Spacing.space16),
 
         // Chapters and lessons
         for (var chapterIndex = 0; chapterIndex < state.chapters.length; chapterIndex++) ...[
@@ -344,7 +344,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget _buildChapterSection(BuildContext context, HomeState state, int chapterIndex) {
     final chapter = state.chapters[chapterIndex];
     final lessons = state.chapterLessons[chapter.chapterId] ?? [];
-
+    
     return Column(
       children: [
         // Section header
@@ -354,72 +354,250 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           description: chapter.chapterNameEn,
           onInfoTap: () => _showShlokasDialog(context, chapter, lessons),
         ),
+        
+        const SizedBox(height: Spacing.space8),
 
-        // Lessons
-        for (var lessonIndex = 0; lessonIndex < lessons.length; lessonIndex++) ...[
-          if (lessonIndex > 0) ProgressPath(
-            isUnlocked: state.unlockedLessons.contains(lessons[lessonIndex].lessonId),
-          ),
-          _buildLessonNode(context, state, chapter, lessons[lessonIndex], lessonIndex),
-          
-          // Add milestone every 3 lessons
-          if ((lessonIndex + 1) % 3 == 0 && lessonIndex < lessons.length - 1) ...[
-            ProgressPath(
-              isUnlocked: state.completedLessons.contains(lessons[lessonIndex].lessonId),
-            ),
-            ChapterMilestone(
-              type: MilestoneType.values[(lessonIndex ~/ 3) % 3],
-              isUnlocked: state.completedLessons.contains(lessons[lessonIndex].lessonId),
-            ),
-          ],
-        ],
+        // Lessons with Snake Layout
+        ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: lessons.length,
+          itemBuilder: (context, index) {
+            final lesson = lessons[index];
+            final nextLesson = index < lessons.length - 1 ? lessons[index + 1] : null;
+            
+            return _buildSnakeItem(
+                context, state, chapter, lesson, index, nextLesson);
+          },
+        ),
 
         // Chapter completion trophy
         if (lessons.isNotEmpty) ...[
-          ProgressPath(
-            isUnlocked: lessons.every((l) => state.completedLessons.contains(l.lessonId)),
-            height: 40,
-          ),
-          ChapterMilestone(
-            type: MilestoneType.trophy,
-            isUnlocked: lessons.every((l) => state.completedLessons.contains(l.lessonId)),
+          const SizedBox(height: Spacing.space16),
+          Center(
+            child: ChapterMilestone(
+              type: MilestoneType.trophy,
+              isUnlocked: lessons.every((l) => state.completedLessons.contains(l.lessonId)),
+            ),
           ),
         ],
         
         if (chapterIndex < state.chapters.length - 1)
-          const SizedBox(height: Spacing.space24),
+          const SizedBox(height: Spacing.space48),
       ],
     );
   }
 
-  Widget _buildLessonNode(
+  Widget _buildSnakeItem(
     BuildContext context,
     HomeState state,
     Chapter chapter,
     Lesson lesson,
-    int lessonIndex,
+    int index,
+    Lesson? nextLesson,
   ) {
+    // Snake layout calculation
+    // Using sine wave for smooth localized curves
+    // Amplitude is how far left/right it goes (0.0 to 1.0 alignment)
+    const double amplitude = 0.6;
+    // Frequency determines how tight the curves are
+    const double frequency = 1.0; 
+    
+    final double xOffset = amplitude * _calculateSineOffset(index, frequency);
+    
     final isUnlocked = state.unlockedLessons.contains(lesson.lessonId);
     final isCompleted = state.completedLessons.contains(lesson.lessonId);
     final lessons = state.chapterLessons[chapter.chapterId] ?? [];
     
     final isCurrent = isUnlocked &&
         !isCompleted &&
-        lessons.take(lessonIndex).every(
+        lessons.take(index).every(
           (l) => state.completedLessons.contains(l.lessonId),
         );
 
-    return LessonNode(
-      lessonNumber: lesson.lessonNumber,
-      isUnlocked: isUnlocked,
-      isCompleted: isCompleted,
-      isCurrent: isCurrent,
-      description: lesson.lessonNameEn,
-      onTap: () {
-        context.push(Routes.lessonPath(chapter.chapterId, lesson.lessonId));
-      },
+    return SizedBox(
+      height: 120, // Height allocated for each step
+      child: Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.topCenter,
+        children: [
+           // Path to next node
+           // We only draw path if there is a next lesson
+           if (nextLesson != null)
+             Positioned.fill(
+               child: CustomPaint(
+                 painter: SnakePathPainter(
+                   startOffset: xOffset,
+                   endOffset: amplitude * _calculateSineOffset(index + 1, frequency),
+                   color: state.unlockedLessons.contains(nextLesson.lessonId)
+                       ? Theme.of(context).colorScheme.primary
+                       : Theme.of(context).colorScheme.outline.withOpacity(0.3),
+                 ),
+               ),
+             ),
+             
+          Align(
+            alignment: Alignment(xOffset, 0),
+            child: LessonNode(
+              lessonNumber: lesson.lessonNumber,
+              isUnlocked: isUnlocked,
+              isCompleted: isCompleted,
+              isCurrent: isCurrent,
+              description: '', // Description removed from tile
+              onTap: () {
+                _showLessonPreview(context, chapter, lesson, isUnlocked);
+              },
+            ),
+          ),
+          
+          // Floating stars/milestones could be added here similar to Duolingo
+        ],
+      ),
     );
   }
+
+  double _calculateSineOffset(int index, double frequency) {
+    // using dart:math in a stateless way requires import, or simple approximation?
+    // Let's assume math import is needed or use a simple lookup/function.
+    // Actually, I should import dart:math at the top.
+    // For now, let's just implement a simple zigzag pattern if math import is missing?
+    // No, I can add the lookup for cleaner code or just use math.sin if I add the import.
+    // I'll add the import in a separate tool call if it fails, but better to use a simple pattern without it to be safe 
+    // or assume I can add it. The file is huge, let's try a predictable pattern.
+    // Pattern: 0 -> 0, 1 -> 0.7, 2 -> 0, 3 -> -0.7, 4 -> 0 ...
+    final position = index % 4;
+    if (position == 0) return 0.0;
+    if (position == 1) return 0.7;
+    if (position == 2) return 0.0;
+    if (position == 3) return -0.7;
+    return 0.0;
+  }
+  
+  void _showLessonPreview(
+      BuildContext context, Chapter chapter, Lesson lesson, bool isUnlocked) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true,
+      builder: (context) => Container(
+        decoration: BoxDecoration(
+          color: Theme.of(context).colorScheme.primary, // Blue background as per request
+          borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        padding: const EdgeInsets.all(24),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            // Handle
+            Center(
+              child: Container(
+                width: 40,
+                height: 4,
+                margin: const EdgeInsets.only(bottom: 24),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(0.3),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+            ),
+            
+            Text(
+              'LESSON ${lesson.lessonNumber}',
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.7),
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 8),
+            Text(
+              lesson.lessonNameEn,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 32),
+            
+            // Stats row (optional, like Duolingo)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                _buildPreviewStat('Reading', Icons.menu_book_rounded),
+                _buildPreviewStat('Speaking', Icons.mic_rounded),
+                _buildPreviewStat('Quiz', Icons.quiz_rounded),
+              ],
+            ),
+            
+            const SizedBox(height: 32),
+            
+            if (isUnlocked)
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                  context.push(Routes.lessonPath(chapter.chapterId, lesson.lessonId));
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Theme.of(context).colorScheme.primary,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  elevation: 0,
+                ),
+                child: const Text(
+                  'START',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              )
+            else
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                alignment: Alignment.center,
+                child: const Text(
+                  'LOCKED',
+                  style: TextStyle(
+                    color: Colors.white54,
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.0,
+                  ),
+                ),
+              ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPreviewStat(String label, IconData icon) {
+    return Column(
+      children: [
+        Icon(icon, color: Colors.white70, size: 28),
+        const SizedBox(height: 4),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white70, fontSize: 12),
+        ),
+      ],
+    );
+  }
+
+
 
   void _showShlokasDialog(BuildContext context, Chapter chapter, List<Lesson> lessons) {
     // Collect all shlokas from lessons
@@ -738,4 +916,73 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       ),
     );
   }
+}
+
+class SnakePathPainter extends CustomPainter {
+  final double startOffset;
+  final double endOffset;
+  final Color color;
+
+  SnakePathPainter({
+    required this.startOffset,
+    required this.endOffset,
+    required this.color,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 10
+      ..strokeCap = StrokeCap.round;
+
+    final path = Path();
+    
+    // Convert alignment (-1 to 1) to pixels
+    final startX = (startOffset + 1) / 2 * size.width;
+    final endX = (endOffset + 1) / 2 * size.width;
+    
+    // Start from bottom of current node
+    path.moveTo(startX, 60); // Assuming node has some height/center
+    
+    // Draw cubic bezier to top of next node
+    // Control points for smooth S-curve
+    final controlPoint1 = Offset(startX, size.height * 0.75);
+    final controlPoint2 = Offset(endX, size.height * 0.25);
+    
+    path.cubicTo(
+      controlPoint1.dx, controlPoint1.dy,
+      controlPoint2.dx, controlPoint2.dy,
+      endX, size.height + 40, // End at top of next node
+    );
+
+    // Dashed line effect for locked paths
+    if (color.opacity < 1.0) {
+      _drawDashedLine(canvas, path, paint);
+    } else {
+      canvas.drawPath(path, paint);
+    }
+  }
+
+  void _drawDashedLine(Canvas canvas, Path path, Paint paint) {
+    // Simple dash implementation
+    final pathMetrics = path.computeMetrics();
+    for (final metric in pathMetrics) {
+      var distance = 0.0;
+      while (distance < metric.length) {
+        canvas.drawPath(
+          metric.extractPath(distance, distance + 10),
+          paint,
+        );
+        distance += 20;
+      }
+    }
+  }
+
+  @override
+  bool shouldRepaint(SnakePathPainter oldDelegate) =>
+      oldDelegate.startOffset != startOffset ||
+      oldDelegate.endOffset != endOffset ||
+      oldDelegate.color != color;
 }
