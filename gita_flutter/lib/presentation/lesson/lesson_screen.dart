@@ -290,33 +290,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => context.pop(),
-        ),
-        title: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              state.lesson?.lessonNameEn ?? 'Loading...',
-              style: Theme.of(context).textTheme.titleMedium,
-            ),
-            Text(
-              'Chapter ${widget.chapterId} - Lesson ${state.lesson?.lessonNumber ?? ""}',
-              style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                color: Theme.of(context).colorScheme.onSurfaceVariant,
-              ),
-            ),
-          ],
-        ),
+      body: SafeArea(
+        child: _buildBody(context, state),
       ),
-      body: _buildBody(context, state),
-      floatingActionButton: state.lesson != null
-          ? CharioteerButton(
-              onPressed: () => _showSarthiDialog(context, state.lesson!),
-            )
-          : null,
     );
   }
 
@@ -377,108 +353,115 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   Widget _buildLessonContent(BuildContext context, LessonState state) {
     final controller = ref.read(lessonControllerProvider.notifier);
 
-    return ListView(
-      padding: const EdgeInsets.all(Spacing.space16),
+    return Stack(
       children: [
-        // Lesson info card
-        Card(
-          color: Theme.of(context).colorScheme.primaryContainer,
+        Column(
+          children: [
+            // Custom Header: Close Button + Progress Bar
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: Spacing.space16, vertical: Spacing.space8),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => context.pop(),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
+                    visualDensity: VisualDensity.compact,
+                  ),
+                  const SizedBox(width: Spacing.space12),
+                  if (state.questions.isNotEmpty)
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: LinearProgressIndicator(
+                          value: (state.currentQuestionIndex + 1) / state.questions.length,
+                          minHeight: 8,
+                          backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            
+            // Main Content
+            Expanded(
+              child: ListView(
+                padding: const EdgeInsets.fromLTRB(
+                  Spacing.space16, 
+                  Spacing.space8, 
+                  Spacing.space16, 
+                  100 // Add bottom padding for the floating button
+                ),
+                children: [
+                  if (state.questions.isNotEmpty) ...[
+                    // REMOVED Old Progress Indicator and Question Counter Text
+                    
+                    const SizedBox(height: Spacing.space8),
+
+                    // Question card
+                    _buildQuestionCard(context, state),
+                    const SizedBox(height: Spacing.space16),
+
+                    // Feedback card
+                    if (state.showFeedback)
+                      _buildFeedbackCard(context, state),
+
+                    const SizedBox(height: Spacing.space16),
+
+                    // Navigation buttons
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        if (state.showFeedback)
+                          FilledButton(
+                            onPressed: () {
+                              controller.hideFeedback();
+                              controller.nextQuestion();
+                            },
+                            child: Text(
+                              state.currentQuestionIndex < state.questions.length - 1
+                                  ? 'Next Question'
+                                  : 'View Results',
+                            ),
+                          )
+                        else if (controller.isCurrentQuestionAnswered())
+                          FilledButton(
+                            onPressed: () => controller.nextQuestion(),
+                            child: Text(
+                              state.currentQuestionIndex < state.questions.length - 1
+                                  ? 'Next'
+                                  : 'Finish',
+                            ),
+                          )
+                        else
+                          FilledButton(
+                            onPressed: controller.getSelectedOptionForCurrentQuestion() != null
+                                ? () => controller.submitAnswer()
+                                : null,
+                            child: const Text('Check'),
+                          ),
+                      ],
+                    ),
+                  ],
+                ],
+              ),
+            ),
+          ],
+        ),
+        
+        // Sarthi Button at Bottom Center
+        Align(
+          alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.all(Spacing.space16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Lesson ${state.lesson?.lessonNumber ?? ""}',
-                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-                ),
-                const SizedBox(height: Spacing.space4),
-                Text(
-                  state.lesson?.lessonNameEn ?? '',
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-                ),
-                const SizedBox(height: Spacing.space8),
-                Text(
-                  'Answer all questions to complete this lesson',
-                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                  ),
-                ),
-              ],
+            padding: const EdgeInsets.only(bottom: Spacing.space24),
+            child: CharioteerButton(
+               onPressed: () => _showSarthiDialog(context, state.lesson!),
             ),
           ),
         ),
-        const SizedBox(height: Spacing.space16),
-
-        // Progress indicator
-        if (state.questions.isNotEmpty) ...[
-          LinearProgressIndicator(
-            value: (state.currentQuestionIndex + 1) / state.questions.length,
-            backgroundColor: Theme.of(context).colorScheme.surfaceContainerHighest,
-          ),
-          const SizedBox(height: Spacing.space4),
-          Text(
-            'Question ${state.currentQuestionIndex + 1} of ${state.questions.length}',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          const SizedBox(height: Spacing.space16),
-
-          // Question card
-          _buildQuestionCard(context, state),
-          const SizedBox(height: Spacing.space16),
-
-          // Feedback card
-          if (state.showFeedback)
-            _buildFeedbackCard(context, state),
-
-          const SizedBox(height: Spacing.space16),
-
-          // Navigation buttons
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              OutlinedButton(
-                onPressed: state.currentQuestionIndex > 0 && !state.showFeedback
-                    ? () => controller.previousQuestion()
-                    : null,
-                child: const Text('Previous'),
-              ),
-              if (state.showFeedback)
-                FilledButton(
-                  onPressed: () {
-                    controller.hideFeedback();
-                    controller.nextQuestion();
-                  },
-                  child: Text(
-                    state.currentQuestionIndex < state.questions.length - 1
-                        ? 'Next Question'
-                        : 'View Results',
-                  ),
-                )
-              else if (controller.isCurrentQuestionAnswered())
-                FilledButton(
-                  onPressed: () => controller.nextQuestion(),
-                  child: Text(
-                    state.currentQuestionIndex < state.questions.length - 1
-                        ? 'Next'
-                        : 'Finish',
-                  ),
-                )
-              else
-                FilledButton(
-                  onPressed: controller.getSelectedOptionForCurrentQuestion() != null
-                      ? () => controller.submitAnswer()
-                      : null,
-                  child: const Text('Submit'),
-                ),
-            ],
-          ),
-        ],
       ],
     );
   }

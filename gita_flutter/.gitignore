@@ -63,3 +63,5 @@ macos/Flutter/Flutter-Release.xcconfig
 # Podfile.lock (regenerated from Podfile)
 ios/Podfile.lock
 macos/Podfile.lock
+
+.env
