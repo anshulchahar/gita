@@ -9,73 +9,74 @@ enum MilestoneType {
   trophy,
 }
 
-/// Section header for chapter groupings
+/// Section header for chapter groupings - Duolingo style
 class SectionHeader extends StatelessWidget {
   final int sectionNumber;
   final int unitNumber;
   final String description;
+  final VoidCallback? onInfoTap;
 
   const SectionHeader({
     super.key,
     required this.sectionNumber,
     required this.unitNumber,
     required this.description,
+    this.onInfoTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: Spacing.space16),
-      padding: const EdgeInsets.all(Spacing.space16),
+      margin: const EdgeInsets.only(bottom: Spacing.space16),
+      padding: const EdgeInsets.symmetric(
+        horizontal: Spacing.space16,
+        vertical: Spacing.space12,
+      ),
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [
-            Theme.of(context).colorScheme.primaryContainer,
-            Theme.of(context).colorScheme.primaryContainer.withOpacity(0.7),
-          ],
-        ),
+        color: Theme.of(context).colorScheme.primary,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Row(
         children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Theme.of(context).colorScheme.primary,
-              shape: BoxShape.circle,
-            ),
-            child: Center(
-              child: Text(
-                '$sectionNumber',
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(width: Spacing.space16),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'UNIT $unitNumber',
+                  'SECTION $sectionNumber, UNIT $unitNumber',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
-                    letterSpacing: 1.2,
+                    color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
                 const SizedBox(height: Spacing.space4),
                 Text(
                   description,
                   style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimaryContainer,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
+            ),
+          ),
+          // Shloka info icon
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: IconButton(
+              icon: Icon(
+                Icons.menu_book_rounded,
+                color: Theme.of(context).colorScheme.onPrimary,
+                size: 22,
+              ),
+              onPressed: onInfoTap,
+              tooltip: 'View shlokas in this unit',
             ),
           ),
         ],

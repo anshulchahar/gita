@@ -8,6 +8,7 @@ import '../../data/repositories/content_repository.dart';
 import '../../data/repositories/user_repository.dart';
 import '../../domain/models/chapter.dart';
 import '../../domain/models/lesson.dart';
+import '../../domain/models/shloka.dart';
 import '../components/krishna_mascot.dart';
 import '../components/lesson_node_components.dart';
 
@@ -198,43 +199,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final state = ref.watch(homeControllerProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        leading: Builder(
-          builder: (context) => IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () => Scaffold.of(context).openDrawer(),
-          ),
-        ),
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            // Streak
-            Row(
-              children: [
-                const Text('🔥'),
-                const SizedBox(width: 4),
-                Text('${state.currentStreak}'),
-              ],
-            ),
-            // Gems
-            Row(
-              children: [
-                const Text('💎'),
-                const SizedBox(width: 4),
-                Text('${state.gems}'),
-              ],
-            ),
-            // Energy
-            Row(
-              children: [
-                const Text('⚡'),
-                const SizedBox(width: 4),
-                Text('${state.energy}'),
-              ],
-            ),
-          ],
-        ),
-      ),
       drawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -325,11 +289,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const KrishnaMascot(
-              emotion: KrishnaEmotion.neutral,
-              animation: KrishnaAnimation.idleFloat,
-              size: 120,
-            ),
+            const SizedBox(height: Spacing.space16),
+            Icon(Icons.book_outlined, size: 80, color: Theme.of(context).colorScheme.outline),
             const SizedBox(height: Spacing.space16),
             Text(
               'No chapters available yet',
@@ -368,25 +329,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: Spacing.space16),
       children: [
-        const SizedBox(height: Spacing.space8),
-        // Welcome with Krishna
-        Center(
-          child: Column(
-            children: [
-              const KrishnaMascot(
-                emotion: KrishnaEmotion.happy,
-                animation: KrishnaAnimation.idleFloat,
-                size: 80,
-              ),
-              const SizedBox(height: Spacing.space8),
-              Text(
-                KrishnaMessages.random(KrishnaMessages.welcome),
-                style: Theme.of(context).textTheme.bodyMedium,
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-        ),
         const SizedBox(height: Spacing.space16),
 
         // Chapters and lessons
@@ -410,6 +352,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           sectionNumber: chapter.chapterNumber,
           unitNumber: chapter.chapterNumber,
           description: chapter.chapterNameEn,
+          onInfoTap: () => _showShlokasDialog(context, chapter, lessons),
         ),
 
         // Lessons
@@ -475,6 +418,324 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       onTap: () {
         context.push(Routes.lessonPath(chapter.chapterId, lesson.lessonId));
       },
+    );
+  }
+
+  void _showShlokasDialog(BuildContext context, Chapter chapter, List<Lesson> lessons) {
+    // Collect all shlokas from lessons
+    final allShlokas = <int>{};
+    for (final lesson in lessons) {
+      allShlokas.addAll(lesson.shlokasCovered);
+    }
+    final sortedShlokas = allShlokas.toList()..sort();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.6,
+        minChildSize: 0.4,
+        maxChildSize: 0.9,
+        builder: (context, scrollController) => Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            children: [
+              // Handle bar
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: Spacing.space12),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.outline,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              // Header
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: Spacing.space16),
+                child: Column(
+                  children: [
+                    Text(
+                      '📖 Shlokas in Chapter ${chapter.chapterNumber}',
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: Spacing.space4),
+                    Text(
+                      chapter.chapterNameEn,
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface.withOpacity(0.7),
+                      ),
+                    ),
+                    const SizedBox(height: Spacing.space8),
+                    Text(
+                      '${sortedShlokas.length} shlokas covered',
+                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const Divider(height: Spacing.space24),
+              // Shlokas list
+              Expanded(
+                child: sortedShlokas.isEmpty
+                    ? Center(
+                        child: Text(
+                          'No shlokas available yet',
+                          style: Theme.of(context).textTheme.bodyMedium,
+                        ),
+                      )
+                    : ListView.builder(
+                        controller: scrollController,
+                        padding: const EdgeInsets.symmetric(horizontal: Spacing.space16),
+                        itemCount: sortedShlokas.length,
+                        itemBuilder: (context, index) {
+                          final shlokaNum = sortedShlokas[index];
+                          return Card(
+                            margin: const EdgeInsets.only(bottom: Spacing.space8),
+                            child: ListTile(
+                              leading: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).colorScheme.primary,
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '$shlokaNum',
+                                    style: TextStyle(
+                                      color: Theme.of(context).colorScheme.onPrimary,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              title: Text('Shloka ${chapter.chapterNumber}.$shlokaNum'),
+                              subtitle: const Text('Tap to read and recite'),
+                              trailing: Icon(
+                                Icons.arrow_forward_ios,
+                                size: 16,
+                                color: Theme.of(context).colorScheme.outline,
+                              ),
+                              onTap: () {
+                                final shloka = ShlokaRepository.getShloka(chapter.chapterNumber, shlokaNum);
+                                if (shloka != null) {
+                                  _showShlokaDetail(context, shloka);
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text('Content for Shloka ${chapter.chapterNumber}.$shlokaNum coming soon!'),
+                                      duration: const Duration(seconds: 2),
+                                    ),
+                                  );
+                                }
+                              },
+                            ),
+                          );
+                        },
+                      ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showShlokaDetail(BuildContext context, Shloka shloka) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      backgroundColor: Colors.transparent,
+      builder: (context) => DraggableScrollableSheet(
+        initialChildSize: 0.8,
+        minChildSize: 0.6,
+        maxChildSize: 0.95,
+        builder: (context, scrollController) => Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surface,
+            borderRadius: const BorderRadius.vertical(top: Radius.circular(20)),
+          ),
+          child: Column(
+            children: [
+              // Handle bar
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: Spacing.space12),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.outline,
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              // Content
+              Expanded(
+                child: ListView(
+                  controller: scrollController,
+                  padding: const EdgeInsets.all(Spacing.space24),
+                  children: [
+                    // Header
+                    Row(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: Spacing.space12,
+                            vertical: Spacing.space8,
+                          ),
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).colorScheme.primaryContainer,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Text(
+                            'Shloka ${shloka.chapter}.${shloka.verse}',
+                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                              color: Theme.of(context).colorScheme.onPrimaryContainer,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(Icons.close),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: Spacing.space32),
+                    
+                    // Sanskrit
+                    Text(
+                      'SANSKRIT',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: Spacing.space8),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(Spacing.space16),
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).colorScheme.surfaceContainerHighest.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.outline.withOpacity(0.2),
+                        ),
+                      ),
+                      child: Text(
+                        shloka.sanskrit,
+                        style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                          height: 1.5,
+                          // fontFamily: 'NotoSansDevanagari', 
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                    
+                    const SizedBox(height: Spacing.space24),
+                    
+                    // Transliteration
+                    Text(
+                      'PRONUNCIATION',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: Spacing.space8),
+                    Text(
+                      shloka.transliteration,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        height: 1.5,
+                        fontStyle: FontStyle.italic,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                    
+                    const SizedBox(height: Spacing.space24),
+                    const Divider(),
+                    const SizedBox(height: Spacing.space24),
+                    
+                    // Translation
+                    Text(
+                      'MEANING',
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: Theme.of(context).colorScheme.primary,
+                        letterSpacing: 1.2,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(height: Spacing.space8),
+                    Text(
+                      shloka.translation,
+                      style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurface,
+                        height: 1.6,
+                      ),
+                    ),
+                    
+                    if (shloka.wordMeanings != null) ...[
+                      const SizedBox(height: Spacing.space24),
+                      Text(
+                        'WORD MEANINGS',
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                          color: Theme.of(context).colorScheme.primary,
+                          letterSpacing: 1.2,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      const SizedBox(height: Spacing.space8),
+                      Text(
+                        shloka.wordMeanings!,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                          height: 1.5,
+                        ),
+                      ),
+                    ],
+                    
+                    const SizedBox(height: Spacing.space48),
+                    
+                    // Action Buttons (Play Audio - Placeholder)
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ElevatedButton.icon(
+                          onPressed: () {
+                             ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(content: Text('Audio recitation coming soon!')),
+                             );
+                          },
+                          icon: const Icon(Icons.volume_up_rounded),
+                          label: const Text('Listen'),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Theme.of(context).colorScheme.primary,
+                            foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: Spacing.space32),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

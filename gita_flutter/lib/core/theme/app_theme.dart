@@ -5,31 +5,31 @@ import 'app_colors.dart';
 class AppTheme {
   /// Light theme color scheme
   static ColorScheme get lightColorScheme => ColorScheme.light(
-    // 10% - Accent/CTA (Green)
-    primary: AppColors.tertiary, 
+    // Primary color - Blue (matching splash screen)
+    primary: AppColors.primary, 
     onPrimary: AppColors.white,
-    primaryContainer: AppColors.tertiary, // Ensure containers are also green if used
-    onPrimaryContainer: AppColors.white,
+    primaryContainer: AppColors.white, // White background for containers
+    onPrimaryContainer: AppColors.gray900,
     
     // 30% - Secondary/Structure (Orange)
     secondary: AppColors.secondary,
     onSecondary: AppColors.white,
-    secondaryContainer: AppColors.secondary,
-    onSecondaryContainer: AppColors.white,
+    secondaryContainer: AppColors.gray100, // Light gray for secondary containers
+    onSecondaryContainer: AppColors.gray900,
     
     // 60% - Dominant/Background (Blue)
-    surface: AppColors.secondary, // Cards/Surfaces are Orange (30%)
-    onSurface: AppColors.white,
+    surface: AppColors.white, // White surface
+    onSurface: AppColors.gray900,
     
     error: AppColors.error,
     onError: AppColors.white,
     
     // Background is handled by Scaffold in ThemeData, but setting these for completeness
-    surfaceContainerHighest: AppColors.primaryShade2, // Muted blue for variants
-    onSurfaceVariant: AppColors.white,
+    surfaceContainerHighest: AppColors.gray100, // Light gray for variants
+    onSurfaceVariant: AppColors.gray700,
     
-    outline: AppColors.white.withOpacity(0.5),
-    outlineVariant: AppColors.white.withOpacity(0.2),
+    outline: AppColors.gray300,
+    outlineVariant: AppColors.gray200,
   );
 
   /// Dark theme color scheme - reusing same vibrant palette for consistency
@@ -40,10 +40,10 @@ class AppTheme {
     useMaterial3: true,
     colorScheme: lightColorScheme,
     
-    // 60% - Dominant Background (Blue)
-    scaffoldBackgroundColor: AppColors.primary, 
+    // Pure white background for all pages (splash screen has its own)
+    scaffoldBackgroundColor: AppColors.white, 
     
-    // 30% - Secondary Structure (Orange)
+    // App Bar with secondary color
     appBarTheme: AppBarTheme(
       backgroundColor: AppColors.secondary,
       foregroundColor: AppColors.white,
@@ -61,10 +61,10 @@ class AppTheme {
       unselectedItemColor: AppColors.white.withOpacity(0.7),
     ),
     
-    // 10% - Accent CTA (Green)
+    // Accent CTA (Green)
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.tertiary,
+        backgroundColor: AppColors.primary,
         foregroundColor: AppColors.white,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
@@ -75,8 +75,8 @@ class AppTheme {
     
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
-        foregroundColor: AppColors.white,
-        side: const BorderSide(color: AppColors.white),
+        foregroundColor: AppColors.gray900,
+        side: const BorderSide(color: AppColors.gray300),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
@@ -87,23 +87,23 @@ class AppTheme {
     inputDecorationTheme: InputDecorationTheme(
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
-        borderSide: BorderSide.none,
+        borderSide: const BorderSide(color: AppColors.gray300),
       ),
       filled: true,
-      fillColor: AppColors.white.withOpacity(0.1), // Translucent white on blue background
-      hintStyle: TextStyle(color: AppColors.white.withOpacity(0.7)),
-      labelStyle: const TextStyle(color: AppColors.white),
+      fillColor: AppColors.gray100,
+      hintStyle: TextStyle(color: AppColors.gray500),
+      labelStyle: const TextStyle(color: AppColors.gray700),
     ),
     
     textTheme: const TextTheme(
-      bodyLarge: TextStyle(color: AppColors.white),
-      bodyMedium: TextStyle(color: AppColors.white),
-      titleLarge: TextStyle(color: AppColors.white),
-      titleMedium: TextStyle(color: AppColors.white),
-      titleSmall: TextStyle(color: AppColors.white),
+      bodyLarge: TextStyle(color: AppColors.gray900),
+      bodyMedium: TextStyle(color: AppColors.gray900),
+      titleLarge: TextStyle(color: AppColors.gray900),
+      titleMedium: TextStyle(color: AppColors.gray900),
+      titleSmall: TextStyle(color: AppColors.gray900),
     ),
     
-    iconTheme: const IconThemeData(color: AppColors.white),
+    iconTheme: const IconThemeData(color: AppColors.gray900),
   );
 
   /// Dark theme - same as light for this specific design request

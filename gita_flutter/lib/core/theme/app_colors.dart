@@ -33,6 +33,7 @@ class AppColors {
   static const Color gray700 = Color(0xFF616161);
   static const Color gray500 = Color(0xFF9E9E9E);
   static const Color gray300 = Color(0xFFE0E0E0);
+  static const Color gray200 = Color(0xFFEEEEEE);
   static const Color gray100 = Color(0xFFF5F5F5);
   
   // Background Colors for Light Theme
