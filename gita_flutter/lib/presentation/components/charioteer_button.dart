@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../home/sarthi_controller.dart';
-import 'dart:math' as math;
 
 class CharioteerButton extends ConsumerStatefulWidget {
   final VoidCallback onPressed;
@@ -98,7 +98,7 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
                   height: size + _rippleAnimation.value * 2 + (voiceScale * 20),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: buttonColor.withOpacity(0.3 - (_controller.value * 0.3).clamp(0.0, 0.3)),
+                    color: buttonColor.withValues(alpha: 0.3 - (_controller.value * 0.3).clamp(0.0, 0.3)),
                   ),
                 ),
                 
@@ -113,12 +113,24 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
                     color: buttonColor,
                     boxShadow: [
                       BoxShadow(
-                        color: buttonColor.withOpacity(0.4),
+                        color: buttonColor.withValues(alpha: 0.4),
                         blurRadius: 10 + (voiceScale * 20),
                         spreadRadius: 2 + (voiceScale * 5),
                         offset: const Offset(0, 4),
                       ),
                     ],
+                  ),
+                  // Peacock feather SVG icon in the center
+                  child: Center(
+                    child: SvgPicture.asset(
+                      'assets/images/peacock_feather.svg',
+                      width: 50,
+                      height: 60,
+                      colorFilter: const ColorFilter.mode(
+                        Colors.white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -129,3 +141,4 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
     );
   }
 }
+

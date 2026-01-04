@@ -11,6 +11,8 @@ import '../../domain/models/lesson.dart';
 import '../../domain/models/shloka.dart';
 import '../components/krishna_mascot.dart';
 import '../components/lesson_node_components.dart';
+import '../components/sarthi_footer.dart';
+import 'sarthi_controller.dart';
 
 /// Home screen state
 class HomeState {
@@ -195,6 +197,25 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _adminClickCount = 0;
 
   @override
+  void initState() {
+    super.initState();
+    // Initialize Sarthi in homepage mode after the widget is built
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref.read(sarthiProvider.notifier).initializeSession(isHomepageMode: true);
+    });
+  }
+
+  @override
+  void dispose() {
+    // Close Sarthi session when leaving the screen
+    // Use a try-catch in case the provider is already disposed
+    try {
+      // We don't call closeSession here as the provider may be disposed
+    } catch (_) {}
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final state = ref.watch(homeControllerProvider);
 
@@ -253,7 +274,23 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           ],
         ),
       ),
-      body: _buildBody(context, state),
+      body: Stack(
+        children: [
+          _buildBody(context, state),
+          // Custom footer with Sarthi button
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SarthiFooter(
+              onProfileTap: () {
+                // Open drawer for profile
+                Scaffold.of(context).openDrawer();
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -327,7 +364,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     }
 
     return ListView(
-      padding: const EdgeInsets.symmetric(horizontal: Spacing.space16),
+      padding: const EdgeInsets.only(
+        left: Spacing.space16,
+        right: Spacing.space16,
+        bottom: 120, // Space for footer
+      ),
       children: [
         SizedBox(height: MediaQuery.of(context).padding.top + Spacing.space16),
 
