@@ -32,6 +32,15 @@ dependencies:
   freezed_annotation: ^2.4.4
   json_annotation: ^4.9.0
 
+  # Sarthi Voice Assistant
+  firebase_vertexai: ^1.2.0
+  record: ^5.1.0
+  audioplayers: ^6.0.0
+  permission_handler: ^11.3.0
+  path_provider: ^2.1.2
+  uuid: ^4.3.3
+  http: ^1.6.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
