@@ -277,6 +277,22 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Listen for lesson loading to initialize Sarthi
+    ref.listen(lessonControllerProvider, (previous, next) {
+      if (next.lesson != null && 
+          !ref.read(sarthiProvider).isSessionActive && 
+          !ref.read(sarthiProvider).isProcessing) {
+        
+        final chapterNum = int.tryParse(widget.chapterId) ?? 1;
+        final shlokas = ShlokaRepository.getShlokas(chapterNum, next.lesson!.shlokasCovered);
+
+        ref.read(sarthiProvider.notifier).initializeSession(
+          contextShlokas: shlokas,
+          contextLesson: next.lesson,
+        );
+      }
+    });
+
     final state = ref.watch(lessonControllerProvider);
     final userId = ref.read(authRepositoryProvider).currentUser?.uid;
 
@@ -296,27 +312,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     );
   }
 
-  void _showSarthiDialog(BuildContext context, Lesson lesson) {
-    // 1. Get Shlokas for context
-    final chapterNum = int.tryParse(widget.chapterId) ?? 1;
-    final shlokas = ShlokaRepository.getShlokas(chapterNum, lesson.shlokasCovered);
 
-    // 2. Start Session
-    ref.read(sarthiProvider.notifier).initializeSession(
-      contextShlokas: shlokas, 
-      contextLesson: lesson
-    );
-
-    // 3. Show Modal
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (context) => const _SarthiModal(),
-    ).whenComplete(() {
-      ref.read(sarthiProvider.notifier).closeSession();
-    });
-  }
 
   Widget _buildBody(BuildContext context, LessonState state) {
     if (state.isLoading) {
@@ -458,7 +454,9 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: Spacing.space24),
             child: CharioteerButton(
-               onPressed: () => _showSarthiDialog(context, state.lesson!),
+               onPressed: () {
+                 ref.read(sarthiProvider.notifier).toggleListening();
+               },
             ),
           ),
         ),
@@ -789,197 +787,4 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   }
 }
 
-class _SarthiModal extends ConsumerWidget {
-  const _SarthiModal();
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final sarthiState = ref.watch(sarthiProvider);
-    final theme = Theme.of(context);
-
-    // Use a draggable scrollable sheet for nice "pull up" feel
-    return DraggableScrollableSheet(
-      initialChildSize: 0.5,
-      minChildSize: 0.3,
-      maxChildSize: 0.9,
-      builder: (context, scrollController) {
-        return Container(
-          decoration: BoxDecoration(
-            color: theme.colorScheme.surface,
-            borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                blurRadius: 10,
-                offset: const Offset(0, -5),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              // Handle for dragging
-              Center(
-                child: Container(
-                  margin: const EdgeInsets.only(top: 12, bottom: 8),
-                  width: 40,
-                  height: 4,
-                  decoration: BoxDecoration(
-                    color: theme.colorScheme.onSurfaceVariant.withOpacity(0.4),
-                    borderRadius: BorderRadius.circular(2),
-                  ),
-                ),
-              ),
-              
-              // Header
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(Icons.mic, color: theme.colorScheme.primary),
-                        const SizedBox(width: 8),
-                        Text(
-                          'Sarthi Voice Assistant',
-                          style: theme.textTheme.titleMedium?.copyWith(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ],
-                    ),
-                    IconButton(
-                      icon: const Icon(Icons.close),
-                      onPressed: () => context.pop(),
-                    ),
-                  ],
-                ),
-              ),
-              const Divider(),
-              
-              // Chat/Transcript Area
-              Expanded(
-                child: ListView(
-                  controller: scrollController,
-                  padding: const EdgeInsets.all(16),
-                  children: [
-                    if (sarthiState.errorMessage != null)
-                      Container(
-                        padding: const EdgeInsets.all(12),
-                        decoration: BoxDecoration(
-                          color: theme.colorScheme.errorContainer,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Text(
-                          sarthiState.errorMessage!,
-                          style: TextStyle(color: theme.colorScheme.error),
-                        ),
-                      ),
-                      
-                    // User Transcript
-                    if (sarthiState.userTranscript.isNotEmpty) ...[
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 4),
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.primaryContainer,
-                            borderRadius: BorderRadius.circular(16).copyWith(bottomRight: Radius.zero),
-                          ),
-                          child: Text(
-                            sarthiState.userTranscript,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onPrimaryContainer,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-
-                    // Basic feedback if processing audio
-                    if (sarthiState.isProcessing)
-                       const Padding(
-                         padding: EdgeInsets.all(16.0),
-                         child: Center(child: CircularProgressIndicator()),
-                       ),
-
-                    // AI Response
-                    if (sarthiState.aiResponse.isNotEmpty) ...[
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(vertical: 4),
-                          padding: const EdgeInsets.all(12),
-                          decoration: BoxDecoration(
-                            color: theme.colorScheme.secondaryContainer,
-                            borderRadius: BorderRadius.circular(16).copyWith(topLeft: Radius.zero),
-                          ),
-                          child: Text(
-                            sarthiState.aiResponse,
-                            style: theme.textTheme.bodyMedium?.copyWith(
-                              color: theme.colorScheme.onSecondaryContainer,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                    
-                    const SizedBox(height: 20),
-                    if (sarthiState.isListening)
-                       Center(
-                         child: Text(
-                           "I'm listening...", 
-                           style: theme.textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic)
-                         ),
-                       ),
-                  ],
-                ),
-              ),
-              
-              // Controls
-              SafeArea(
-                child: Padding(
-                   padding: const EdgeInsets.all(16.0),
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       // Toggle Flash/Pro (Premium)
-                       Switch(
-                         value: sarthiState.isPremium,
-                         onChanged: (val) {
-                           ref.read(sarthiProvider.notifier).togglePremium();
-                         },
-                       ),
-                       Text(sarthiState.isPremium ? "Pro (Wisdom)" : "Flash (Speed)"),
-                       
-                       const Spacer(),
-                       
-                       // Mic Button
-                       if (!sarthiState.isListening && !sarthiState.isProcessing)
-                         FloatingActionButton(
-                           backgroundColor: theme.colorScheme.primary,
-                           onPressed: () {
-                             ref.read(sarthiProvider.notifier).startListening();
-                           },
-                           child: const Icon(Icons.mic, color: Colors.white),
-                         ),
-                       if (sarthiState.isListening)
-                         FloatingActionButton(
-                            backgroundColor: theme.colorScheme.error,
-                            onPressed: () {
-                              ref.read(sarthiProvider.notifier).stopListeningAndSend();
-                            },
-                            child: const Icon(Icons.stop, color: Colors.white),
-                         ),
-                     ],
-                   ),
-                ),
-              )
-            ],
-          ),
-        );
-      },
-    );
-  }
-}

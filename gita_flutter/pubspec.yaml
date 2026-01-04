@@ -40,6 +40,11 @@ dependencies:
   path_provider: ^2.1.2
   uuid: ^4.3.3
   http: ^1.6.0
+  firebase_app_check: ^0.3.2+10
+  google_generative_ai: ^0.4.7
+  flutter_dotenv: ^6.0.0
+  flutter_tts: ^4.2.3
+  speech_to_text: ^7.3.0
 
 dev_dependencies:
   flutter_test:
@@ -54,3 +59,4 @@ flutter:
   
   assets:
     - assets/images/
+    - .env

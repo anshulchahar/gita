@@ -74,18 +74,28 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
       child: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
-          final scale = sarthiState.isSessionActive || sarthiState.isListening 
-              ? _scaleAnimation.value 
-              : 1.0;
-              
+          // Base scale from pulse animation
+          double baseScale = 1.0;
+          if (sarthiState.isSessionActive || sarthiState.isListening) {
+             baseScale = _scaleAnimation.value;
+          }
+          
+          // Voice scale from sound level in state
+          double voiceScale = 0.0;
+          if (sarthiState.isListening) {
+            voiceScale = sarthiState.soundLevel * 0.4;
+          }
+
+          final totalScale = (baseScale + voiceScale).clamp(1.0, 1.8);
+
           return Stack(
             alignment: Alignment.center,
             children: [
               // Ripple effect when active
               if (sarthiState.isSessionActive || sarthiState.isListening)
                 Container(
-                  width: size + _rippleAnimation.value * 2,
-                  height: size + _rippleAnimation.value * 2,
+                  width: size + _rippleAnimation.value * 2 + (voiceScale * 20),
+                  height: size + _rippleAnimation.value * 2 + (voiceScale * 20),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: buttonColor.withOpacity(0.3 - (_controller.value * 0.3).clamp(0.0, 0.3)),
@@ -94,7 +104,7 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
                 
               // Main Button
               Transform.scale(
-                scale: scale,
+                scale: totalScale,
                 child: Container(
                   width: size,
                   height: size,
@@ -104,18 +114,17 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
                     boxShadow: [
                       BoxShadow(
                         color: buttonColor.withOpacity(0.4),
-                        blurRadius: 10,
-                        spreadRadius: 2,
+                        blurRadius: 10 + (voiceScale * 20),
+                        spreadRadius: 2 + (voiceScale * 5),
                         offset: const Offset(0, 4),
                       ),
                     ],
                   ),
-                  // Icon removed as per request
                 ),
               ),
             ],
           );
-        },
+        }
       ),
     );
   }
