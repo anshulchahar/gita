@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/constants/constants.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/repositories/auth_repository.dart';
-import '../components/krishna_mascot.dart';
+
 
 /// Login screen state
 class LoginState {
@@ -126,14 +126,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 Center(
                   child: Column(
                     children: [
-                      const KrishnaMascot(
-                        emotion: KrishnaEmotion.happy,
-                        animation: KrishnaAnimation.idleFloat,
-                        size: 100,
-                      ),
-                      const SizedBox(height: Spacing.space16),
                       Text(
-                        '🕉️ Gita',
+                        'Gita',
                         style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                           color: Theme.of(context).colorScheme.primary,

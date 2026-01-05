@@ -5,7 +5,7 @@ import '../../core/constants/constants.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/repositories/auth_repository.dart';
 import '../../data/repositories/user_repository.dart';
-import '../components/krishna_mascot.dart';
+
 
 /// Profile screen widget
 class ProfileScreen extends ConsumerWidget {
@@ -43,11 +43,6 @@ class ProfileScreen extends ConsumerWidget {
           child: Column(
             children: [
               // Profile header with mascot
-              const KrishnaMascot(
-                emotion: KrishnaEmotion.happy,
-                animation: KrishnaAnimation.idleFloat,
-                size: 80,
-              ),
               const SizedBox(height: Spacing.space16),
 
               // User avatar

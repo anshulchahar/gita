@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import '../../core/constants/constants.dart';
 import '../../core/theme/app_theme.dart';
 import '../../data/repositories/auth_repository.dart';
-import '../components/krishna_mascot.dart';
+
 
 /// Signup screen state
 class SignupState {
@@ -134,11 +134,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                 Center(
                   child: Column(
                     children: [
-                      const KrishnaMascot(
-                        emotion: KrishnaEmotion.encouraging,
-                        animation: KrishnaAnimation.idleFloat,
-                        size: 80,
-                      ),
+
                       const SizedBox(height: Spacing.space16),
                       Text(
                         'Create Account',
