@@ -10,8 +10,8 @@ import '../../domain/models/shloka.dart'; // Added for context
 import '../../domain/models/question.dart';
 import '../../domain/models/user.dart';
 import '../components/krishna_mascot.dart';
-import '../components/charioteer_button.dart'; // Added
-import '../home/sarthi_controller.dart'; // Added
+import '../components/question_footer.dart';
+import '../home/sarthi_controller.dart';
 
 /// Lesson screen state
 class LessonState {
@@ -407,40 +407,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
 
                     const SizedBox(height: Spacing.space16),
 
-                    // Navigation buttons
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        if (state.showFeedback)
-                          FilledButton(
-                            onPressed: () {
-                              controller.hideFeedback();
-                              controller.nextQuestion();
-                            },
-                            child: Text(
-                              state.currentQuestionIndex < state.questions.length - 1
-                                  ? 'Next Question'
-                                  : 'View Results',
-                            ),
-                          )
-                        else if (controller.isCurrentQuestionAnswered())
-                          FilledButton(
-                            onPressed: () => controller.nextQuestion(),
-                            child: Text(
-                              state.currentQuestionIndex < state.questions.length - 1
-                                  ? 'Next'
-                                  : 'Finish',
-                            ),
-                          )
-                        else
-                          FilledButton(
-                            onPressed: controller.getSelectedOptionForCurrentQuestion() != null
-                                ? () => controller.submitAnswer()
-                                : null,
-                            child: const Text('Check'),
-                          ),
-                      ],
-                    ),
+                    // Navigation buttons now in footer
                   ],
                 ],
               ),
@@ -448,16 +415,36 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
           ],
         ),
         
-        // Sarthi Button at Bottom Center
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Padding(
-            padding: const EdgeInsets.only(bottom: Spacing.space24),
-            child: CharioteerButton(
-               onPressed: () {
-                 ref.read(sarthiProvider.notifier).toggleListening();
-               },
-            ),
+        // Question Footer with Hint, Sarthi, and Check/Next
+        Positioned(
+          bottom: 0,
+          left: 0,
+          right: 0,
+          child: QuestionFooter(
+            onHintTap: () {
+              // TODO: Implement hint functionality
+              final currentQuestion = state.questions[state.currentQuestionIndex];
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(
+                  content: Text('Think about: ${currentQuestion.content.questionText.split(' ').take(5).join(' ')}...'),
+                  duration: const Duration(seconds: 3),
+                ),
+              );
+            },
+            isCheckEnabled: controller.getSelectedOptionForCurrentQuestion() != null,
+            onCheckTap: controller.getSelectedOptionForCurrentQuestion() != null
+                ? () => controller.submitAnswer()
+                : null,
+            showNextButton: state.showFeedback || controller.isCurrentQuestionAnswered(),
+            nextButtonText: state.currentQuestionIndex < state.questions.length - 1
+                ? (state.showFeedback ? 'Next' : 'Next')
+                : (state.showFeedback ? 'Results' : 'Finish'),
+            onNextTap: () {
+              if (state.showFeedback) {
+                controller.hideFeedback();
+              }
+              controller.nextQuestion();
+            },
           ),
         ),
       ],
