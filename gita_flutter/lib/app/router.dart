@@ -5,6 +5,7 @@ import '../presentation/auth/login_screen.dart';
 import '../presentation/auth/signup_screen.dart';
 import '../presentation/home/home_screen.dart';
 import '../presentation/lesson/lesson_screen.dart';
+import '../presentation/profile/profile_screen.dart';
 import '../presentation/splash/splash_screen.dart';
 
 /// App router configuration using go_router
@@ -48,6 +49,12 @@ final appRouter = GoRouter(
     GoRoute(
       path: Routes.admin,
       builder: (context, state) => const AdminScreen(),
+    ),
+
+    // Profile
+    GoRoute(
+      path: Routes.profile,
+      builder: (context, state) => const ProfileScreen(),
     ),
   ],
 );

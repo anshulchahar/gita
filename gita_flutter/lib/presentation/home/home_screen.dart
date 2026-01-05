@@ -9,7 +9,6 @@ import '../../data/repositories/user_repository.dart';
 import '../../domain/models/chapter.dart';
 import '../../domain/models/lesson.dart';
 import '../../domain/models/shloka.dart';
-import '../components/krishna_mascot.dart';
 import '../components/lesson_node_components.dart';
 import '../components/sarthi_footer.dart';
 import 'sarthi_controller.dart';
@@ -220,60 +219,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final state = ref.watch(homeControllerProvider);
 
     return Scaffold(
-      drawer: Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            DrawerHeader(
-              decoration: BoxDecoration(
-                color: Theme.of(context).colorScheme.primaryContainer,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Icon(
-                    Icons.person,
-                    size: 64,
-                    color: Theme.of(context).colorScheme.primary,
-                  ),
-                  const SizedBox(height: Spacing.space8),
-                  Text(
-                    ref.read(authRepositoryProvider).currentUser?.email ?? 'Guest',
-                    style: Theme.of(context).textTheme.titleMedium,
-                  ),
-                  Text(
-                    'Seeker of Wisdom',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            // Show Sign In for guests, Logout for authenticated users
-            if (ref.read(authRepositoryProvider).currentUser == null)
-              ListTile(
-                leading: const Icon(Icons.login),
-                title: const Text('Sign In'),
-                subtitle: const Text('Save your progress'),
-                onTap: () {
-                  Navigator.pop(context);
-                  context.go(Routes.login);
-                },
-              )
-            else
-              ListTile(
-                leading: const Icon(Icons.exit_to_app),
-                title: const Text('Logout'),
-                onTap: () {
-                  Navigator.pop(context);
-                  ref.read(homeControllerProvider.notifier).signOut();
-                  context.go(Routes.login);
-                },
-              ),
-          ],
-        ),
-      ),
       body: Stack(
         children: [
           _buildBody(context, state),
@@ -284,8 +229,13 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
             right: 0,
             child: SarthiFooter(
               onProfileTap: () {
-                // Open drawer for profile
-                Scaffold.of(context).openDrawer();
+                // Navigate to profile if logged in, login if not
+                final user = ref.read(authRepositoryProvider).currentUser;
+                if (user != null) {
+                  context.push(Routes.profile);
+                } else {
+                  context.push(Routes.login);
+                }
               },
             ),
           ),

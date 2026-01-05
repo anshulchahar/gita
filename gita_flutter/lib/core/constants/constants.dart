@@ -6,6 +6,7 @@ class Routes {
   static const String home = '/home';
   static const String lesson = '/lesson/:chapterId/:lessonId';
   static const String admin = '/admin';
+  static const String profile = '/profile';
   
   static String lessonPath(String chapterId, String lessonId) => 
       '/lesson/$chapterId/$lessonId';

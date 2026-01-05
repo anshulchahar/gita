@@ -23,7 +23,7 @@ class AuthRepository {
   /// Lazy initialization of GoogleSignIn
   GoogleSignIn get googleSignIn {
     _googleSignIn ??= GoogleSignIn(
-      scopes: ['email', 'profile'],
+      // scopes: ['email', 'profile'], // Removed to avoid People API error
       // Add client ID for web if needed
       clientId: kIsWeb ? '130647293969-h9homid4an61g9ih6ngd1one2b1n785a.apps.googleusercontent.com' : null,
     );
