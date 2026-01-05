@@ -297,7 +297,10 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     final userId = ref.read(authRepositoryProvider).currentUser?.uid;
 
     // Save progress when results are shown
-    if (state.showResults && !state.progressSaved && userId != null) {
+    if (state.showResults && 
+        !state.progressSaved && 
+        !state.isSavingProgress && 
+        userId != null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ref
             .read(lessonControllerProvider.notifier)
@@ -384,32 +387,55 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             
             // Main Content
             Expanded(
-              child: ListView(
-                padding: const EdgeInsets.fromLTRB(
-                  Spacing.space16, 
-                  Spacing.space8, 
-                  Spacing.space16, 
-                  100 // Add bottom padding for the floating button
-                ),
-                children: [
-                  if (state.questions.isNotEmpty) ...[
-                    // REMOVED Old Progress Indicator and Question Counter Text
-                    
-                    const SizedBox(height: Spacing.space8),
+              child: LayoutBuilder(
+                builder: (context, constraints) {
+                  return SingleChildScrollView(
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: constraints.maxHeight,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(
+                          Spacing.space16, 
+                          Spacing.space8, 
+                          Spacing.space16, 
+                          100 // Add bottom padding for the floating button
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            if (state.questions.isNotEmpty) ...[
+                              // REMOVED Old Progress Indicator and Question Counter Text
+                              
+                              const SizedBox(height: Spacing.space8),
 
-                    // Question card
-                    _buildQuestionCard(context, state),
-                    const SizedBox(height: Spacing.space16),
+                              // Question card
+                              _buildQuestionCard(context, state),
+                              const SizedBox(height: Spacing.space16),
 
-                    // Feedback card
-                    if (state.showFeedback)
-                      _buildFeedbackCard(context, state),
+                              // Feedback card with animation
+                              AnimatedSize(
+                                duration: const Duration(milliseconds: 300),
+                                curve: Curves.easeInOut,
+                                child: state.showFeedback
+                                    ? AnimatedOpacity(
+                                        duration: const Duration(milliseconds: 300),
+                                        opacity: 1.0,
+                                        child: _buildFeedbackCard(context, state),
+                                      )
+                                    : const SizedBox(width: double.infinity),
+                              ),
 
-                    const SizedBox(height: Spacing.space16),
+                              const SizedBox(height: Spacing.space16),
 
-                    // Navigation buttons now in footer
-                  ],
-                ],
+                              // Navigation buttons now in footer
+                            ],
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
             ),
           ],
@@ -565,55 +591,41 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                KrishnaMascot(
-                  emotion: result.isCorrect
-                      ? KrishnaEmotion.celebrating
-                      : KrishnaEmotion.sad,
-                  animation: result.isCorrect
-                      ? KrishnaAnimation.bounce
-                      : KrishnaAnimation.none,
-                  size: 80,
-                ),
-                const SizedBox(width: Spacing.space12),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
                     children: [
-                      Row(
-                        children: [
-                          Icon(
-                            result.isCorrect ? Icons.check : Icons.close,
-                            color: result.isCorrect
-                                ? Theme.of(context).colorScheme.primary
-                                : Theme.of(context).colorScheme.error,
-                          ),
-                          const SizedBox(width: Spacing.space8),
-                          Text(
-                            result.isCorrect ? 'Correct! 🎉' : 'Not quite right',
-                            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
+                      Icon(
+                        result.isCorrect ? Icons.check : Icons.close,
+                        color: result.isCorrect
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.error,
                       ),
-                      const SizedBox(height: Spacing.space8),
+                      const SizedBox(width: Spacing.space8),
                       Text(
-                        result.isCorrect
-                            ? KrishnaMessages.random(KrishnaMessages.correctAnswer)
-                            : KrishnaMessages.random(KrishnaMessages.wrongAnswer),
-                        style: Theme.of(context).textTheme.bodySmall,
+                        result.isCorrect ? 'Correct!' : 'Not quite right',
+                        style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
+                  const SizedBox(height: Spacing.space8),
+                  Text(
+                    result.isCorrect
+                        ? KrishnaMessages.random(KrishnaMessages.correctAnswer)
+                        : KrishnaMessages.random(KrishnaMessages.wrongAnswer),
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                ],
+              ),
             ),
             const Divider(height: Spacing.space32),
             if (result.explanation.isNotEmpty) ...[
               Text(
-                '📖 Explanation',
+                'Explanation',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -624,7 +636,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             if (result.realLifeApplication.isNotEmpty) ...[
               const SizedBox(height: Spacing.space16),
               Text(
-                '🌟 Real-Life Application',
+                'Real-Life Application',
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
                   fontWeight: FontWeight.bold,
                 ),
@@ -666,11 +678,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         Center(
           child: Column(
             children: [
-              KrishnaMascot(
-                emotion: emotion,
-                animation: animation,
-                size: 150,
-              ),
+              // REMOVED KrishnaMascot
               const SizedBox(height: Spacing.space16),
               Card(
                 color: Theme.of(context).colorScheme.secondaryContainer,

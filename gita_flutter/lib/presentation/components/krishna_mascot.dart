@@ -113,20 +113,20 @@ class _KrishnaMascotState extends State<KrishnaMascot>
     super.dispose();
   }
 
-  String _getEmoji() {
+  IconData _getIcon() {
     switch (widget.emotion) {
       case KrishnaEmotion.happy:
-        return '😊';
+        return Icons.sentiment_satisfied_rounded;
       case KrishnaEmotion.sad:
-        return '😢';
+        return Icons.sentiment_dissatisfied_rounded;
       case KrishnaEmotion.neutral:
-        return '🙂';
+        return Icons.sentiment_neutral_rounded;
       case KrishnaEmotion.encouraging:
-        return '💪';
+        return Icons.thumb_up_rounded;
       case KrishnaEmotion.celebrating:
-        return '🎉';
+        return Icons.celebration_rounded;
       case KrishnaEmotion.thinking:
-        return '🤔';
+        return Icons.psychology_rounded;
     }
   }
 
@@ -171,9 +171,10 @@ class _KrishnaMascotState extends State<KrishnaMascot>
             ],
           ),
           child: Center(
-            child: Text(
-              _getEmoji(),
-              style: TextStyle(fontSize: widget.size * 0.5),
+            child: Icon(
+              _getIcon(),
+              size: widget.size * 0.5,
+              color: _getColor(),
             ),
           ),
         );
@@ -206,44 +207,44 @@ class _KrishnaMascotState extends State<KrishnaMascot>
 /// Krishna messages for different situations
 class KrishnaMessages {
   static const List<String> welcome = [
-    "Welcome, seeker of wisdom! 🙏",
+    "Welcome, seeker of wisdom!",
     "Ready to explore the Gita today?",
     "Let's continue your journey of knowledge!",
     "The path of wisdom awaits you!",
   ];
 
   static const List<String> correctAnswer = [
-    "Excellent! You understood well! 🌟",
-    "Your wisdom grows, Arjuna! ✨",
+    "Excellent! You understood well!",
+    "Your wisdom grows, Arjuna!",
     "Perfect! Continue on this path!",
-    "Wonderful understanding! 🎯",
+    "Wonderful understanding!",
   ];
 
   static const List<String> wrongAnswer = [
-    "Don't worry, learning takes time. 📚",
-    "Even the wisest must practice. 🌱",
+    "Don't worry, learning takes time.",
+    "Even the wisest must practice.",
     "Reflect on this and try again!",
     "Every mistake is a step toward wisdom.",
   ];
 
   static const List<String> highScore = [
-    "Outstanding! You have truly understood! 🏆",
-    "Your wisdom shines like the sun! ☀️",
-    "Arjuna would be proud! 🎉",
-    "Masterful understanding! 🌟",
+    "Outstanding! You have truly understood!",
+    "Your wisdom shines like the sun!",
+    "Arjuna would be proud!",
+    "Masterful understanding!",
   ];
 
   static const List<String> mediumScore = [
-    "Good effort! Keep practicing! 💪",
-    "You're on the right path! 🌈",
-    "Progress comes with persistence! 📈",
-    "Continue your journey! 🚶",
+    "Good effort! Keep practicing!",
+    "You're on the right path!",
+    "Progress comes with persistence!",
+    "Continue your journey!",
   ];
 
   static const List<String> lowScore = [
-    "Don't be discouraged. Try again! 🌱",
-    "Every master was once a beginner. 📖",
-    "Wisdom comes through practice. 🔄",
+    "Don't be discouraged. Try again!",
+    "Every master was once a beginner.",
+    "Wisdom comes through practice.",
     "The journey matters more than the destination.",
   ];
 
