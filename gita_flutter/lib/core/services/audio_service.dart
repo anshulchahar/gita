@@ -7,6 +7,8 @@ import 'package:uuid/uuid.dart';
 import 'package:flutter/foundation.dart' show kIsWeb, debugPrint;
 import 'dart:io' show Directory;
 
+import 'package:audio_session/audio_session.dart' as audio_session;
+
 /// Audio service for recording and playback
 /// Extended to support PCM streaming for Gemini Live API
 class AudioService {
@@ -70,6 +72,26 @@ class AudioService {
     }
 
     try {
+      // Configure audio session for speech/voice communication
+      // This is CRITICAL for Android emulator and consistent behavior
+      if (!kIsWeb) {
+        final session = await audio_session.AudioSession.instance;
+        await session.configure(audio_session.AudioSessionConfiguration(
+          avAudioSessionCategory: audio_session.AVAudioSessionCategory.playAndRecord,
+          avAudioSessionCategoryOptions: audio_session.AVAudioSessionCategoryOptions.allowBluetooth | audio_session.AVAudioSessionCategoryOptions.defaultToSpeaker,
+          avAudioSessionMode: audio_session.AVAudioSessionMode.voiceChat,
+          avAudioSessionRouteSharingPolicy: audio_session.AVAudioSessionRouteSharingPolicy.defaultPolicy,
+          avAudioSessionSetActiveOptions: audio_session.AVAudioSessionSetActiveOptions.none,
+          androidAudioAttributes: const audio_session.AndroidAudioAttributes(
+            contentType: audio_session.AndroidAudioContentType.speech,
+            flags: audio_session.AndroidAudioFlags.none,
+            usage: audio_session.AndroidAudioUsage.voiceCommunication,
+          ),
+          androidAudioFocusGainType: audio_session.AndroidAudioFocusGainType.gain,
+          androidWillPauseWhenDucked: true,
+        ));
+      }
+
       // Start recording as PCM stream
       // The record package can stream audio data
       final stream = await _audioRecorder.startStream(

@@ -7,46 +7,51 @@ import '../../core/services/gemini_live_service.dart';
 import '../../core/services/audio_service.dart';
 import '../../core/services/pcm_player_service.dart';
 
+/// Voice assistant states
+enum VoiceAssistantState {
+  /// Not active, button shows "Start"
+  inactive,
+  /// Connecting to Gemini API
+  connecting,
+  /// Recording user audio, waiting for speech
+  listening,
+  /// Model is generating/speaking response
+  responding,
+  /// Model done speaking, waiting for user to speak or timeout
+  waitingForUser,
+}
+
 /// State for Sarthi voice assistant
 class SarthiState {
-  final bool isListening;
-  final bool isProcessing;
-  final bool isSpeaking;
-  final bool isSessionActive;
-  final bool isConnecting;
+  final VoiceAssistantState state;
   final String? errorMessage;
   final double soundLevel;
 
   const SarthiState({
-    this.isListening = false,
-    this.isProcessing = false,
-    this.isSpeaking = false,
-    this.isSessionActive = false,
-    this.isConnecting = false,
+    this.state = VoiceAssistantState.inactive,
     this.errorMessage,
     this.soundLevel = 0.0,
   });
 
   SarthiState copyWith({
-    bool? isListening,
-    bool? isProcessing,
-    bool? isSpeaking,
-    bool? isSessionActive,
-    bool? isConnecting,
+    VoiceAssistantState? state,
     String? errorMessage,
     double? soundLevel,
     bool clearError = false,
   }) {
     return SarthiState(
-      isListening: isListening ?? this.isListening,
-      isProcessing: isProcessing ?? this.isProcessing,
-      isSpeaking: isSpeaking ?? this.isSpeaking,
-      isSessionActive: isSessionActive ?? this.isSessionActive,
-      isConnecting: isConnecting ?? this.isConnecting,
+      state: state ?? this.state,
       errorMessage: clearError ? null : (errorMessage ?? this.errorMessage),
       soundLevel: soundLevel ?? this.soundLevel,
     );
   }
+
+  // Convenience getters for UI
+  bool get isActive => state != VoiceAssistantState.inactive;
+  bool get isListening => state == VoiceAssistantState.listening;
+  bool get isResponding => state == VoiceAssistantState.responding;
+  bool get isConnecting => state == VoiceAssistantState.connecting;
+  bool get isWaitingForUser => state == VoiceAssistantState.waitingForUser;
 }
 
 /// Provider for Sarthi controller
@@ -55,19 +60,33 @@ final sarthiProvider = StateNotifierProvider<SarthiController, SarthiState>((ref
 });
 
 /// Controller for Sarthi voice assistant
-/// Orchestrates Gemini Live API connection, audio recording, and playback
+/// 
+/// Implements the voice assistant logic:
+/// - Single button to activate/deactivate
+/// - Automatic listening when active
+/// - VAD-based turn detection (model responds when user stops)
+/// - Interruption support (user speaking stops model)
+/// - Auto-deactivation after model finishes and user doesn't respond
 class SarthiController extends StateNotifier<SarthiState> {
   GeminiLiveService? _geminiService;
   final AudioService _audioService = AudioService();
   final PcmPlayerService _pcmPlayer = PcmPlayerService();
   
+  // Subscriptions
   StreamSubscription? _connectionSubscription;
   StreamSubscription? _audioChunkSubscription;
+  StreamSubscription? _modelStartedSubscription;
+  StreamSubscription? _modelStoppedSubscription;
+  StreamSubscription? _interruptedSubscription;
   StreamSubscription? _errorSubscription;
-  StreamSubscription? _turnCompleteSubscription;
   StreamSubscription? _amplitudeSubscription;
   StreamSubscription? _playbackSubscription;
   
+  // Auto-deactivation timer
+  Timer? _inactivityTimer;
+  static const Duration _inactivityTimeout = Duration(seconds: 3);
+  
+  // Context for system instruction
   String? _contextText;
   
   SarthiController() : super(const SarthiState()) {
@@ -76,35 +95,23 @@ class SarthiController extends StateNotifier<SarthiState> {
   
   void _initializePlaybackListener() {
     _playbackSubscription = _pcmPlayer.isPlayingStream.listen((isPlaying) {
-      if (mounted) {
-        state = state.copyWith(isSpeaking: isPlaying);
-      }
+      // Playback state is handled by model events now
     });
   }
   
-  /// Initialize a voice assistant session
-  /// [contextShlokas] and [contextLesson] provide context for the conversation
-  /// [isHomepageMode] when true, uses a system prompt optimized for general Gita guidance
+  /// Initialize context for the voice assistant
   void initializeSession({
     dynamic contextShlokas, 
     dynamic contextLesson,
     bool isHomepageMode = false,
   }) {
-    // Build system instruction from context
-    final systemPrompt = isHomepageMode 
+    _contextText = isHomepageMode 
         ? _buildHomepageSystemPrompt()
         : _buildSystemPrompt(
             contextShlokas: contextShlokas, 
             contextLesson: contextLesson
           );
-    _contextText = systemPrompt;
-    
-    state = state.copyWith(
-      isSessionActive: true,
-      clearError: true,
-    );
-    
-    debugPrint('Sarthi session initialized ${isHomepageMode ? "in homepage mode" : "with context"}');
+    debugPrint('Sarthi: Session context initialized');
   }
   
   String _buildHomepageSystemPrompt() {
@@ -156,29 +163,25 @@ If the user's question is not clearly addressable through Gita wisdom, gently gu
     return buffer.toString();
   }
   
-  /// Toggle listening state
-  /// If not listening, start recording and connect to Gemini
-  /// If listening, stop recording and wait for response
-  Future<void> toggleListening() async {
-    if (state.isConnecting) return;
-    
-    if (state.isListening) {
-      await _stopListening();
+  /// Toggle the voice assistant on/off
+  /// This is the ONLY user action - everything else is automatic
+  Future<void> toggleSession() async {
+    if (state.state == VoiceAssistantState.inactive) {
+      await _activate();
     } else {
-      // If AI is speaking, interrupt it
-      if (state.isSpeaking) {
-        await _pcmPlayer.interrupt();
-      }
-      await _startListening();
+      await _deactivate();
     }
   }
   
-  Future<void> _startListening() async {
+  /// Activate the voice assistant
+  Future<void> _activate() async {
+    debugPrint('Sarthi: Activating...');
+    
     // Get API key
     final apiKey = dotenv.env['GEMINI_API_KEY'];
     if (apiKey == null || apiKey.isEmpty) {
       state = state.copyWith(errorMessage: 'GEMINI_API_KEY not found in .env');
-      debugPrint('Error: GEMINI_API_KEY not found');
+      debugPrint('Sarthi: ERROR - GEMINI_API_KEY not found');
       return;
     }
     
@@ -186,140 +189,161 @@ If the user's question is not clearly addressable through Gita wisdom, gently gu
     final hasPermission = await _audioService.hasPermission();
     if (!hasPermission) {
       state = state.copyWith(errorMessage: 'Microphone permission denied');
+      debugPrint('Sarthi: ERROR - Microphone permission denied');
       return;
     }
     
-    state = state.copyWith(isConnecting: true, clearError: true);
+    state = state.copyWith(state: VoiceAssistantState.connecting, clearError: true);
     
     try {
-      // Initialize Gemini service if needed
-      if (_geminiService == null) {
-        _geminiService = GeminiLiveService(
-          apiKey: apiKey,
-          systemInstruction: _contextText,
-        );
-        _setupGeminiListeners();
-      }
+      // Create Gemini service
+      _geminiService = GeminiLiveService(
+        apiKey: apiKey,
+        systemInstruction: _contextText,
+      );
+      _setupGeminiListeners();
       
       // Connect to Gemini
       await _geminiService!.connect();
       
-      // Start PCM streaming
-      final started = await _audioService.startPcmStreaming(
-        onAudioChunk: (Uint8List chunk) {
-          _geminiService?.sendAudioChunk(chunk);
-        },
-      );
+      // Start recording immediately
+      await _startRecording();
       
-      if (!started) {
-        state = state.copyWith(
-          isConnecting: false,
-          errorMessage: 'Failed to start audio recording',
-        );
-        return;
-      }
+      state = state.copyWith(state: VoiceAssistantState.listening);
+      debugPrint('Sarthi: Active and listening');
       
-      // Start amplitude monitoring for visual feedback
-      _amplitudeSubscription = _audioService.onAmplitudeChanged?.listen((amplitude) {
-        // Normalize amplitude to 0-1 range
-        final normalized = ((amplitude.current + 50) / 50).clamp(0.0, 1.0);
-        if (mounted) {
-          state = state.copyWith(soundLevel: normalized);
-        }
-      });
-      
-      state = state.copyWith(
-        isListening: true,
-        isConnecting: false,
-      );
-      
-      debugPrint('Sarthi: Started listening');
     } catch (e) {
-      debugPrint('Error starting Sarthi: $e');
+      debugPrint('Sarthi: ERROR activating: $e');
       state = state.copyWith(
-        isConnecting: false,
+        state: VoiceAssistantState.inactive,
         errorMessage: e.toString(),
       );
+      await _cleanup();
     }
   }
   
-  Future<void> _stopListening() async {
-    await _amplitudeSubscription?.cancel();
-    _amplitudeSubscription = null;
-    
-    await _audioService.stopPcmStreaming();
-    
-    // Signal end of turn to Gemini
-    _geminiService?.sendEndOfTurn();
-    
-    state = state.copyWith(
-      isListening: false,
-      isProcessing: true,
-      soundLevel: 0.0,
+  /// Deactivate the voice assistant
+  Future<void> _deactivate() async {
+    debugPrint('Sarthi: Deactivating...');
+    _cancelInactivityTimer();
+    await _cleanup();
+    state = const SarthiState(); // Reset to initial state
+    debugPrint('Sarthi: Deactivated');
+  }
+  
+  /// Start recording audio and sending to Gemini
+  Future<void> _startRecording() async {
+    final started = await _audioService.startPcmStreaming(
+      onAudioChunk: (Uint8List chunk) {
+        _geminiService?.sendAudioChunk(chunk);
+      },
     );
     
-    debugPrint('Sarthi: Stopped listening, waiting for response');
+    if (!started) {
+      throw Exception('Failed to start audio recording');
+    }
+    
+    // Monitor amplitude for visual feedback
+    _amplitudeSubscription = _audioService.onAmplitudeChanged?.listen((amplitude) {
+      final normalized = ((amplitude.current + 50) / 50).clamp(0.0, 1.0);
+      if (mounted) {
+        state = state.copyWith(soundLevel: normalized);
+      }
+    });
+    
+    debugPrint('Sarthi: Recording started');
+  }
+  
+  /// Stop recording audio
+  Future<void> _stopRecording() async {
+    await _amplitudeSubscription?.cancel();
+    _amplitudeSubscription = null;
+    await _audioService.stopPcmStreaming();
+    state = state.copyWith(soundLevel: 0.0);
+    debugPrint('Sarthi: Recording stopped');
   }
   
   void _setupGeminiListeners() {
+    // Connection state
     _connectionSubscription = _geminiService!.connectionState.listen((connState) {
-      debugPrint('Gemini connection state: $connState');
-      if (connState == GeminiConnectionState.error) {
-        state = state.copyWith(
-          errorMessage: 'Connection error',
-          isConnecting: false,
-          isListening: false,
-          isProcessing: false,
-        );
-      } else if (connState == GeminiConnectionState.disconnected) {
-        state = state.copyWith(
-          isConnecting: false,
-          isListening: false,
-          isProcessing: false,
-        );
+      debugPrint('Sarthi: Gemini connection state: $connState');
+      if (connState == GeminiConnectionState.error ||
+          connState == GeminiConnectionState.disconnected) {
+        if (state.state != VoiceAssistantState.inactive) {
+          _deactivate();
+        }
       }
     });
     
+    // Audio chunks from Gemini (model speaking)
     _audioChunkSubscription = _geminiService!.audioChunks.listen((chunk) {
-      debugPrint('Sarthi: Received audio chunk from Gemini (${chunk.data.length} bytes), queuing for playback');
-      // Queue audio for playback
       _pcmPlayer.queueAudio(chunk.data);
-      // We're no longer processing, now speaking
-      if (state.isProcessing) {
-        state = state.copyWith(isProcessing: false);
-      }
     });
     
+    // Model started speaking
+    _modelStartedSubscription = _geminiService!.onModelStartedSpeaking.listen((_) {
+      debugPrint('Sarthi: Model started speaking');
+      _cancelInactivityTimer();
+      state = state.copyWith(state: VoiceAssistantState.responding);
+    });
+    
+    // Model stopped speaking (turn complete)
+    _modelStoppedSubscription = _geminiService!.onModelStoppedSpeaking.listen((_) {
+      debugPrint('Sarthi: Model stopped speaking');
+      state = state.copyWith(state: VoiceAssistantState.waitingForUser);
+      _startInactivityTimer();
+    });
+    
+    // User interrupted model
+    _interruptedSubscription = _geminiService!.onInterrupted.listen((_) {
+      debugPrint('Sarthi: User interrupted model');
+      _pcmPlayer.interrupt();
+      _cancelInactivityTimer();
+      state = state.copyWith(state: VoiceAssistantState.listening);
+    });
+    
+    // Errors
     _errorSubscription = _geminiService!.errors.listen((error) {
-      debugPrint('Gemini error: $error');
+      debugPrint('Sarthi: Gemini error: $error');
       state = state.copyWith(errorMessage: error);
     });
-    
-    _turnCompleteSubscription = _geminiService!.turnComplete.listen((_) {
-      debugPrint('Gemini turn complete');
-      // The playback listener will update isSpeaking when audio finishes
+  }
+  
+  /// Start inactivity timer for auto-deactivation
+  void _startInactivityTimer() {
+    _cancelInactivityTimer();
+    debugPrint('Sarthi: Starting inactivity timer (${_inactivityTimeout.inSeconds}s)');
+    _inactivityTimer = Timer(_inactivityTimeout, () {
+      debugPrint('Sarthi: Inactivity timeout - auto-deactivating');
+      _deactivate();
     });
   }
   
-  /// Close the voice assistant session
-  Future<void> closeSession() async {
-    await _cleanup();
-    state = const SarthiState(); // Reset to initial state
-    debugPrint('Sarthi session closed');
+  /// Cancel inactivity timer
+  void _cancelInactivityTimer() {
+    _inactivityTimer?.cancel();
+    _inactivityTimer = null;
   }
   
+  /// Clean up all resources
   Future<void> _cleanup() async {
-    await _amplitudeSubscription?.cancel();
+    _cancelInactivityTimer();
+    
     await _connectionSubscription?.cancel();
     await _audioChunkSubscription?.cancel();
+    await _modelStartedSubscription?.cancel();
+    await _modelStoppedSubscription?.cancel();
+    await _interruptedSubscription?.cancel();
     await _errorSubscription?.cancel();
-    await _turnCompleteSubscription?.cancel();
+    await _amplitudeSubscription?.cancel();
     
-    _amplitudeSubscription = null;
     _connectionSubscription = null;
     _audioChunkSubscription = null;
+    _modelStartedSubscription = null;
+    _modelStoppedSubscription = null;
+    _interruptedSubscription = null;
     _errorSubscription = null;
-    _turnCompleteSubscription = null;
+    _amplitudeSubscription = null;
     
     await _audioService.stopPcmStreaming();
     await _pcmPlayer.stop();

@@ -90,7 +90,7 @@ class SarthiFooter extends ConsumerWidget {
             bottom: 25, // Position above the footer
             child: CharioteerButton(
               onPressed: () {
-                ref.read(sarthiProvider.notifier).toggleListening();
+                ref.read(sarthiProvider.notifier).toggleSession();
               },
             ),
           ),

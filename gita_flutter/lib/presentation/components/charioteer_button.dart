@@ -15,8 +15,6 @@ class CharioteerButton extends ConsumerStatefulWidget {
 class _CharioteerButtonState extends ConsumerState<CharioteerButton>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  
-  // Use multiple animations to simulate a complex "voice" reaction
   late Animation<double> _scaleAnimation;
   late Animation<double> _rippleAnimation;
 
@@ -26,13 +24,13 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1500),
-    )..repeat(reverse: true);
+    );
     
-    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.15).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
     );
     
-     _rippleAnimation = Tween<double>(begin: 0.0, end: 10.0).animate(
+    _rippleAnimation = Tween<double>(begin: 0.0, end: 10.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOut),
     );
   }
@@ -47,26 +45,31 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
   Widget build(BuildContext context) {
     final sarthiState = ref.watch(sarthiProvider);
     
-    // "Big Blue Circular Icon"
-    // We'll use a specific blue color, or the primary color if it is blue-ish.
-    // Let's use a nice vibrant blue.
-    const Color buttonColor = Color(0xFF2196F3); // Material Blue 500
-    const double size = 90.0; // Increased from 72.0
+    const Color buttonColor = Color(0xFF2196F3);
+    const double size = 90.0;
 
-    // Adjust animation speed based on state
-    if (sarthiState.isListening) {
-      if (!_controller.isAnimating) _controller.repeat(reverse: true);
-      _controller.duration = const Duration(milliseconds: 800); // Faster beat when listening
-    } else if (sarthiState.isSpeaking) {
-       if (!_controller.isAnimating) _controller.repeat(reverse: true);
-      _controller.duration = const Duration(milliseconds: 400); // Fast talk
-    } else if (sarthiState.isProcessing) {
-       if (!_controller.isAnimating) _controller.repeat(reverse: true);
-      _controller.duration = const Duration(milliseconds: 1000); // Thinking
-    } else {
-      // Idle
-      _controller.stop();
-      _controller.value = 0.0; // Reset
+    // Animation based on state
+    switch (sarthiState.state) {
+      case VoiceAssistantState.inactive:
+        _controller.stop();
+        _controller.value = 0.0;
+        break;
+      case VoiceAssistantState.connecting:
+        _controller.duration = const Duration(milliseconds: 1200);
+        if (!_controller.isAnimating) _controller.repeat(reverse: true);
+        break;
+      case VoiceAssistantState.listening:
+        _controller.duration = const Duration(milliseconds: 800);
+        if (!_controller.isAnimating) _controller.repeat(reverse: true);
+        break;
+      case VoiceAssistantState.responding:
+        _controller.duration = const Duration(milliseconds: 400);
+        if (!_controller.isAnimating) _controller.repeat(reverse: true);
+        break;
+      case VoiceAssistantState.waitingForUser:
+        _controller.duration = const Duration(milliseconds: 2000);
+        if (!_controller.isAnimating) _controller.repeat(reverse: true);
+        break;
     }
 
     return GestureDetector(
@@ -76,29 +79,37 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
         builder: (context, child) {
           // Base scale from pulse animation
           double baseScale = 1.0;
-          if (sarthiState.isSessionActive || sarthiState.isListening) {
-             baseScale = _scaleAnimation.value;
+          if (sarthiState.isActive) {
+            baseScale = _scaleAnimation.value;
           }
           
-          // Voice scale from sound level in state
+          // Voice scale from sound level
           double voiceScale = 0.0;
           if (sarthiState.isListening) {
             voiceScale = sarthiState.soundLevel * 0.4;
           }
 
-          final totalScale = (baseScale + voiceScale).clamp(1.0, 1.8);
+          final totalScale = (baseScale + voiceScale).clamp(1.0, 1.6);
+
+          // Color based on state
+          Color currentColor = buttonColor;
+          if (sarthiState.isResponding) {
+            currentColor = const Color(0xFF4CAF50); // Green when responding
+          } else if (sarthiState.isWaitingForUser) {
+            currentColor = const Color(0xFFFFC107); // Amber when waiting
+          }
 
           return Stack(
             alignment: Alignment.center,
             children: [
               // Ripple effect when active
-              if (sarthiState.isSessionActive || sarthiState.isListening)
+              if (sarthiState.isActive)
                 Container(
                   width: size + _rippleAnimation.value * 2 + (voiceScale * 20),
                   height: size + _rippleAnimation.value * 2 + (voiceScale * 20),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: buttonColor.withValues(alpha: 0.3 - (_controller.value * 0.3).clamp(0.0, 0.3)),
+                    color: currentColor.withValues(alpha: 0.3 - (_controller.value * 0.2).clamp(0.0, 0.3)),
                   ),
                 ),
                 
@@ -110,17 +121,16 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
                   height: size,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: buttonColor,
+                    color: currentColor,
                     boxShadow: [
                       BoxShadow(
-                        color: buttonColor.withValues(alpha: 0.4),
-                        blurRadius: 10 + (voiceScale * 20),
-                        spreadRadius: 2 + (voiceScale * 5),
+                        color: currentColor.withValues(alpha: 0.4),
+                        blurRadius: 10 + (voiceScale * 15),
+                        spreadRadius: 2 + (voiceScale * 3),
                         offset: const Offset(0, 4),
                       ),
                     ],
                   ),
-                  // Peacock feather SVG icon in the center
                   child: Center(
                     child: SvgPicture.asset(
                       'assets/images/peacock_feather.svg',
@@ -141,4 +151,3 @@ class _CharioteerButtonState extends ConsumerState<CharioteerButton>
     );
   }
 }
-

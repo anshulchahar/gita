@@ -286,8 +286,7 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
     // Listen for lesson loading to initialize Sarthi
     ref.listen(lessonControllerProvider, (previous, next) {
       if (next.lesson != null && 
-          !ref.read(sarthiProvider).isSessionActive && 
-          !ref.read(sarthiProvider).isProcessing) {
+          !ref.read(sarthiProvider).isActive) {
         
         final chapterNum = int.tryParse(widget.chapterId) ?? 1;
         final shlokas = ShlokaRepository.getShlokas(chapterNum, next.lesson!.shlokasCovered);
