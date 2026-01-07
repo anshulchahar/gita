@@ -94,6 +94,7 @@ class LessonNode extends StatelessWidget {
   final bool isCompleted;
   final bool isCurrent;
   final String description;
+  final int starsEarned; // 0-3 stars based on score
   final VoidCallback onTap;
 
   const LessonNode({
@@ -103,6 +104,7 @@ class LessonNode extends StatelessWidget {
     required this.isCompleted,
     required this.isCurrent,
     required this.description,
+    this.starsEarned = 0,
     required this.onTap,
   });
 
@@ -173,30 +175,25 @@ class LessonNode extends StatelessWidget {
                     ),
                   ),
                 
+                // Center icon - star for unlocked/completed, lock for locked
                 Center(
-                  child: isCompleted
+                  child: isUnlocked
                       ? Icon(
-                          Icons.check_rounded,
-                          color: Theme.of(context).colorScheme.onPrimary,
+                          Icons.star_rounded,
+                          color: isCompleted || isCurrent
+                              ? Theme.of(context).colorScheme.onPrimary
+                              : Theme.of(context).colorScheme.onSurface,
                           size: 40,
                         )
-                      : isUnlocked
-                          ? Icon(
-                              Icons.star_rounded,
-                              color: isCompleted || isCurrent
-                                  ? Theme.of(context).colorScheme.onPrimary
-                                  : Theme.of(context).colorScheme.onSurface,
-                              size: 40,
-                            )
-                          : Icon(
-                              Icons.lock_rounded,
-                              color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
-                              size: 32,
-                            ),
+                      : Icon(
+                          Icons.lock_rounded,
+                          color: Theme.of(context).colorScheme.onSurface.withOpacity(0.4),
+                          size: 32,
+                        ),
                 ),
                 
-                // Stars for completed/mastered lessons could go here
-                if (isCompleted)
+                // Stars earned display for completed lessons
+                if (isCompleted && starsEarned > 0)
                   Positioned(
                     bottom: 8,
                     child: Row(
@@ -204,7 +201,9 @@ class LessonNode extends StatelessWidget {
                       children: List.generate(3, (index) => Icon(
                         Icons.star_rounded,
                         size: 12,
-                        color: Colors.amber, // Or theme color
+                        color: index < starsEarned 
+                            ? Colors.amber 
+                            : Colors.grey.shade400,
                       )),
                     ),
                   ),
@@ -275,7 +274,7 @@ class ChapterMilestone extends StatelessWidget {
       case MilestoneType.krishna:
         return '🪈';
       case MilestoneType.trophy:
-        return '🏆';
+        return '';
     }
   }
 

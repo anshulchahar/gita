@@ -22,6 +22,7 @@ class HomeState {
   final Set<String> unlockedChapters;
   final Set<String> unlockedLessons;
   final Set<String> completedLessons;
+  final Map<String, int> lessonScores; // lessonId -> score (number of correct answers)
   final int currentStreak;
   final int gems;
   final int energy;
@@ -34,6 +35,7 @@ class HomeState {
     this.unlockedChapters = const {},
     this.unlockedLessons = const {},
     this.completedLessons = const {},
+    this.lessonScores = const {},
     this.currentStreak = 0,
     this.gems = 0,
     this.energy = 5,
@@ -47,6 +49,7 @@ class HomeState {
     Set<String>? unlockedChapters,
     Set<String>? unlockedLessons,
     Set<String>? completedLessons,
+    Map<String, int>? lessonScores,
     int? currentStreak,
     int? gems,
     int? energy,
@@ -59,6 +62,7 @@ class HomeState {
       unlockedChapters: unlockedChapters ?? this.unlockedChapters,
       unlockedLessons: unlockedLessons ?? this.unlockedLessons,
       completedLessons: completedLessons ?? this.completedLessons,
+      lessonScores: lessonScores ?? this.lessonScores,
       currentStreak: currentStreak ?? this.currentStreak,
       gems: gems ?? this.gems,
       energy: energy ?? this.energy,
@@ -98,6 +102,7 @@ class HomeController extends StateNotifier<HomeState> {
       final unlockedChapters = <String>{};
       final unlockedLessons = <String>{};
       var completedLessons = <String>{};
+      var lessonScores = <String, int>{};
       var currentStreak = 0;
       var gems = 0;
       var energy = 5;
@@ -108,6 +113,8 @@ class HomeController extends StateNotifier<HomeState> {
         final user = await _userRepository.getUser(userId);
         if (user != null) {
           completedLessons = user.progress.keys.toSet();
+          // Extract scores from progress
+          lessonScores = user.progress.map((key, value) => MapEntry(key, value.score));
           currentStreak = user.gamification.currentStreak;
           gems = user.gamification.gems;
           energy = user.gamification.energy;
@@ -161,6 +168,7 @@ class HomeController extends StateNotifier<HomeState> {
         unlockedChapters: unlockedChapters,
         unlockedLessons: unlockedLessons,
         completedLessons: completedLessons,
+        lessonScores: lessonScores,
         currentStreak: currentStreak,
         gems: gems,
         energy: energy,
@@ -361,17 +369,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 context, state, chapter, lesson, index, nextLesson);
           },
         ),
-
-        // Chapter completion trophy
-        if (lessons.isNotEmpty) ...[
-          const SizedBox(height: Spacing.space16),
-          Center(
-            child: ChapterMilestone(
-              type: MilestoneType.trophy,
-              isUnlocked: lessons.every((l) => state.completedLessons.contains(l.lessonId)),
-            ),
-          ),
-        ],
         
         if (chapterIndex < state.chapters.length - 1)
           const SizedBox(height: Spacing.space48),
@@ -435,6 +432,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               isCompleted: isCompleted,
               isCurrent: isCurrent,
               description: '', // Description removed from tile
+              starsEarned: _calculateStars(state.lessonScores[lesson.lessonId] ?? 0),
               onTap: () {
                 _showLessonPreview(context, chapter, lesson, isUnlocked);
               },
@@ -462,6 +460,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     if (position == 2) return 0.0;
     if (position == 3) return -0.7;
     return 0.0;
+  }
+
+  /// Calculate stars earned based on percentage score
+  /// Score is stored as percentage (0-100)
+  /// 1 star: completed lesson (any score)
+  /// 2 stars: 70%+ correct
+  /// 3 stars: 90%+ correct
+  int _calculateStars(int percentageScore) {
+    if (percentageScore >= 90) return 3;
+    if (percentageScore >= 70) return 2;
+    if (percentageScore > 0) return 1;
+    return 0;
   }
   
   void _showLessonPreview(

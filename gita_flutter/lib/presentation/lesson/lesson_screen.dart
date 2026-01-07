@@ -12,6 +12,7 @@ import '../../domain/models/user.dart';
 import '../components/krishna_mascot.dart';
 import '../components/question_footer.dart';
 import '../home/sarthi_controller.dart';
+import '../home/home_screen.dart';
 
 /// Lesson screen state
 class LessonState {
@@ -196,13 +197,18 @@ class LessonController extends StateNotifier<LessonState> {
 
       final xpEarned = (state.lesson?.xpReward ?? 50) * state.score ~/ state.questions.length;
 
+      // Calculate percentage score
+      final percentageScore = state.questions.isNotEmpty 
+          ? (state.score * 100) ~/ state.questions.length 
+          : 0;
+
       // Save lesson progress
       await _userRepository.saveLessonProgress(
         userId,
         lessonId,
         LessonProgress(
           completedAt: DateTime.now(),
-          score: state.score,
+          score: percentageScore, // Store as percentage (0-100)
           attempts: 1,
           timeSpent: 0,
         ),
@@ -363,7 +369,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                 children: [
                   IconButton(
                     icon: const Icon(Icons.close),
-                    onPressed: () => context.pop(),
+                    onPressed: () {
+                      // Invalidate home controller to refresh dashboard  
+                      ref.invalidate(homeControllerProvider);
+                      context.pop();
+                    },
                     padding: EdgeInsets.zero,
                     constraints: const BoxConstraints(),
                     visualDensity: VisualDensity.compact,
@@ -774,7 +784,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
         ),
         const SizedBox(height: Spacing.space12),
         OutlinedButton(
-          onPressed: () => context.pop(),
+          onPressed: () {
+            // Invalidate home controller to refresh dashboard with completed lesson
+            ref.invalidate(homeControllerProvider);
+            context.pop();
+          },
           child: const Text('Back to Home'),
         ),
       ],
