@@ -92,7 +92,6 @@ class AudioService {
         ));
       }
 
-      // Start recording as PCM stream
       // The record package can stream audio data
       final stream = await _audioRecorder.startStream(
         const RecordConfig(
@@ -100,6 +99,8 @@ class AudioService {
           sampleRate: 16000,
           numChannels: 1,
           bitRate: 256000,
+          echoCancel: true,
+          noiseSuppress: true,
         ),
       );
       

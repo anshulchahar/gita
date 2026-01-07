@@ -164,7 +164,16 @@ class GeminiLiveService {
     
     _audioChunkCount++;
     if (_audioChunkCount % 50 == 1) {
-      debugPrint('Gemini: Sending audio chunk #$_audioChunkCount (${audioData.length} bytes)');
+      // Basic amplitude check
+      int maxAmp = 0;
+      for (int i = 0; i < audioData.length; i += 2) {
+        if (i + 1 < audioData.length) {
+          int sample = audioData[i] | (audioData[i + 1] << 8);
+          if (sample > 32767) sample -= 65536;
+          maxAmp = sample.abs() > maxAmp ? sample.abs() : maxAmp;
+        }
+      }
+      debugPrint('Gemini: Sending audio chunk #$_audioChunkCount (${audioData.length} bytes, Peak Amp: $maxAmp)');
     }
     
     final base64Audio = base64Encode(audioData);
@@ -215,10 +224,15 @@ class GeminiLiveService {
             }
           }
         },
-        // VAD configuration - using defaults
+        // VAD configuration - tuned for noisy environments
         'realtimeInputConfig': {
           'automaticActivityDetection': {
             'disabled': false,
+            // Low sensitivity for start = ignores background noise
+            'startOfSpeechSensitivity': 'START_SENSITIVITY_LOW',
+            // High sensitivity for end = detects silence quickly 
+            'endOfSpeechSensitivity': 'END_SENSITIVITY_HIGH',
+            'silenceDurationMs': 1000,
           },
           'activityHandling': 'START_OF_ACTIVITY_INTERRUPTS',
         },
