@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'firebase_options.dart';
+import 'data/seed/content_seeder.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'app/app.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -28,6 +30,15 @@ void main() async {
   } catch (e) {
     // App already initialized or AppCheck failed, ignore
     debugPrint("Firebase initialization error: $e");
+  }
+
+  // Seed initial content
+  try {
+    debugPrint("Starting content seeding...");
+    await ContentSeeder(FirebaseFirestore.instance).seedAll();
+    debugPrint("Content seeding completed successfully.");
+  } catch (e) {
+    debugPrint("Content seeding failed: $e");
   }
   
   runApp(
