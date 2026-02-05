@@ -217,6 +217,7 @@ def seed_unit(token, content):
     print(f"\n  📑 Creating {len(sections)} sections...")
     for section in sections:
         section['journeyId'] = journey_id # Propagate journeyId
+        section['chapterId'] = chapter_id # Propagate chapterId for easy querying
         create_document(token, "sections", section['id'], section)
     
     # Create lessons

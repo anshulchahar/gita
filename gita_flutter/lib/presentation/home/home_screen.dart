@@ -8,6 +8,7 @@ import '../../data/repositories/content_repository.dart';
 import '../../data/repositories/user_repository.dart';
 import '../../domain/models/chapter.dart';
 import '../../domain/models/journey.dart';
+import '../../domain/models/section.dart';
 import '../../domain/models/lesson.dart';
 import '../../domain/models/shloka.dart';
 import '../components/lesson_node_components.dart';
@@ -20,6 +21,7 @@ class HomeState {
   final String? error;
   final List<Journey> journeys;
   final List<Chapter> chapters;
+  final Map<String, List<Section>> chapterSections;
   final Map<String, List<Lesson>> chapterLessons;
   final Set<String> unlockedChapters;
   final Set<String> unlockedLessons;
@@ -34,6 +36,7 @@ class HomeState {
     this.error,
     this.journeys = const [],
     this.chapters = const [],
+    this.chapterSections = const {},
     this.chapterLessons = const {},
     this.unlockedChapters = const {},
     this.unlockedLessons = const {},
@@ -49,6 +52,7 @@ class HomeState {
     String? error,
     List<Journey>? journeys,
     List<Chapter>? chapters,
+    Map<String, List<Section>>? chapterSections,
     Map<String, List<Lesson>>? chapterLessons,
     Set<String>? unlockedChapters,
     Set<String>? unlockedLessons,
@@ -63,6 +67,7 @@ class HomeState {
       error: error,
       journeys: journeys ?? this.journeys,
       chapters: chapters ?? this.chapters,
+      chapterSections: chapterSections ?? this.chapterSections,
       chapterLessons: chapterLessons ?? this.chapterLessons,
       unlockedChapters: unlockedChapters ?? this.unlockedChapters,
       unlockedLessons: unlockedLessons ?? this.unlockedLessons,
@@ -97,10 +102,14 @@ class HomeController extends StateNotifier<HomeState> {
       final journeys = await _contentRepository.getJourneys();
       final chapters = await _contentRepository.getChapters();
 
-      // Load lessons for each chapter
+      // Load sections and lessons for each chapter
+      final chapterSections = <String, List<Section>>{};
       final chapterLessons = <String, List<Lesson>>{};
       for (final chapter in chapters) {
+        final sections = await _contentRepository.getSections(chapter.chapterId);
         final lessons = await _contentRepository.getLessons(chapter.chapterId);
+        
+        chapterSections[chapter.chapterId] = sections;
         chapterLessons[chapter.chapterId] = lessons;
       }
 
@@ -171,6 +180,7 @@ class HomeController extends StateNotifier<HomeState> {
         isLoading: false,
         journeys: journeys,
         chapters: chapters,
+        chapterSections: chapterSections,
         chapterLessons: chapterLessons,
         unlockedChapters: unlockedChapters,
         unlockedLessons: unlockedLessons,
@@ -399,6 +409,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     // Note: chapterIndex is local loop index here, might need adjustment for animations if strictly relying on global index
     // but sine wave is local to list, so it should be fine.
     final lessons = state.chapterLessons[chapter.chapterId] ?? [];
+    final sections = state.chapterSections[chapter.chapterId] ?? [];
     
     return Column(
       children: [
@@ -411,22 +422,133 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         
         const SizedBox(height: Spacing.space8),
 
-        // Lessons with Snake Layout
+        if (sections.isNotEmpty) ...[
+          // Group by Section
+          for (final section in sections) ...[
+             _buildSectionGroup(context, state, chapter, section, lessons),
+          ],
+          
+          // Fallback for lessons without section (if any)
+          // We can check if any lessons have no sectionId matching known sections
+           _buildOrphanLessons(context, state, chapter, lessons, sections),
+        ] else ...[
+          // Legacy/No Section mode
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: lessons.length,
+            itemBuilder: (context, index) {
+              final lesson = lessons[index];
+              final nextLesson = index < lessons.length - 1 ? lessons[index + 1] : null;
+              
+              return _buildSnakeItem(
+                  context, state, chapter, lesson, index, nextLesson);
+            },
+          ),
+        ],
+        
+        const SizedBox(height: Spacing.space48),
+      ],
+    );
+  }
+
+  Widget _buildSectionGroup(
+    BuildContext context, 
+    HomeState state, 
+    Chapter chapter, 
+    Section section, 
+    List<Lesson> allLessons
+  ) {
+    // Filter lessons for this section
+    // Use unitId mapping? Or assume sectionId match.
+    // In DB, Lesson has 'sectionId'.
+    final sectionLessons = allLessons.where((l) => l.sectionId == section.id).toList();
+    
+    if (sectionLessons.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Section Header
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.space24, 
+            vertical: Spacing.space12
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'SECTION ${section.sectionNumber}',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                ),
+              ),
+              Text(
+                section.sectionNameEn,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Lessons list for this section
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: lessons.length,
+          itemCount: sectionLessons.length,
           itemBuilder: (context, index) {
-            final lesson = lessons[index];
-            final nextLesson = index < lessons.length - 1 ? lessons[index + 1] : null;
+            final lesson = sectionLessons[index];
+            // Find next lesson to link to. 
+            // Ideally we link to next lesson in THIS section, or first of NEXT section?
+            // Simple approach: Next in this list. Cross-section linking might be tricky with snake path visually unless lists join.
+            // SnakePathPainter is relative to X offset. If we break listview, we break the continuous path?
+            // YES. Standard snake view usually is one continuous list.
+            // If we break it with Section Headers, the path will break.
+            // We should interrupt the path or make the header overlay?
+            // Let's interrupt path for sections. It's cleaner.
             
+            final nextLesson = index < sectionLessons.length - 1 ? sectionLessons[index + 1] : null;
+            
+            // Adjust index for sine wave continuity?
+            // Or reset sine wave for each section? Resetting is easier.
             return _buildSnakeItem(
                 context, state, chapter, lesson, index, nextLesson);
           },
         ),
         
-        const SizedBox(height: Spacing.space48),
+        const SizedBox(height: Spacing.space16),
       ],
+    );
+  }
+
+  Widget _buildOrphanLessons(
+    BuildContext context, 
+    HomeState state, 
+    Chapter chapter, 
+    List<Lesson> allLessons, 
+    List<Section> sections
+  ) {
+    // Find lessons not in any section
+    final sectionIds = sections.map((s) => s.id).toSet();
+    final orphanLessons = allLessons.where((l) => !sectionIds.contains(l.sectionId)).toList();
+    
+    if (orphanLessons.isEmpty) return const SizedBox.shrink();
+    
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: orphanLessons.length,
+      itemBuilder: (context, index) {
+        final lesson = orphanLessons[index];
+        final nextLesson = index < orphanLessons.length - 1 ? orphanLessons[index + 1] : null;
+        return _buildSnakeItem(
+            context, state, chapter, lesson, index, nextLesson);
+      },
     );
   }
 

@@ -13,6 +13,7 @@ class Lesson {
   final List<int> shlokasCovered;
   final int xpReward;
   final String? prerequisite;
+  final String sectionId;
 
   const Lesson({
     this.lessonId = '',
@@ -26,6 +27,7 @@ class Lesson {
     this.shlokasCovered = const [],
     this.xpReward = 0,
     this.prerequisite,
+    this.sectionId = '',
   });
 
   factory Lesson.fromFirestore(DocumentSnapshot doc) {
@@ -62,6 +64,7 @@ class Lesson {
         shlokasCovered: shlokas,
         xpReward: _safeInt(data, 'xpReward'),
         prerequisite: data['prerequisite']?.toString(), // nullable
+        sectionId: _safeString(data, 'sectionId'),
       );
     } catch (e, stack) {
       print('❌ Error parsing Lesson ${doc.id}: $e');
