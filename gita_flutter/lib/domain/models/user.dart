@@ -37,21 +37,101 @@ class AppUser {
   }
 
   factory AppUser.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>? ?? {};
-    return AppUser(
-      userId: doc.id,
-      email: data['email'] ?? '',
-      displayName: data['displayName'] ?? '',
-      photoUrl: data['photoUrl'],
-      createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      lastActiveAt: (data['lastActiveAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      gamification: Gamification.fromMap(data['gamification'] ?? {}),
-      progress: (data['progress'] as Map<String, dynamic>? ?? {})
-          .map((key, value) => MapEntry(key, LessonProgress.fromMap(value))),
-      weakAreas: List<String>.from(data['weakAreas'] ?? []),
-      achievements: List<String>.from(data['achievements'] ?? []),
-      preferences: UserPreferences.fromMap(data['preferences'] ?? {}),
-    );
+    try {
+      final data = doc.data() as Map<String, dynamic>? ?? {};
+      
+      // Safe progress parsing
+      Map<String, LessonProgress> progressMap = {};
+      final progressData = data['progress'] as Map<String, dynamic>?;
+      if (progressData != null) {
+        progressData.forEach((key, value) {
+          if (value is Map) {
+            try {
+              progressMap[key] = LessonProgress.fromMap(Map<String, dynamic>.from(value));
+            } catch (e) {
+              print('Error parsing progress for $key: $e');
+            }
+          }
+        });
+      }
+
+      // Safe gamification parsing
+      Gamification gamificationData;
+      try {
+        final gData = data['gamification'];
+        if (gData is Map) {
+          gamificationData = Gamification.fromMap(Map<String, dynamic>.from(gData));
+        } else {
+          gamificationData = const Gamification();
+        }
+      } catch (e) {
+        gamificationData = const Gamification();
+      }
+
+      // Safe preferences parsing
+      UserPreferences prefs;
+      try {
+        final pData = data['preferences'];
+        if (pData is Map) {
+          prefs = UserPreferences.fromMap(Map<String, dynamic>.from(pData));
+        } else {
+          prefs = const UserPreferences();
+        }
+      } catch (e) {
+        prefs = const UserPreferences();
+      }
+
+      return AppUser(
+        userId: doc.id,
+        email: _safeString(data, 'email'),
+        displayName: _safeString(data, 'displayName'),
+        photoUrl: data['photoUrl']?.toString(), 
+        createdAt: _safeDate(data, 'createdAt'),
+        lastActiveAt: _safeDate(data, 'lastActiveAt'),
+        gamification: gamificationData,
+        progress: progressMap,
+        weakAreas: _safeList<String>(data, 'weakAreas'),
+        achievements: _safeList<String>(data, 'achievements'),
+        preferences: prefs,
+      );
+    } catch (e, stack) {
+      print('❌ Error parsing User ${doc.id}: $e');
+      print(stack);
+      // Return minimal user to avoid crash if totally corrupt
+      return AppUser(
+        userId: doc.id,
+        createdAt: DateTime.now(),
+        lastActiveAt: DateTime.now(),
+        displayName: 'Error Loading User',
+      );
+    }
+  }
+
+  /// Safe helper for String extraction
+  static String _safeString(Map<String, dynamic> data, String key, {String fallback = ''}) {
+    final val = data[key];
+    if (val is String) return val;
+    if (val != null) return val.toString();
+    return fallback;
+  }
+
+  /// Safe helper for Date extraction
+  static DateTime _safeDate(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is Timestamp) return val.toDate();
+    if (val is String) return DateTime.tryParse(val) ?? DateTime.now();
+    return DateTime.now();
+  }
+
+  /// Safe helper for List extraction
+  static List<T> _safeList<T>(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is List) {
+      // Map everything to string then filter? Or just safe cast?
+      // Since T is usually String for us:
+      return val.map((e) => e?.toString() ?? '').whereType<T>().toList();
+    }
+    return [];
   }
 
   Map<String, dynamic> toFirestore() {
@@ -137,49 +217,67 @@ class Gamification {
     this.scenariosCorrect = 0,
   }) : lastEnergyRefill = lastEnergyRefill ?? const _DefaultDateTime();
 
-  /// Calculate user level from XP
   int get level => calculateLevel(wisdomPoints);
-
-  /// Get level title
   String get levelTitle => levelTitles[level - 1];
-
-  /// Get XP needed for next level
   int get xpToNextLevel => xpForNextLevel(wisdomPoints);
-
-  /// Get progress to next level (0.0 - 1.0)
   double get levelProgressPercent => levelProgress(wisdomPoints);
-
-  /// Check if user has earned a specific badge
   bool hasBadge(BadgeId badge) => earnedBadges.contains(badge);
 
   factory Gamification.fromMap(Map<String, dynamic> data) {
     return Gamification(
-      wisdomPoints: data['wisdomPoints'] ?? 0,
-      gems: data['gems'] ?? 0,
-      energy: data['energy'] ?? 5,
-      maxEnergy: data['maxEnergy'] ?? 5,
-      lastEnergyRefill: (data['lastEnergyRefill'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      currentStreak: data['currentStreak'] ?? 0,
-      longestStreak: data['longestStreak'] ?? 0,
-      lastCompletedDate: data['lastCompletedDate'] ?? '',
-      totalLessonsCompleted: data['totalLessonsCompleted'] ?? 0,
-      perfectScores: data['perfectScores'] ?? 0,
+      wisdomPoints: _safeInt(data, 'wisdomPoints'),
+      gems: _safeInt(data, 'gems'),
+      energy: _safeInt(data, 'energy', fallback: 5),
+      maxEnergy: _safeInt(data, 'maxEnergy', fallback: 5),
+      lastEnergyRefill: _safeDate(data, 'lastEnergyRefill'),
+      currentStreak: _safeInt(data, 'currentStreak'),
+      longestStreak: _safeInt(data, 'longestStreak'),
+      lastCompletedDate: _safeString(data, 'lastCompletedDate'),
+      totalLessonsCompleted: _safeInt(data, 'totalLessonsCompleted'),
+      perfectScores: _safeInt(data, 'perfectScores'),
+      
       earnedBadges: (data['earnedBadges'] as List<dynamic>? ?? [])
           .map((e) => BadgeId.values.firstWhere(
-                (b) => b.name == e,
+                (b) => b.name == e.toString(),
                 orElse: () => BadgeId.firstStep,
               ))
           .toList(),
-      lessonStrength: Map<String, int>.from(data['lessonStrength'] ?? {}),
+          
+      lessonStrength: (data['lessonStrength'] as Map<String, dynamic>? ?? {})
+          .map((key, value) => MapEntry(key, int.tryParse(value.toString()) ?? 0)),
+          
       lastPracticed: (data['lastPracticed'] as Map<String, dynamic>? ?? {})
           .map((key, value) => MapEntry(
                 key,
-                value is Timestamp ? value.toDate() : DateTime.parse(value),
+                value is Timestamp ? value.toDate() : (DateTime.tryParse(value.toString()) ?? DateTime.now()),
               )),
-      consecutivePerfects: data['consecutivePerfects'] ?? 0,
-      reflectionsCompleted: data['reflectionsCompleted'] ?? 0,
-      scenariosCorrect: data['scenariosCorrect'] ?? 0,
+              
+      consecutivePerfects: _safeInt(data, 'consecutivePerfects'),
+      reflectionsCompleted: _safeInt(data, 'reflectionsCompleted'),
+      scenariosCorrect: _safeInt(data, 'scenariosCorrect'),
     );
+  }
+
+  // Safe helpers duplicated here for simplicity or can be static public
+  static int _safeInt(Map<String, dynamic> data, String key, {int fallback = 0}) {
+    final val = data[key];
+    if (val is int) return val;
+    if (val != null) return int.tryParse(val.toString()) ?? fallback;
+    return fallback;
+  }
+  
+  static String _safeString(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is String) return val;
+    if (val != null) return val.toString();
+    return '';
+  }
+
+  static DateTime _safeDate(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is Timestamp) return val.toDate();
+    if (val is String) return DateTime.tryParse(val) ?? DateTime.now();
+    return DateTime.now(); // Default to now if missing/corrupt
   }
 
   Map<String, dynamic> toMap() {
@@ -246,7 +344,12 @@ class Gamification {
 
 class _DefaultDateTime implements DateTime {
   const _DefaultDateTime();
-  
+  @override
+  bool isAfter(DateTime other) => false;
+  @override
+  bool isBefore(DateTime other) => true;
+  @override
+  int compareTo(DateTime other) => -1;
   @override
   dynamic noSuchMethod(Invocation invocation) => DateTime.now();
 }
@@ -267,11 +370,24 @@ class LessonProgress {
 
   factory LessonProgress.fromMap(Map<String, dynamic> data) {
     return LessonProgress(
-      completedAt: (data['completedAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
-      score: data['score'] ?? 0,
-      attempts: data['attempts'] ?? 0,
-      timeSpent: data['timeSpent'] ?? 0,
+      completedAt: _safeDate(data, 'completedAt'),
+      score: _safeInt(data, 'score'),
+      attempts: _safeInt(data, 'attempts'),
+      timeSpent: _safeInt(data, 'timeSpent'),
     );
+  }
+  
+  static int _safeInt(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is int) return val;
+    return int.tryParse(val?.toString() ?? '') ?? 0;
+  }
+  
+  static DateTime _safeDate(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is Timestamp) return val.toDate();
+    if (val is String) return DateTime.tryParse(val) ?? DateTime.now();
+    return DateTime.now();
   }
 
   Map<String, dynamic> toMap() {
@@ -300,11 +416,19 @@ class UserPreferences {
 
   factory UserPreferences.fromMap(Map<String, dynamic> data) {
     return UserPreferences(
-      notificationsEnabled: data['notificationsEnabled'] ?? true,
-      dailyReminderTime: data['dailyReminderTime'] ?? '09:00',
-      language: data['language'] ?? 'hi',
-      theme: data['theme'] ?? 'light',
+      notificationsEnabled: data['notificationsEnabled'] as bool? ?? true,
+      dailyReminderTime: _safeString(data, 'dailyReminderTime', fallback: '09:00'),
+      // STRICTLY ENFORCE STRING for language and theme to fix Map subtype error
+      language: _safeString(data, 'language', fallback: 'hi'),
+      theme: _safeString(data, 'theme', fallback: 'light'),
     );
+  }
+  
+  static String _safeString(Map<String, dynamic> data, String key, {String fallback = ''}) {
+    final val = data[key];
+    if (val is String) return val;
+    if (val != null) return val.toString();
+    return fallback;
   }
 
   Map<String, dynamic> toMap() {

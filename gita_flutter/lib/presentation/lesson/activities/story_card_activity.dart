@@ -124,8 +124,8 @@ class _StoryCardActivityState extends State<StoryCardActivity>
                     const SizedBox(width: Spacing.space8),
                     Flexible(
                       child: Text(
-                        widget.content.narratorDialogue.isNotEmpty
-                            ? widget.content.narratorDialogue
+                        widget.content.krishnaMessage.isNotEmpty
+                            ? widget.content.krishnaMessage
                             : 'Let me share some wisdom with you...',
                         style: theme.textTheme.bodyMedium?.copyWith(
                           fontStyle: FontStyle.italic,

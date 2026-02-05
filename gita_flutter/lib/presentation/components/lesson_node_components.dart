@@ -10,16 +10,15 @@ enum MilestoneType {
 }
 
 /// Section header for chapter groupings - Duolingo style
-class SectionHeader extends StatelessWidget {
-  final int sectionNumber;
-  final int unitNumber;
+/// Chapter header for chapter groupings
+class ChapterHeader extends StatelessWidget {
+  final int chapterNumber;
   final String description;
   final VoidCallback? onInfoTap;
 
-  const SectionHeader({
+  const ChapterHeader({
     super.key,
-    required this.sectionNumber,
-    required this.unitNumber,
+    required this.chapterNumber,
     required this.description,
     this.onInfoTap,
   });
@@ -45,7 +44,7 @@ class SectionHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'SECTION $sectionNumber, UNIT $unitNumber',
+                  'CHAPTER $chapterNumber',
                   style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: Theme.of(context).colorScheme.onPrimary.withOpacity(0.9),
                     letterSpacing: 1.0,
@@ -78,7 +77,7 @@ class SectionHeader extends StatelessWidget {
                 size: 22,
               ),
               onPressed: onInfoTap,
-              tooltip: 'View shlokas in this unit',
+              tooltip: 'View shlokas in this chapter',
             ),
           ),
         ],

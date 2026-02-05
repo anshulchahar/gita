@@ -29,20 +29,45 @@ class Chapter {
   });
 
   factory Chapter.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>? ?? {};
-    return Chapter(
-      chapterId: doc.id,
-      chapterNumber: data['chapterNumber'] ?? 0,
-      chapterName: data['chapterName'] ?? '',
-      chapterNameEn: data['chapterNameEn'] ?? '',
-      description: data['description'] ?? '',
-      descriptionEn: data['descriptionEn'] ?? '',
-      shlokaCount: data['shlokaCount'] ?? 0,
-      order: data['order'] ?? 0,
-      isUnlocked: data['isUnlocked'] ?? false,
-      icon: data['icon'] ?? '',
-      color: data['color'] ?? '',
-    );
+    try {
+      final data = doc.data() as Map<String, dynamic>? ?? {};
+      return Chapter(
+        chapterId: doc.id,
+        chapterNumber: _safeInt(data, 'chapterNumber'),
+        chapterName: _safeString(data, 'chapterName'),
+        chapterNameEn: _safeString(data, 'chapterNameEn'),
+        description: _safeString(data, 'description'),
+        descriptionEn: _safeString(data, 'descriptionEn'),
+        shlokaCount: _safeInt(data, 'shlokaCount'),
+        order: _safeInt(data, 'order'),
+        isUnlocked: data['isUnlocked'] == true,
+        icon: _safeString(data, 'icon'),
+        color: _safeString(data, 'color'),
+      );
+    } catch (e, stack) {
+      print('❌ Error parsing Chapter ${doc.id}: $e');
+      print(stack);
+      // Return a dummy chapter to prevent crash
+      return Chapter(
+        chapterId: doc.id,
+        chapterNumber: 0,
+        chapterName: 'Error loading chapter',
+      );
+    }
+  }
+
+  static String _safeString(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is String) return val;
+    if (val != null) return val.toString();
+    return '';
+  }
+
+  static int _safeInt(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is int) return val;
+    if (val != null) return int.tryParse(val.toString()) ?? 0;
+    return 0;
   }
 
   Map<String, dynamic> toFirestore() {

@@ -101,7 +101,7 @@ class _ReflectionPromptActivityState extends State<ReflectionPromptActivity> {
               ],
             ),
             
-            const SizedBox(height: Spacing.space20),
+            const SizedBox(height: 20),
             
             // Shloka reference if available
             if (widget.content.shlokaSanskrit.isNotEmpty) ...[

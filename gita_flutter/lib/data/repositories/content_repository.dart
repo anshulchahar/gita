@@ -25,7 +25,16 @@ class ContentRepository {
           .collection(Collections.chapters)
           .orderBy('chapterNumber')
           .get();
-      return snapshot.docs.map((doc) => Chapter.fromFirestore(doc)).toList();
+      
+      final List<Chapter> chapters = [];
+      for (final doc in snapshot.docs) {
+        try {
+          chapters.add(Chapter.fromFirestore(doc));
+        } catch (e) {
+          print('❌ Error parsing chapter ${doc.id}: $e');
+        }
+      }
+      return chapters;
     } catch (e) {
       throw Exception('Failed to get chapters: $e');
     }
@@ -37,8 +46,17 @@ class ContentRepository {
         .collection(Collections.chapters)
         .orderBy('chapterNumber')
         .snapshots()
-        .map((snapshot) => 
-            snapshot.docs.map((doc) => Chapter.fromFirestore(doc)).toList());
+        .map((snapshot) {
+            final List<Chapter> chapters = [];
+            for (final doc in snapshot.docs) {
+              try {
+                chapters.add(Chapter.fromFirestore(doc));
+              } catch (e) {
+                print('❌ Error parsing chapter ${doc.id}: $e');
+              }
+            }
+            return chapters;
+        });
   }
 
   /// Get a single chapter by ID
@@ -66,7 +84,15 @@ class ContentRepository {
           .collection(Collections.lessons)
           .where('chapterId', isEqualTo: chapterId)
           .get();
-      final lessons = snapshot.docs.map((doc) => Lesson.fromFirestore(doc)).toList();
+      
+      final List<Lesson> lessons = [];
+      for (final doc in snapshot.docs) {
+        try {
+          lessons.add(Lesson.fromFirestore(doc));
+        } catch (e) {
+          print('❌ Error parsing lesson ${doc.id}: $e');
+        }
+      }
       lessons.sort((a, b) => a.order.compareTo(b.order));
       return lessons;
     } catch (e) {
@@ -81,7 +107,14 @@ class ContentRepository {
         .where('chapterId', isEqualTo: chapterId)
         .snapshots()
         .map((snapshot) {
-            final lessons = snapshot.docs.map((doc) => Lesson.fromFirestore(doc)).toList();
+            final List<Lesson> lessons = [];
+            for (final doc in snapshot.docs) {
+              try {
+                lessons.add(Lesson.fromFirestore(doc));
+              } catch (e) {
+                print('❌ Error parsing lesson ${doc.id}: $e');
+              }
+            }
             lessons.sort((a, b) => a.order.compareTo(b.order));
             return lessons;
         });
@@ -112,7 +145,16 @@ class ContentRepository {
           .collection(Collections.questions)
           .where('lessonId', isEqualTo: lessonId)
           .get();
-      final questions = snapshot.docs.map((doc) => Question.fromFirestore(doc)).toList();
+      
+      final List<Question> questions = [];
+      for (final doc in snapshot.docs) {
+        try {
+          questions.add(Question.fromFirestore(doc));
+        } catch (e) {
+          print('Error parsing question ${doc.id}: $e');
+        }
+      }
+      
       questions.sort((a, b) => a.order.compareTo(b.order));
       return questions;
     } catch (e) {
@@ -127,7 +169,14 @@ class ContentRepository {
         .where('lessonId', isEqualTo: lessonId)
         .snapshots()
         .map((snapshot) {
-            final questions = snapshot.docs.map((doc) => Question.fromFirestore(doc)).toList();
+            final List<Question> questions = [];
+            for (final doc in snapshot.docs) {
+              try {
+                questions.add(Question.fromFirestore(doc));
+              } catch (e) {
+                print('Error parsing question ${doc.id}: $e');
+              }
+            }
             questions.sort((a, b) => a.order.compareTo(b.order));
             return questions;
         });

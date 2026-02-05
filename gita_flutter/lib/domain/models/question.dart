@@ -64,22 +64,33 @@ extension QuestionTypeExtension on QuestionType {
   }
 
   static QuestionType fromString(String value) {
-    switch (value) {
-      case 'STORY_CARD':
+    // Handle both uppercase (STORY_CARD) and lowercase (storyCard) formats
+    final normalized = value.toLowerCase();
+    switch (normalized) {
+      case 'story_card':
+      case 'storycard':
         return QuestionType.storyCard;
-      case 'MULTIPLE_CHOICE_TRANSLATION':
+      case 'multiple_choice_translation':
+      case 'multiplechoice':
+      case 'multiplechoicetranslation':
         return QuestionType.multipleChoiceTranslation;
-      case 'FILL_IN_BLANK':
+      case 'fill_in_blank':
+      case 'fillinblank':
         return QuestionType.fillInBlank;
-      case 'REFLECTION_PROMPT':
+      case 'reflection_prompt':
+      case 'reflectionprompt':
         return QuestionType.reflectionPrompt;
-      case 'SCENARIO_CHALLENGE':
+      case 'scenario_challenge':
+      case 'scenariochallenge':
         return QuestionType.scenarioChallenge;
-      case 'WORD_MATCHING':
+      case 'word_matching':
+      case 'wordmatching':
         return QuestionType.wordMatching;
-      case 'CONTEXTUAL_APPLICATION':
+      case 'contextual_application':
+      case 'contextualapplication':
         return QuestionType.contextualApplication;
-      case 'TRUE_FALSE':
+      case 'true_false':
+      case 'truefalse':
         return QuestionType.trueFalse;
       default:
         return QuestionType.multipleChoiceTranslation;
@@ -104,7 +115,7 @@ class QuestionContent {
   /// The main story/context text for Story Card activities
   final String storyText;
   /// Krishna's narrative dialogue for Story Card
-  final String narratorDialogue;
+  final String krishnaMessage;
 
   // === Reflection Prompt fields ===
   /// The reflection question for journal-style activities
@@ -132,7 +143,7 @@ class QuestionContent {
     this.keywords = const [],
     // Story Card
     this.storyText = '',
-    this.narratorDialogue = '',
+    this.krishnaMessage = '',
     // Reflection Prompt
     this.reflectionQuestion = '',
     this.reflectionHint = '',
@@ -143,27 +154,81 @@ class QuestionContent {
   });
 
   factory QuestionContent.fromMap(Map<String, dynamic> data) {
+    // STRICT CONTENT PARSING MATCHING unit1.json / unit2.json
     return QuestionContent(
-      shlokaSanskrit: data['shlokaSanskrit'] ?? '',
-      shlokaTransliteration: data['shlokaTransliteration'] ?? '',
-      shlokaNumber: data['shlokaNumber'] ?? '',
-      questionText: data['questionText'] ?? '',
-      options: List<String>.from(data['options'] ?? []),
-      correctAnswerIndex: data['correctAnswerIndex'] ?? 0,
-      explanation: data['explanation'] ?? '',
-      realLifeApplication: data['realLifeApplication'] ?? '',
-      keywords: List<String>.from(data['keywords'] ?? []),
+      shlokaSanskrit: _safeString(data, 'shlokaSanskrit'),
+      shlokaTransliteration: _safeString(data, 'shlokaTransliteration'),
+      shlokaNumber: _safeString(data, 'shlokaNumber'),
+      
+      // Question Text: prefer 'questionText', fallback for some legacy consistency if needed but aimed at JSON
+      questionText: _safeString(data, 'questionText'),
+      
+      options: _extractOptions(data),
+      correctAnswerIndex: _safeInt(data, 'correctAnswerIndex'),
+      
+      explanation: _safeString(data, 'explanation'),
+      realLifeApplication: _safeString(data, 'realLifeApplication'),
+      keywords: _safeStringList(data, 'keywords'),
+      
       // Story Card
-      storyText: data['storyText'] ?? '',
-      narratorDialogue: data['narratorDialogue'] ?? '',
+      // JSON uses 'story' and 'krishnaMessage'
+      storyText: _safeString(data, 'story'), 
+      krishnaMessage: _safeString(data, 'krishnaMessage'),
+      
       // Reflection Prompt
-      reflectionQuestion: data['reflectionQuestion'] ?? '',
-      reflectionHint: data['reflectionHint'] ?? '',
+      // JSON uses 'prompt'
+      reflectionQuestion: _safeString(data, 'prompt'),
+      reflectionHint: _safeString(data, 'hint'), // 'hint' not always present but good fallback
+      
       // Scenario Challenge
-      scenarioDescription: data['scenarioDescription'] ?? '',
-      scenarioContext: data['scenarioContext'] ?? '',
-      scenarioTeaching: data['scenarioTeaching'] ?? '',
+      // JSON uses 'scenario', 'scenarioTitle'
+      scenarioDescription: _safeString(data, 'scenario'),
+      scenarioContext: _safeString(data, 'scenarioTitle'),
+      scenarioTeaching: _safeString(data, 'scenarioTeaching'),
     );
+  }
+
+  /// Safely extract a string value, with optional fallback key
+  static String _safeString(Map<String, dynamic> data, String key, {String? fallbackKey}) {
+    var value = data[key];
+    if (value == null && fallbackKey != null) {
+      value = data[fallbackKey];
+    }
+    if (value is String) return value;
+    if (value != null) return value.toString();
+    return '';
+  }
+
+  /// Safely extract an int value
+  static int _safeInt(Map<String, dynamic> data, String key) {
+    final value = data[key];
+    if (value is int) return value;
+    if (value != null) return int.tryParse(value.toString()) ?? 0;
+    return 0;
+  }
+
+  /// Safely extract a list of strings
+  static List<String> _safeStringList(Map<String, dynamic> data, String key) {
+    final value = data[key];
+    if (value is List) {
+      return value.map((e) => e?.toString() ?? '').toList();
+    }
+    return [];
+  }
+
+  /// Helper to extract options from different data formats
+  static List<String> _extractOptions(Map<String, dynamic> data) {
+    // Check both 'options' and 'optionsEnglish' if you have dual language in future, 
+    // but unit1.json just uses 'options' as list of strings usually.
+    final value = data['options'];
+    if (value == null) return [];
+    if (value is! List) return [];
+    
+    return value.map((o) {
+      if (o is String) return o;
+      if (o is Map) return o['text']?.toString() ?? '';
+      return o?.toString() ?? '';
+    }).toList().map((e) => e.toString()).toList();
   }
 
   Map<String, dynamic> toMap() {
@@ -178,14 +243,14 @@ class QuestionContent {
       'realLifeApplication': realLifeApplication,
       'keywords': keywords,
       // Story Card
-      'storyText': storyText,
-      'narratorDialogue': narratorDialogue,
+      'story': storyText,
+      'krishnaMessage': krishnaMessage,
       // Reflection Prompt
-      'reflectionQuestion': reflectionQuestion,
-      'reflectionHint': reflectionHint,
+      'prompt': reflectionQuestion,
+      'hint': reflectionHint,
       // Scenario Challenge
-      'scenarioDescription': scenarioDescription,
-      'scenarioContext': scenarioContext,
+      'scenario': scenarioDescription,
+      'scenarioTitle': scenarioContext,
       'scenarioTeaching': scenarioTeaching,
     };
   }
@@ -211,17 +276,63 @@ class Question {
     this.timeLimit = 60,
   });
 
+
   factory Question.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>? ?? {};
-    return Question(
-      questionId: doc.id,
-      lessonId: data['lessonId'] ?? '',
-      type: QuestionTypeExtension.fromString(data['type'] ?? ''),
-      order: data['order'] ?? 0,
-      content: QuestionContent.fromMap(data['content'] ?? {}),
-      points: data['points'] ?? 10,
-      timeLimit: data['timeLimit'] ?? 60,
-    );
+    try {
+      final data = doc.data() as Map<String, dynamic>? ?? {};
+      
+      // SAFE PARSING OF CORE FIELDS
+      
+      // LessonId
+      String lessonId = '';
+      if (data['lessonId'] != null) lessonId = data['lessonId'].toString();
+      
+      // Type
+      String typeStr = '';
+      if (data['type'] != null) typeStr = data['type'].toString();
+      
+      // Order, Points, TimeLimit
+      int order = _safeInt(data, 'order');
+      int points = _safeInt(data, 'points', fallback: 10);
+      int timeLimit = _safeInt(data, 'timeLimit', fallback: 60);
+
+      // Content Map
+      Map<String, dynamic> contentMap = {};
+      if (data['content'] is Map) {
+        contentMap = Map<String, dynamic>.from(data['content']);
+      }
+
+      return Question(
+        questionId: doc.id,
+        lessonId: lessonId,
+        type: QuestionTypeExtension.fromString(typeStr),
+        order: order,
+        content: QuestionContent.fromMap(contentMap),
+        points: points,
+        timeLimit: timeLimit,
+      );
+    } catch (e, stackTrace) {
+      // Log the specific document that failed
+      print('❌ Error parsing Question ${doc.id}: $e');
+      print(stackTrace);
+      // Return a safe 'error' question to prevent app crash
+      return Question(
+        questionId: doc.id,
+        type: QuestionType.storyCard,
+        content: QuestionContent(
+          questionText: 'Error loading question (${doc.id})',
+          explanation: e.toString(),
+        ),
+      );
+    }
+  }
+
+  
+  static int _safeInt(Map<String, dynamic> data, String key, {int fallback = 0}) {
+    final val = data[key];
+    if (val is int) return val;
+    if (val != null) return int.tryParse(val.toString()) ?? fallback;
+    return fallback;
   }
 
   Map<String, dynamic> toFirestore() {

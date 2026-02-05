@@ -346,10 +346,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     
     return Column(
       children: [
-        // Section header
-        SectionHeader(
-          sectionNumber: chapter.chapterNumber,
-          unitNumber: chapter.chapterNumber,
+        // Chapter header
+        ChapterHeader(
+          chapterNumber: chapter.chapterNumber,
           description: chapter.chapterNameEn,
           onInfoTap: () => _showShlokasDialog(context, chapter, lessons),
         ),
