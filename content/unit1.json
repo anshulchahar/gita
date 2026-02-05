@@ -10,7 +10,9 @@
         "icon": "🏹",
         "color": "#FF9933",
         "description": "Explore the universal experience of facing difficult choices through Arjuna's crisis on the battlefield.",
-        "descriptionHi": "कुरुक्षेत्र के युद्धक्षेत्र में अर्जुन के संकट के माध्यम से कठिन निर्णयों का सामना करने के सार्वभौमिक अनुभव का अन्वेषण करें।"
+        "descriptionHi": "कुरुक्षेत्र के युद्धक्षेत्र में अर्जुन के संकट के माध्यम से कठिन निर्णयों का सामना करने के सार्वभौमिक अनुभव का अन्वेषण करें।",
+        "journeyId": "journey_1",
+        "shlokasCovered": "1-47"
     },
     "sections": [
         {
@@ -186,17 +188,52 @@
     ],
     "questions": [
         {
+            "questionId": "q_1_1_1_scenario_1",
+            "lessonId": "lesson_1_1_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Impossible Choice",
+                "scenarioTitleHi": "असंभव चुनाव",
+                "scenario": "You've just been promoted to lead a project. But you discover the project requires you to work directly against your former team—people who are still your friends. Your boss expects you to win at their expense. What feels closest to your initial reaction?",
+                "scenarioHi": "आपको एक प्रोजेक्ट का नेतृत्व करने के लिए पदोन्नत किया गया है। लेकिन आप पाते हैं कि इस प्रोजेक्ट में आपको अपनी पुरानी टीम के खिलाफ काम करना है। आपकी पहली प्रतिक्रिया क्या है?",
+                "options": [
+                    {
+                        "text": "Refuse the promotion to keep the peace",
+                        "textHi": "पदोन्नति अस्वीकार करें",
+                        "feedback": "Avoiding the situation might seem peaceful, but it's often running away from growth.",
+                        "feedbackHi": "स्थिति से बचना शांतिपूर्ण लग सकता है, लेकिन यह विकास से भागना है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Feel conflicted and paralyzed",
+                        "textHi": "द्वंद्व और पक्षाघात महसूस करना",
+                        "feedback": "This is exactly how Arjuna felt! Confusion is often the first step before seeking deeper wisdom.",
+                        "feedbackHi": "बिल्कुल अर्जुन की तरह! गहरा ज्ञान प्राप्त करने से पहले भ्रम अक्सर पहला कदम होता है।",
+                        "isOptimal": true
+                    },
+                    {
+                        "text": "Ignore the friends and crush them",
+                        "textHi": "दोस्तों को अनदेखा करें और उन्हें हराएं",
+                        "feedback": "Ruthlessness ignores the human cost of our actions.",
+                        "feedbackHi": "निर्दयता हमारे कार्यों की मानवीय कीमत को अनदेखा करती है।",
+                        "isOptimal": false
+                    }
+                ]
+            }
+        },
+        {
             "questionId": "q_1_1_1_story_1",
             "lessonId": "lesson_1_1_1",
             "type": "storyCard",
-            "order": 1,
+            "order": 2,
             "xpReward": 10,
             "content": {
                 "title": "The Battlefield of Kurukshetra",
                 "titleHi": "कुरुक्षेत्र का युद्धक्षेत्र",
-                "story": "Picture this: Two massive armies face each other. Millions of warriors, horses, elephants, chariots. The air is thick with tension. In the middle stands one chariot with a white flag. Inside sits Arjuna, the greatest archer in the world, with Lord Krishna as his charioteer. Arjuna asks Krishna to drive him between the two armies so he can see who he must fight. What happens next changes everything...",
-                "storyHi": "कल्पना करो: दो विशाल सेनाएं आमने-सामने। लाखों योद्धा, घोड़े, हाथी, रथ। हवा में तनाव भरा है। बीच में एक सफेद ध्वज वाला रथ खड़ा है। उसमें बैठे हैं अर्जुन - विश्व के सबसे महान धनुर्धर, और उनके सारथी हैं भगवान श्रीकृष्ण। अर्जुन कृष्ण से कहते हैं कि उन्हें दोनों सेनाओं के बीच ले चलें ताकि वे देख सकें कि उन्हें किससे लड़ना है। जो अगला होता है, वह सब कुछ बदल देता है...",
-                "imagePrompt": "Ancient Indian battlefield at dawn, two massive armies, golden chariot in center with divine light",
+                "story": "Picture this: Two massive armies face each other. Millions of warriors. The air is thick with tension. In the middle stands one chariot with a white flag. Inside sits Arjuna, the greatest archer, with Lord Krishna as his driver. Arjuna asks Krishna to drive him between the two armies so he can see who he must fight. This moment of observation changes everything.",
+                "storyHi": "कल्पना करो: दो विशाल सेनाएं आमने-सामने। बीच में एक सफेद ध्वज वाला रथ खड़ा है। उसमें बैठे हैं अर्जुन, और उनके सारथी हैं भगवान श्रीकृष्ण। अर्जुन कृष्ण से कहते हैं कि उन्हें दोनों सेनाओं के बीच ले चलें। अवलोकन का यह क्षण सब कुछ बदल देता है।",
                 "krishnaMessage": "Every great transformation begins with a moment of stillness before the storm."
             }
         },
@@ -204,7 +241,7 @@
             "questionId": "q_1_1_1_mc_1",
             "lessonId": "lesson_1_1_1",
             "type": "multipleChoice",
-            "order": 2,
+            "order": 3,
             "xpReward": 15,
             "content": {
                 "questionText": "Why did Arjuna ask Krishna to place the chariot between the two armies?",
@@ -222,49 +259,42 @@
                     "युद्ध से भागने के लिए"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Arjuna wanted to see his opponents face-to-face. He was confident and ready, seeking to know exactly who stood against him. This confidence would soon turn to confusion when he recognized his own family members.",
-                "explanationHi": "अर्जुन अपने विरोधियों को आमने-सामने देखना चाहते थे। वे आत्मविश्वास से भरे और तैयार थे। लेकिन जब उन्होंने अपने परिवार के सदस्यों को देखा, तो यह आत्मविश्वास भ्रम में बदल गया।",
+                "explanation": "Arjuna wanted to see his opponents face-to-face. He was confident and ready, seeking to know exactly who stood against him.",
+                "explanationHi": "अर्जुन अपने विरोधियों को आमने-सामने देखना चाहते थे। वे ठीक-ठीक जानना चाहते थे कि उनके खिलाफ कौन खड़ा है।",
                 "realLifeApplication": "Before taking on any challenge, it's wise to fully understand what we're facing."
             }
         },
         {
-            "questionId": "q_1_1_1_scenario_1",
+            "questionId": "q_1_1_1_scenario_2",
             "lessonId": "lesson_1_1_1",
             "type": "scenarioChallenge",
-            "order": 3,
+            "order": 4,
             "xpReward": 25,
             "content": {
-                "scenarioTitle": "The Impossible Choice",
-                "scenarioTitleHi": "असंभव चुनाव",
-                "scenario": "You've just been promoted to lead a project. But you discover the project requires you to work directly against your former team—people who are still your friends. Your boss expects you to win at their expense. What do you do?",
-                "scenarioHi": "आपको एक प्रोजेक्ट का नेतृत्व करने के लिए पदोन्नत किया गया है। लेकिन आप पाते हैं कि इस प्रोजेक्ट में आपको अपनी पुरानी टीम के खिलाफ काम करना है—वे लोग जो अभी भी आपके मित्र हैं। आपका बॉस चाहता है कि आप उनकी कीमत पर जीतें। आप क्या करेंगे?",
+                "scenarioTitle": "Seeking Clarity",
+                "scenarioTitleHi": "स्पष्टता की तलाश",
+                "scenario": "You are overwhelmed by the complexity of the new project. You don't know where to start. What is the wisest next step?",
+                "scenarioHi": "आप नए प्रोजेक्ट की जटिलता से अभिभूत हैं। आपको नहीं पता कि कहां से शुरू करें। सबसे बुद्धिमानी वाला अगला कदम क्या है?",
                 "options": [
                     {
-                        "text": "Refuse the promotion",
-                        "textHi": "पदोन्नति अस्वीकार करें",
-                        "feedback": "Avoiding the situation might seem peaceful, but it's running away from growth. Arjuna considered this too, but Krishna teaches that avoiding our duties isn't the answer.",
-                        "feedbackHi": "स्थिति से बचना शांतिपूर्ण लग सकता है, लेकिन यह विकास से भागना है। अर्जुन ने भी यही सोचा, लेकिन कृष्ण सिखाते हैं कि कर्तव्यों से भागना उत्तर नहीं है।",
+                        "text": "Guess and hope for the best",
+                        "textHi": "अंदाजा लगाएं और अच्छे की उम्मीद करें",
+                        "feedback": "Blind action often leads to mistakes.",
+                        "feedbackHi": "अंधाधुंध कार्रवाई अक्सर गलतियों की ओर ले जाती है।",
                         "isOptimal": false
                     },
                     {
-                        "text": "Take the job but sabotage yourself",
-                        "textHi": "काम लें लेकिन खुद को नुकसान पहुंचाएं",
-                        "feedback": "This is dishonest to everyone, including yourself. Half-hearted action helps no one.",
-                        "feedbackHi": "यह सभी के साथ बेईमानी है, खुद के साथ भी। अधूरा प्रयास किसी की मदद नहीं करता।",
-                        "isOptimal": false
-                    },
-                    {
-                        "text": "Seek guidance from a mentor before deciding",
-                        "textHi": "निर्णय लेने से पहले किसी मार्गदर्शक से सलाह लें",
-                        "feedback": "Like Arjuna turning to Krishna, seeking wisdom before making big decisions shows maturity. Understanding the full picture helps us act with clarity.",
-                        "feedbackHi": "जैसे अर्जुन ने कृष्ण की ओर रुख किया, बड़े निर्णयों से पहले ज्ञान की खोज परिपक्वता दिखाती है। पूरी तस्वीर समझने से हमें स्पष्टता से कार्य करने में मदद मिलती है।",
+                        "text": "Pause and observe the situation clearly",
+                        "textHi": "रुकें और स्थिति का स्पष्ट रूप से निरीक्षण करें",
+                        "feedback": "Just as Arjuna paused between the armies to see clearly, taking a moment to observe helps us understand the true nature of our challenge.",
+                        "feedbackHi": "जैसे अर्जुन ने सेनाओं के बीच रुककर स्पष्ट रूप से देखा, वैसे ही निरीक्षण करने के लिए एक पल लेने से हमें अपनी चुनौती की वास्तविक प्रकृति को समझने में मदद मिलती है।",
                         "isOptimal": true
                     },
                     {
-                        "text": "Go all in and crush your former team",
-                        "textHi": "पूरी ताकत से जाएं और पुरानी टीम को हराएं",
-                        "feedback": "Ruthless competition without consideration for relationships can win battles but lose long-term trust and peace of mind.",
-                        "feedbackHi": "रिश्तों की परवाह किए बिना निर्दयी प्रतिस्पर्धा लड़ाइयां जीत सकती है लेकिन दीर्घकालिक विश्वास और मन की शांति खो सकती है।",
+                        "text": "Complain about the difficulty",
+                        "textHi": "कठिनाई के बारे में शिकायत करें",
+                        "feedback": "Complaining drains energy needed for action.",
+                        "feedbackHi": "शिकायत करने से कार्रवाई के लिए आवश्यक ऊर्जा खत्म हो जाती है।",
                         "isOptimal": false
                     }
                 ]
@@ -274,44 +304,66 @@
             "questionId": "q_1_1_1_reflection_1",
             "lessonId": "lesson_1_1_1",
             "type": "reflectionPrompt",
-            "order": 4,
+            "order": 5,
             "xpReward": 20,
             "content": {
                 "prompt": "Think of a time when you had to make a difficult decision. What made it hard? Who did you turn to for guidance?",
                 "promptHi": "उस समय के बारे में सोचें जब आपको कोई कठिन निर्णय लेना पड़ा। क्या चीज़ इसे मुश्किल बनाती थी? मार्गदर्शन के लिए आपने किसकी ओर रुख किया?",
                 "guidingQuestions": [
                     "What emotions did you feel?",
-                    "Did you feel pulled in different directions?",
-                    "What helped you finally decide?"
-                ],
-                "guidingQuestionsHi": [
-                    "आपने क्या भावनाएं महसूस कीं?",
-                    "क्या आप अलग-अलग दिशाओं में खिंचे महसूस कर रहे थे?",
-                    "अंत में निर्णय लेने में क्या मदद मिली?"
+                    "Did you feel pulled in different directions?"
                 ],
                 "krishnaWisdom": "In moments of confusion, pause. The answer often comes when we stop fighting and start listening."
+            }
+        },
+        {
+            "questionId": "q_1_1_2_scenario_1",
+            "lessonId": "lesson_1_1_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Unexpected Familiarity",
+                "scenarioTitleHi": "अप्रत्याशित परिचय",
+                "scenario": "You are preparing to file a complaint against a competitor who stole your ideas. As you review their file, you realize the company is run by an old college friend who once helped you during tough times. How does this change your feeling?",
+                "scenarioHi": "आप एक प्रतियोगी के खिलाफ शिकायत दर्ज करने की तैयारी कर रहे हैं जिसने आपके विचार चुरा लिए हैं। जब आप उनकी फाइल देखते हैं, तो आपको पता चलता है कि कंपनी एक पुराने कॉलेज मित्र द्वारा चलाई जा रही है जिसने कभी कठिन समय में आपकी मदद की थी। यह आपकी भावना को कैसे बदलता है?",
+                "options": [
+                    {
+                        "text": "It doesn't. Business is business.",
+                        "textHi": "कोई फर्क नहीं पड़ता। व्यापार व्यापार है।",
+                        "feedback": "Ignoring personal connections makes us robotic. Arjuna couldn't just ignore who he was fighting.",
+                        "feedbackHi": "व्यक्तिगत संबंधों की अनदेखी हमें रोबोटिक बनाती है। अर्जुन केवल यह अनदेखा नहीं कर सकते थे कि वे किससे लड़ रहे थे।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "I feel suddenly weakened and hesitant.",
+                        "textHi": "मैं अचानक कमजोर और हिचकिचाता हुआ महसूस करता हूं।",
+                        "feedback": "This is natural! When 'enemy' becomes 'friend', our resolve naturally wavers. This is exactly Arjuna's dilemma.",
+                        "feedbackHi": "यह स्वाभाविक है! जब 'दुश्मन' 'दोस्त' बन जाता है, तो हमारा संकल्प स्वाभाविक रूप से डगमगा जाता है। यह ठीक अर्जुन की दुविधा है।",
+                        "isOptimal": true
+                    }
+                ]
             }
         },
         {
             "questionId": "q_1_1_2_story_1",
             "lessonId": "lesson_1_1_2",
             "type": "storyCard",
-            "order": 1,
+            "order": 2,
             "xpReward": 10,
             "content": {
                 "title": "What Arjuna Saw",
                 "titleHi": "अर्जुन ने क्या देखा",
-                "story": "As the chariot rolled to a stop between the armies, Arjuna's eyes began to recognize faces. There was his grandfather Bhishma—the man who had taught him to shoot his first arrow. There was his teacher Drona—who made him the archer he is today. There were his cousins, uncles, nephews... This wasn't an enemy army. This was his family.",
-                "storyHi": "जब रथ दोनों सेनाओं के बीच रुका, अर्जुन की आंखें चेहरे पहचानने लगीं। वहां थे उनके दादा भीष्म—जिन्होंने उन्हें पहला तीर चलाना सिखाया था। वहां थे उनके गुरु द्रोण—जिन्होंने उन्हें आज का धनुर्धर बनाया। वहां थे उनके चचेरे भाई, चाचा, भतीजे... यह शत्रु सेना नहीं थी। यह उनका परिवार था।",
-                "imagePrompt": "Arjuna in chariot looking shocked, seeing familiar faces of elderly warriors and family members in opposing army",
-                "krishnaMessage": "Sometimes the hardest battles are not with enemies, but with those we love."
+                "story": "As the chariot rolled to a stop, Arjuna's eyes began to recognize faces. There was Bhishma, his grandfather. There was Drona, his teacher. There were cousins, uncles, friends. This wasn't just an faceless enemy army. This was his family. The people he loved most were the ones he had to fight.",
+                "storyHi": "जब रथ रुका, अर्जुन की आंखें चेहरे पहचानने लगीं। वहां भीष्म थे, उनके दादा। द्रोण थे, उनके गुरु। चचेरे भाई, चाचा, मित्र थे। यह सिर्फ एक बिना चेहरे वाली दुश्मन सेना नहीं थी। यह उनका परिवार था। जिन लोगों से वे सबसे ज्यादा प्यार करते थे, वे ही थे जिनसे उन्हें लड़ना था।",
+                "krishnaMessage": "Sometimes the hardest battles are not with enemies, but with our own attachments."
             }
         },
         {
             "questionId": "q_1_1_2_mc_1",
             "lessonId": "lesson_1_1_2",
             "type": "multipleChoice",
-            "order": 2,
+            "order": 3,
             "xpReward": 15,
             "content": {
                 "questionText": "What made Arjuna's situation so difficult?",
@@ -329,64 +381,211 @@
                     "कृष्ण ने उनकी मदद करने से मना कर दिया"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Arjuna's crisis wasn't about skill or strength—he was the most skilled warrior. It was about facing people he loved and respected in battle. This internal conflict is what makes the Gita so relevant to our lives.",
-                "explanationHi": "अर्जुन का संकट कौशल या शक्ति के बारे में नहीं था—वे सबसे कुशल योद्धा थे। यह उन लोगों का सामना करने के बारे में था जिन्हें वे प्यार करते थे और उनका सम्मान करते थे। यह आंतरिक संघर्ष ही गीता को हमारे जीवन के लिए इतना प्रासंगिक बनाता है।",
+                "explanation": "Arjuna's crisis was about facing people he loved and respected in battle. This internal conflict is what makes the Gita so relevant.",
+                "explanationHi": "अर्जुन का संकट युद्ध में उन लोगों का सामना करने के बारे में था जिन्हें वे प्यार करते थे और उनका सम्मान करते थे। यह आंतरिक संघर्ष ही गीता को इतना प्रासंगिक बनाता है।",
                 "realLifeApplication": "Our toughest challenges often involve the people closest to us."
             }
         },
         {
-            "questionId": "q_1_1_2_fib_1",
+            "questionId": "q_1_1_2_scenario_2",
             "lessonId": "lesson_1_1_2",
-            "type": "fillInBlank",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Duty vs. Relationship",
+                "scenarioTitleHi": "कर्तव्य बनाम संबंध",
+                "scenario": "You are a referee in a match. Your best friend commits a foul. If you call it, they lose the game. If you don't, you fail your duty as a referee. What guides you?",
+                "scenarioHi": "आप एक मैच में रेफरी हैं। आपका सबसे अच्छा दोस्त फाउल करता है। यदि आप इसे कॉल करते हैं, तो वे गेम हार जाते हैं। यदि आप नहीं करते हैं, तो आप रेफरी के रूप में अपने कर्तव्य में विफल होते हैं। आपका मार्गदर्शन क्या करता है?",
+                "options": [
+                    {
+                        "text": "Friendship is more important than a game.",
+                        "textHi": "खेल से दोस्ती ज्यादा जरूरी है।",
+                        "feedback": "Attachment to the person clouds judgment about what is right.",
+                        "feedbackHi": "व्यक्ति के प्रति मोह सही क्या है, इस बारे में निर्णय को धूमिल कर देता है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "My duty is to the integrity of the game, regardless of who plays.",
+                        "textHi": "मेरा कर्तव्य खेल की अखंडता के प्रति है, चाहे कोई भी खेले।",
+                        "feedback": "This is the path of Dharma. Doing what is right, even when it's hard involving loved ones.",
+                        "feedbackHi": "यह धर्म का मार्ग है। जो सही है वह करना, भले ही उसमें प्रियजन शामिल हों।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_1_1_2_reflection_1",
+            "lessonId": "lesson_1_1_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Have you ever held back from saying or doing the right thing because you didn't want to upset someone you care about?",
+                "promptHi": "क्या आपने कभी सही बात कहने या करने से खुद को रोका है क्योंकि आप किसी ऐसे व्यक्ति को परेशान नहीं करना चाहते थे जिसकी आप परवाह करते हैं?",
+                "krishnaWisdom": "Attachment can blur our vision of duty. True love does not ask us to compromise on truth."
+            }
+        },
+        {
+            "questionId": "q_1_1_3_scenario_1",
+            "lessonId": "lesson_1_1_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Appreciating the Opposition",
+                "scenarioTitleHi": "विपक्ष की सराहना",
+                "scenario": "You are playing a competitive sport. The opposing team is incredibly skilled. Do you respect their skill or hate them for it?",
+                "scenarioHi": "आप एक प्रतिस्पर्धी खेल खेल रहे हैं। विपक्षी टीम अविश्वसनीय रूप से कुशल है। क्या आप उनके कौशल का सम्मान करते हैं या इसके लिए उनसे नफरत करते हैं?",
+                "options": [
+                    {
+                        "text": "I hate them; they are the enemy.",
+                        "textHi": "मुझे उनसे नफरत है; वे दुश्मन हैं।",
+                        "feedback": "Blind hatred closes our eyes to reality.",
+                        "feedbackHi": "अंधाधुंध नफरत हमारी आंखों को वास्तविकता से बंद कर देती है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "I respect their skill, even if I must defeat them.",
+                        "textHi": "मैं उनके कौशल का सम्मान करता हूं, भले ही मुझे उन्हें हराना पड़े।",
+                        "feedback": "A true warrior acknowledges strength wherever it exists. Arjuna respected the warriors he faced.",
+                        "feedbackHi": "एक सच्चा योद्धा जहां भी शक्ति मौजूद है, उसे स्वीकार करता है। अर्जुन ने उन योद्धाओं का सम्मान किया जिनका उन्होंने सामना किया।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_1_1_3_story_1",
+            "lessonId": "lesson_1_1_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "The Strength of the Other Side",
+                "titleHi": "दूसरे पक्ष की ताकत",
+                "story": "Arjuna didn't just see family; he saw power. He saw Bhishma, who could not be killed against his will. He saw Drona, who held divine weapons. He saw Karna, his equal in archery. He realized that victory, if possible at all, would come at a terrible price.",
+                "storyHi": "अर्जुन ने सिर्फ परिवार नहीं देखा; उसने शक्ति देखी। उसने भीष्म को देखा, जिसे उसकी इच्छा के विरुद्ध नहीं मारा जा सकता था। उसने द्रोण को देखा, जिसके पास दिव्य हथियार थे। उसने कर्ण को देखा, जो तीरंदाजी में उसके बराबर था। उसे एहसास हुआ कि जीत, अगर संभव भी हो, तो भयानक कीमत पर मिलेगी।",
+                "krishnaMessage": "To face a challenge, you must first acknowledge its true magnitude."
+            }
+        },
+        {
+            "questionId": "q_1_1_3_mc_1",
+            "lessonId": "lesson_1_1_3",
+            "type": "multipleChoice",
             "order": 3,
             "xpReward": 15,
             "content": {
-                "questionText": "Arjuna saw his _____ Bhishma and his _____ Drona in the opposing army.",
-                "questionTextHi": "अर्जुन ने विपक्षी सेना में अपने _____ भीष्म और अपने _____ द्रोण को देखा।",
-                "blanks": [
-                    "grandfather",
-                    "teacher"
+                "questionText": "What did Arjuna realize about the opposing army?",
+                "questionTextHi": "अर्जुन ने विपक्षी सेना के बारे में क्या महसूस किया?",
+                "options": [
+                    "They were weak and easily defeated",
+                    "They were strangers to him",
+                    "They were powerful and worthy of respect",
+                    "They had no weapons"
                 ],
-                "blanksHi": [
-                    "दादा",
-                    "गुरु"
+                "optionsHi": [
+                    "वे कमजोर थे और आसानी से हारने वाले थे",
+                    "वे उसके लिए अजनबी थे",
+                    "वे शक्तिशाली और सम्मान के योग्य थे",
+                    "उनके पास कोई हथियार नहीं था"
                 ],
-                "acceptableAnswers": [
-                    [
-                        "grandfather",
-                        "grandpa",
-                        "pitamah"
-                    ],
-                    [
-                        "teacher",
-                        "guru",
-                        "master"
-                    ]
-                ],
-                "explanation": "Bhishma was Arjuna's great-grandfather, and Drona was his archery teacher who trained him since childhood.",
-                "explanationHi": "भीष्म अर्जुन के प्रपितामह थे, और द्रोण उनके तीरंदाजी के गुरु थे जिन्होंने उन्हें बचपन से प्रशिक्षित किया था।"
+                "correctAnswerIndex": 2,
+                "explanation": "Arjuna recognized the formidable strength and skill of the warriors facing him. He did not underestimate the challenge.",
+                "explanationHi": "अर्जुन ने अपने सामने वाले योद्धाओं की दुर्जेय शक्ति और कौशल को पहचाना। उसने चुनौती को कम नहीं आंका।",
+                "realLifeApplication": "Respecting the difficulty of a task is the first step to mastering it."
+            }
+        },
+        {
+            "questionId": "q_1_1_3_scenario_2",
+            "lessonId": "lesson_1_1_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Cost of Winning",
+                "scenarioTitleHi": "जीतने की कीमत",
+                "scenario": "You can win a debate against a friend by bringing up a painful secret from their past. It guarantees victory, but hurts them deeply. Do you do it?",
+                "scenarioHi": "आप अपने दोस्त के अतीत से एक दर्दनाक रहस्य सामने लाकर वाद-विवाद जीत सकते हैं। यह जीत की गारंटी देता है, लेकिन उन्हें गहरा चोट पहुंचाता है। क्या आप ऐसा करते हैं?",
+                "options": [
+                    {
+                        "text": "Yes, winning is everything.",
+                        "textHi": "हाँ, जीतना ही सब कुछ है।",
+                        "feedback": "Victory at any cost can destroy the soul. Arjuna feared the price of his victory.",
+                        "feedbackHi": "किसी भी कीमत पर जीत आत्मा को नष्ट कर सकती है। अर्जुन को अपनी जीत की कीमत का डर था।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "No, some methods of winning are not worth the cost.",
+                        "textHi": "नहीं, जीतने के कुछ तरीके कीमत के लायक नहीं हैं।",
+                        "feedback": "Correct. Determining the right means is as important as the end goal.",
+                        "feedbackHi": "सही। सही साधनों का निर्धारण करना अंतिम लक्ष्य जितना ही महत्वपूर्ण है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_1_1_3_reflection_1",
+            "lessonId": "lesson_1_1_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Is there a 'battle' in your life right now that feels too big or too costly to fight?",
+                "promptHi": "क्या आपके जीवन में अभी कोई ऐसी 'लड़ाई' है जो लड़ने के लिए बहुत बड़ी या बहुत महंगी लगती है?",
+                "krishnaWisdom": "Assess the challenge, but do not let fear decide your path."
+            }
+        },
+        {
+            "questionId": "q_1_2_1_scenario_1",
+            "lessonId": "lesson_1_2_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Panic Attack",
+                "scenarioTitleHi": "घबराहट का दौरा",
+                "scenario": "You are about to give a speech. Suddenly your hands shake, your mouth goes dry, and you want to run. What is happening?",
+                "scenarioHi": "आप भाषण देने वाले हैं। अचानक आपके हाथ कांपने लगते हैं, आपका मुंह सूख जाता है, और आप भागना चाहते हैं। क्या हो रहा है?",
+                "options": [
+                    {
+                        "text": "I am being a coward.",
+                        "textHi": "मैं कायर बन रहा हूं।",
+                        "feedback": "Judgement doesn't help. This is a physiological response to stress.",
+                        "feedbackHi": "निर्णय मदद नहीं करता। यह तनाव के लिए एक शारीरिक प्रतिक्रिया है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "My body is reacting to deep conflict or fear.",
+                        "textHi": "मेरा शरीर गहरे संघर्ष या भय पर प्रतिक्रिया कर रहा है।",
+                        "feedback": "Recognizing the connection between mind and body is key. Arjuna felt this intensely.",
+                        "feedbackHi": "मन और शरीर के बीच संबंध को पहचानना महत्वपूर्ण है। अर्जुन ने इसे तीव्रता से महसूस किया।",
+                        "isOptimal": true
+                    }
+                ]
             }
         },
         {
             "questionId": "q_1_2_1_story_1",
             "lessonId": "lesson_1_2_1",
             "type": "storyCard",
-            "order": 1,
+            "order": 2,
             "xpReward": 10,
             "content": {
                 "title": "The Physical Signs of Crisis",
                 "titleHi": "संकट के शारीरिक लक्षण",
-                "story": "Something strange began happening to Arjuna—the fearless warrior who had never known defeat. His body started to betray him. His skin began to burn. His legs became weak. The famous Gandiva bow—which had never slipped from his grip—started to fall from his trembling hands. His mind was spinning, unable to hold a single thought.",
-                "storyHi": "निडर योद्धा अर्जुन के साथ कुछ अजीब होने लगा—जिन्होंने कभी हार नहीं जानी थी। उनका शरीर उनके साथ धोखा करने लगा। उनकी त्वचा जलने लगी। उनके पैर कमजोर हो गए। प्रसिद्ध गांडीव धनुष—जो कभी उनकी पकड़ से नहीं फिसला—उनके कांपते हाथों से गिरने लगा। उनका मन घूम रहा था, एक भी विचार स्थिर नहीं रह पा रहा था।",
-                "imagePrompt": "Close-up of warrior's trembling hands, bow slipping, sweat on brow, distressed expression",
-                "krishnaMessage": "The body speaks what the mind tries to hide. Listen to it."
+                "story": "Something strange happened to Arjuna—the fearless warrior. His body betrayed him. His skin burned. His legs grew weak. The famous Gandiva bow slipped from his trembling hands. His mind spun.",
+                "storyHi": "निडर योद्धा अर्जुन के साथ कुछ अजीब हुआ। उनके शरीर ने उन्हें धोखा दिया। उनकी त्वचा जलने लगी। उनके पैर कमजोर हो गए। प्रसिद्ध गांडीव धनुष उनके कांपते हाथों से फिसल गया। उनका दिमाग चकरा गया।",
+                "krishnaMessage": "The body often speaks what the mind tries to hide."
             }
         },
         {
             "questionId": "q_1_2_1_mc_1",
             "lessonId": "lesson_1_2_1",
             "type": "multipleChoice",
-            "order": 2,
+            "order": 3,
             "xpReward": 15,
             "content": {
                 "questionText": "What physical symptoms did Arjuna experience?",
@@ -394,60 +593,309 @@
                 "options": [
                     "He felt hungry and tired",
                     "His skin burned, limbs weakened, and his bow slipped",
-                    "He became invisible to enemies",
-                    "His arrows turned to flowers"
+                    "He became invisible",
+                    "He fell asleep"
                 ],
                 "optionsHi": [
                     "उन्हें भूख और थकान महसूस हुई",
                     "उनकी त्वचा जलने लगी, अंग कमजोर हो गए, और धनुष फिसल गया",
-                    "वे शत्रुओं को अदृश्य हो गए",
-                    "उनके तीर फूलों में बदल गए"
+                    "वे अदृश्य हो गए",
+                    "वे सो गए"
                 ],
                 "correctAnswerIndex": 1,
-                "explanation": "Arjuna describes classic anxiety symptoms: skin burning (fever), weak limbs, trembling hands, and mental confusion. The Gita accurately describes what we now call panic or anxiety attacks.",
-                "explanationHi": "अर्जुन क्लासिक चिंता के लक्षणों का वर्णन करते हैं: त्वचा का जलना (बुखार), कमजोर अंग, कांपते हाथ, और मानसिक भ्रम। गीता सटीक रूप से वर्णन करती है जिसे आज हम घबराहट या चिंता का दौरा कहते हैं।",
-                "realLifeApplication": "Your body often knows you're stressed before your mind admits it. Pay attention to physical symptoms."
+                "explanation": "Arjuna describes symptoms of intense anxiety: burning skin, trembling, and weakness.",
+                "explanationHi": "अर्जुन तीव्र चिंता के लक्षणों का वर्णन करते हैं: जलती हुई त्वचा, कांपना और कमजोरी।",
+                "realLifeApplication": "Listen to your body's stress signals."
             }
         },
         {
-            "questionId": "q_1_2_1_scenario_1",
+            "questionId": "q_1_2_1_scenario_2",
             "lessonId": "lesson_1_2_1",
             "type": "scenarioChallenge",
-            "order": 3,
+            "order": 4,
             "xpReward": 25,
             "content": {
-                "scenarioTitle": "The Presentation Panic",
-                "scenarioTitleHi": "प्रस्तुति का घबराहट",
-                "scenario": "You're about to give an important presentation. Suddenly your heart is racing, your palms are sweaty, and you can't remember a single point you prepared. What would be the wisest response?",
-                "scenarioHi": "आप एक महत्वपूर्ण प्रस्तुति देने वाले हैं। अचानक आपका दिल तेजी से धड़क रहा है, हथेलियां पसीने से तर हैं, और आपको एक भी बिंदु याद नहीं आ रहा जो आपने तैयार किया था। सबसे बुद्धिमान प्रतिक्रिया क्या होगी?",
+                "scenarioTitle": "Addressing the Stress",
+                "scenarioTitleHi": "तनाव को संबोधित करना",
+                "scenario": "Your body is giving you all the signs of burnout—headaches, fatigue, shaking. What is the best response?",
+                "scenarioHi": "आपका शरीर आपको बर्नआउट के सभी संकेत दे रहा है—सिरदर्द, थकान, कांपना। सबसे अच्छी प्रतिक्रिया क्या है?",
                 "options": [
                     {
-                        "text": "Run away and call in sick",
-                        "textHi": "भाग जाएं और बीमार बता दें",
-                        "feedback": "Avoidance provides temporary relief but builds long-term anxiety. Arjuna wanted to run too, but Krishna showed him a better way.",
-                        "feedbackHi": "टालना अस्थायी राहत देता है लेकिन दीर्घकालिक चिंता बढ़ाता है। अर्जुन भी भागना चाहते थे, लेकिन कृष्ण ने उन्हें बेहतर रास्ता दिखाया।",
+                        "text": "Push harder, don't be weak.",
+                        "textHi": "और जोर लगाएं, कमजोर न बनें।",
+                        "feedback": "Ignoring the body leads to collapse.",
+                        "feedbackHi": "शरीर की अनदेखी करने से पतन होता है।",
                         "isOptimal": false
                     },
                     {
-                        "text": "Ignore the symptoms and power through",
-                        "textHi": "लक्षणों को नजरअंदाज करें और जबरदस्ती आगे बढ़ें",
-                        "feedback": "Fighting against your body's signals without addressing them often makes things worse.",
-                        "feedbackHi": "अपने शरीर के संकेतों को संबोधित किए बिना उनसे लड़ना अक्सर चीजों को और खराब कर देता है।",
-                        "isOptimal": false
-                    },
-                    {
-                        "text": "Take deep breaths, acknowledge the feeling, then proceed",
-                        "textHi": "गहरी सांस लें, भावना को स्वीकार करें, फिर आगे बढ़ें",
-                        "feedback": "Acknowledging stress without being overwhelmed by it is wisdom. Like Arjuna who paused to speak his fears to Krishna, expressing what we feel helps us move forward.",
-                        "feedbackHi": "तनाव को स्वीकार करना बिना उससे अभिभूत हुए ज्ञान है। जैसे अर्जुन ने रुककर अपने भय कृष्ण को बताए, जो हम महसूस करते हैं उसे व्यक्त करना आगे बढ़ने में मदद करता है।",
+                        "text": "Pause and admit that something is wrong.",
+                        "textHi": "रुकें और स्वीकार करें कि कुछ गड़बड़ है।",
+                        "feedback": "Admitting the problem is the first step to solving it. Arjuna paused and spoke to Krishna.",
+                        "feedbackHi": "समस्या को स्वीकार करना इसे हल करने का पहला कदम है। अर्जुन रुके और कृष्ण से बात की।",
                         "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_1_2_1_reflection_1",
+            "lessonId": "lesson_1_2_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "How does your body react when you are stressed or afraid? Do you listen to it?",
+                "promptHi": "जब आप तनावग्रस्त या भयभीत होते हैं तो आपका शरीर कैसे प्रतिक्रिया करता है? क्या आप इसकी सुनते हैं?",
+                "krishnaWisdom": "Fear affects the body, but wisdom calms the mind."
+            }
+        },
+        {
+            "questionId": "q_1_2_2_scenario_1",
+            "lessonId": "lesson_1_2_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Fog of Confusion",
+                "scenarioTitleHi": "भ्रम का कोहरा",
+                "scenario": "You have a major decision to make, but your mind keeps spinning in circles. You can't focus on anything. What is happening?",
+                "scenarioHi": "आपको एक बड़ा निर्णय लेना है, लेकिन आपका दिमाग हलकों में घूमता रहता है। आप किसी भी चीज़ पर ध्यान केंद्रित नहीं कर सकते। क्या हो रहा है?",
+                "options": [
+                    {
+                        "text": "I'm just being indecisive.",
+                        "textHi": "मैं सिर्फ अनिर्णायक हो रहा हूं।",
+                        "feedback": "It's more than that; emotional overwhelm shuts down clear thinking.",
+                        "feedbackHi": "यह उससे अधिक है; भावनात्मक अधिकता स्पष्ट सोच को बंद कर देती है।",
+                        "isOptimal": false
                     },
                     {
-                        "text": "Blame others for putting you in this situation",
-                        "textHi": "दूसरों को दोष दें कि उन्होंने आपको इस स्थिति में डाला",
-                        "feedback": "External blame doesn't address the internal experience. True growth comes from facing our responses.",
-                        "feedbackHi": "बाहरी दोष आंतरिक अनुभव को संबोधित नहीं करता। सच्चा विकास हमारी प्रतिक्रियाओं का सामना करने से आता है।",
+                        "text": "My emotions have hijacked my logic.",
+                        "textHi": "मेरी भावनाओं ने मेरे तर्क को हाईजैक कर लिया है।",
+                        "feedback": "Exactly. Arjuna said his mind was reeling.",
+                        "feedbackHi": "बिल्कुल। अर्जुन ने कहा कि उनका दिमाग घूम रहा था।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_1_2_2_story_1",
+            "lessonId": "lesson_1_2_2",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "Mind in Turmoil",
+                "titleHi": "उथल-पुथल में मन",
+                "story": "Arjuna said, 'My mind is reeling. I can no longer stand.' The confusion was so deep that he started losing his sense of purpose. He began to argue against fighting, coming up with many reasons why it was wrong, even though his duty as a warrior was to protect the innocent.",
+                "storyHi": "अर्जुन ने कहा, 'मेरा दिमाग घूम रहा है। मैं अब और खड़ा नहीं रह सकता।' भ्रम इतना गहरा था कि वह अपने उद्देश्य की भावना खोने लगा। वह लड़ने के खिलाफ बहस करने लगा, कई कारण बताते हुए कि यह गलत क्यों था, भले ही एक योद्धा के रूप में उसका कर्तव्य निर्दोषों की रक्षा करना था।",
+                "krishnaMessage": "When emotions run high, intelligence runs low."
+            }
+        },
+        {
+            "questionId": "q_1_2_2_mc_1",
+            "lessonId": "lesson_1_2_2",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "What happened to Arjuna's ability to think clearly?",
+                "questionTextHi": "अर्जुन की स्पष्ट सोचने की क्षमता का क्या हुआ?",
+                "options": [
+                    "It became sharper",
+                    "It disappeared in confusion",
+                    "He fell asleep",
+                    "He became angry"
+                ],
+                "optionsHi": [
+                    "यह तेज हो गई",
+                    "यह भ्रम में गायब हो गई",
+                    "वह सो गया",
+                    "वह क्रोधित हो गया"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Arjuna confesses that his mind is wandering and he sees 'adverse omens'. His clarity was lost to fear and attachment.",
+                "explanationHi": "अर्जुन स्वीकार करते हैं कि उनका मन भटक रहा है और वे 'विपरीत शगुन' देखते हैं। उनकी स्पष्टता भय और मोह में खो गई थी।",
+                "realLifeApplication": "Don't make big decisions when you are emotionally overwhelmed."
+            }
+        },
+        {
+            "questionId": "q_1_2_2_scenario_2",
+            "lessonId": "lesson_1_2_2",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Restoring Focus",
+                "scenarioTitleHi": "ध्यान बहाल करना",
+                "scenario": "You realize you are too emotional to decide. What is the best way to regain clarity?",
+                "scenarioHi": "आपको अहसास होता है कि आप निर्णय लेने के लिए बहुत भावुक हैं। स्पष्टता वापस पाने का सबसे अच्छा तरीका क्या है?",
+                "options": [
+                    {
+                        "text": "Force yourself to decide immediately.",
+                        "textHi": "तुरंत निर्णय लेने के लिए खुद को मजबूर करें।",
+                        "feedback": "Hasty decisions in confusion lead to regret.",
+                        "feedbackHi": "भ्रम में जल्दबाजी के निर्णय पछतावे की ओर ले जाते हैं।",
                         "isOptimal": false
+                    },
+                    {
+                        "text": "Step back, breathe, and seek counsel.",
+                        "textHi": "पीछे हटें, सांस लें, और सलाह लें।",
+                        "feedback": "Creating distance gives perspective. This is what Arjuna eventually did.",
+                        "feedbackHi": "दूरी बनाने से परिप्रेक्ष्य मिलता है। अर्जुन ने अंततः यही किया।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_1_2_2_reflection_1",
+            "lessonId": "lesson_1_2_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "What do you do when your mind feels 'cloudy' or confused? What helps you clear the fog?",
+                "promptHi": "जब आपका दिमाग 'धुंधला' या भ्रमित लगता है तो आप क्या करते हैं? कोहरे को साफ करने में क्या मदद करता है?",
+                "krishnaWisdom": "Stillness clears the muddy water of the mind."
+            }
+        },
+        {
+            "questionId": "q_1_3_1_scenario_1",
+            "lessonId": "lesson_1_3_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Winning the Argument",
+                "scenarioTitleHi": "बहस जीतना",
+                "scenario": "You get into a heated argument with your partner. You know exactly what to say to 'win' and silence them, but it will cause deep hurt. Is this victory?",
+                "scenarioHi": "आप अपने साथी के साथ गरमागरम बहस में पड़ जाते हैं। आप जानते हैं कि 'जीतने' और उन्हें चुप कराने के लिए क्या कहना है, लेकिन इससे गहरी चोट पहुंचेगी। क्या यह जीत है?",
+                "options": [
+                    {
+                        "text": "Yes, proving I am right is matters most.",
+                        "textHi": "हाँ, मैं सही हूँ यह साबित करना सबसे महत्वपूर्ण है।",
+                        "feedback": "This leads to isolation, not happiness.",
+                        "feedbackHi": "इससे अलगाव होता है, खुशी नहीं।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "No, defeating a loved one is a loss.",
+                        "textHi": "नहीं, किसी प्रियजन को हराना एक हार है।",
+                        "feedback": "Arjuna realized this too: 'What implies victory, if we kill our own people?'",
+                        "feedbackHi": "अर्जुन ने भी इसे महसूस किया: 'जीत का क्या मतलब है, अगर हम अपने ही लोगों को मार डालते हैं?'",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_1_3_1_story_1",
+            "lessonId": "lesson_1_3_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "What Victory Really Costs",
+                "titleHi": "जीत की असली कीमत",
+                "story": "Arjuna reasoned: 'I do not desire victory, kingdom, or pleasures. Of what use is a kingdom, if those for whose sake we desire it are killed in battle?' He realized that some victories are actually defeats.",
+                "storyHi": "अर्जुन ने तर्क दिया: 'मुझे जीत, राज्य या सुख की इच्छा नहीं है। राज्य का क्या उपयोग है, अगर जिनके लिए हम इसकी इच्छा रखते हैं, वे युद्ध में मारे जाते हैं?' उसे एहसास हुआ कि कुछ जीतें वास्तव में हार होती हैं।",
+                "krishnaMessage": "Success is meaningless if you lose your soul to get it."
+            }
+        },
+        {
+            "questionId": "q_1_3_1_mc_1",
+            "lessonId": "lesson_1_3_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "Why did Arjuna reject the idea of victory?",
+                "questionTextHi": "अर्जुन ने जीत के विचार को क्यों खारिज कर दिया?",
+                "options": [
+                    "He was afraid of losing",
+                    "He didn't want the prize money",
+                    "He saw that killing his kin would make victory empty and painful",
+                    "He wanted to retire"
+                ],
+                "optionsHi": [
+                    "वह हारने से डरता था",
+                    "वह पुरस्कार राशि नहीं चाहता था",
+                    "उसने देखा कि अपने परिजनों को मारने से जीत खाली और दर्दनाक हो जाएगी",
+                    "वह सेवानिवृत्त होना चाहता था"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "Arjuna understood that enjoying a kingdom won by the blood of family would be misery, not happiness.",
+                "explanationHi": "अर्जुन समझ गया कि परिवार के खून से जीते गए राज्य का आनंद लेना दुख होगा, खुशी नहीं।",
+                "realLifeApplication": "Consider the cost of your ambitions."
+            }
+        },
+        {
+            "questionId": "q_1_3_1_scenario_2",
+            "lessonId": "lesson_1_3_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Success at What Price?",
+                "scenarioTitleHi": "किस कीमत पर सफलता?",
+                "scenario": "You get a job offer that pays double but requires you to work 80 hours a week and miss your child's milestones. Is it a good 'victory'?",
+                "scenarioHi": "आपको नौकरी का प्रस्ताव मिलता है जो दोगुना भुगतान करता है लेकिन आपको सप्ताह में 80 घंटे काम करने और अपने बच्चे के मील के पत्थर को याद करने की आवश्यकता होती है। क्या यह एक अच्छी 'जीत' है?",
+                "options": [
+                    {
+                        "text": "Yes, money solves everything.",
+                        "textHi": "हाँ, पैसा सब कुछ हल करता है।",
+                        "feedback": "Wealth without time to share it is empty.",
+                        "feedbackHi": "साझा करने के लिए समय के बिना धन खाली है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "It depends on what I value most.",
+                        "textHi": "यह इस पर निर्भर करता है कि मैं सबसे ज्यादा किसे महत्व देता हूं।",
+                        "feedback": "Correct. Weighing the cost against the gain is true wisdom.",
+                        "feedbackHi": "सही। लाभ के मुकाबले लागत को तौलना सच्चा ज्ञान है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_1_3_1_reflection_1",
+            "lessonId": "lesson_1_3_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "What is something you are chasing right now? If you get it, who will you share it with?",
+                "promptHi": "ऐसी कौन सी चीज़ है जिसका आप अभी पीछा कर रहे हैं? यदि आप इसे प्राप्त करते हैं, तो आप इसे किसके साथ साझा करेंगे?",
+                "krishnaWisdom": "True happiness is shared. Success is solitary."
+            }
+        },
+        {
+            "questionId": "q_1_4_1_scenario_1",
+            "lessonId": "lesson_1_4_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Hitting Rock Bottom",
+                "scenarioTitleHi": "निचले स्तर पर पहुंचना",
+                "scenario": "You have tried everything to solve a problem, but nothing worked. You are exhausted and out of ideas. What do you do?",
+                "scenarioHi": "आपने किसी समस्या को हल करने के लिए सब कुछ कोशिश की है, लेकिन कुछ भी काम नहीं आया। आप थक चुके हैं और विचारों से बाहर हैं। आप क्या करेंगे?",
+                "options": [
+                    {
+                        "text": "Keep banging my head against the wall.",
+                        "textHi": "दीवार पर सिर पटकते रहें।",
+                        "feedback": "Ego makes us persist in failure.",
+                        "feedbackHi": "अहंकार हमें असफलता में बने रहने के लिए प्रेरित करता है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Admit I cannot do it alone and ask for help.",
+                        "textHi": "स्वीकार करें कि मैं इसे अकेले नहीं कर सकता और मदद मांगें।",
+                        "feedback": "This is surrender. It opens the door to new solutions.",
+                        "feedbackHi": "यह समर्पण है। यह नए समाधानों के द्वार खोलता है।",
+                        "isOptimal": true
                     }
                 ]
             }
@@ -456,22 +904,21 @@
             "questionId": "q_1_4_1_story_1",
             "lessonId": "lesson_1_4_1",
             "type": "storyCard",
-            "order": 1,
+            "order": 2,
             "xpReward": 10,
             "content": {
                 "title": "The Moment of Surrender",
                 "titleHi": "समर्पण का क्षण",
-                "story": "After expressing all his doubts and fears, Arjuna does something remarkable. He puts down his bow and arrows. He sits down in the chariot. And with complete honesty, he says to Krishna: 'I am your disciple. I have surrendered to you. Please instruct me.' This moment of vulnerability becomes the doorway to the greatest wisdom ever spoken.",
-                "storyHi": "अपने सभी संदेहों और भय को व्यक्त करने के बाद, अर्जुन कुछ उल्लेखनीय करते हैं। वे अपना धनुष और तीर नीचे रख देते हैं। वे रथ में बैठ जाते हैं। और पूर्ण ईमानदारी से, वे कृष्ण से कहते हैं: 'मैं आपका शिष्य हूं। मैंने आपको समर्पण किया है। कृपया मुझे निर्देश दें।' संवेदनशीलता का यह क्षण अब तक बोले गए सबसे महान ज्ञान का द्वार बन जाता है।",
-                "imagePrompt": "Arjuna sitting in chariot, bow laid down, hands folded, looking up at Krishna with humble expression, divine light around Krishna",
-                "krishnaMessage": "True strength is knowing when to ask for help. Only the humble can truly learn."
+                "story": "Arjuna finally put down his bow. He sat in the chariot, tears in his eyes. He turned to Krishna and said the most important words: 'I am confused about my duty. I am your disciple. I surrender to you. Please instruct me.' He stopped being a warrior and became a student.",
+                "storyHi": "अर्जुन ने आखिरकार अपना धनुष नीचे रख दिया। वह रथ में बैठ गया, उसकी आँखों में आँसू थे। वह कृष्ण की ओर मुड़ा और सबसे महत्वपूर्ण शब्द कहे: 'मैं अपने कर्तव्य के बारे में भ्रमित हूं। मैं आपका शिष्य हूं। मैं आपको समर्पण करता हूं। कृपया मुझे निर्देश दें।' उसने एक योद्धा होना बंद कर दिया और एक छात्र बन गया।",
+                "krishnaMessage": "When the cup is empty, it can be filled."
             }
         },
         {
             "questionId": "q_1_4_1_mc_1",
             "lessonId": "lesson_1_4_1",
             "type": "multipleChoice",
-            "order": 2,
+            "order": 3,
             "xpReward": 15,
             "content": {
                 "questionText": "What did Arjuna say to Krishna when he surrendered?",
@@ -489,31 +936,50 @@
                     "मुझे और हथियार दें"
                 ],
                 "correctAnswerIndex": 2,
-                "explanation": "Arjuna's surrender was not giving up—it was opening up. By admitting 'I don't know what to do,' he became ready to receive Krishna's teaching. This is the foundation of the entire Bhagavad Gita.",
-                "explanationHi": "अर्जुन का समर्पण हार मानना नहीं था—यह खुलना था। 'मुझे नहीं पता क्या करना है' स्वीकारते हुए, वे कृष्ण की शिक्षा प्राप्त करने के लिए तैयार हो गए। यह संपूर्ण भगवद्गीता की नींव है।",
-                "realLifeApplication": "Saying 'I need help' is often the bravest and wisest thing we can do."
+                "explanation": "Arjuna's surrender was not giving up—it was opening up. By admitting 'I don't know', he touched the feet of the master.",
+                "explanationHi": "अर्जुन का समर्पण हार मानना नहीं था—यह खुलना था। 'मुझे नहीं पता' स्वीकार करके, उसने गुरु के चरणों को स्पर्श किया।",
+                "realLifeApplication": "Admitting ignorance is the first step to knowledge."
+            }
+        },
+        {
+            "questionId": "q_1_4_1_scenario_2",
+            "lessonId": "lesson_1_4_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Choosing a Guide",
+                "scenarioTitleHi": "एक मार्गदर्शक चुनना",
+                "scenario": "You realize you need a mentor. Who do you choose?",
+                "scenarioHi": "आपको एहसास है कि आपको एक संरक्षक की आवश्यकता है। आप किसे चुनेंगे?",
+                "options": [
+                    {
+                        "text": "Someone who just agrees with me.",
+                        "textHi": "कोई ऐसा जो बस मुझसे सहमत है।",
+                        "feedback": "That's an echo chamber, not guidance.",
+                        "feedbackHi": "वह एक गूंज कक्ष है, मार्गदर्शन नहीं।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Someone wise, honest, and who has my best interest at heart.",
+                        "textHi": "कोई बुद्धिमान, ईमानदार, और जो मेरे सर्वोत्तम हित को दिल में रखता है।",
+                        "feedback": "Exactly. Arjuna chose Krishna because he trusted his wisdom and love.",
+                        "feedbackHi": "बिल्कुल। अर्जुन ने कृष्ण को चुना क्योंकि उन्हें उनके ज्ञान और प्रेम पर भरोसा था।",
+                        "isOptimal": true
+                    }
+                ]
             }
         },
         {
             "questionId": "q_1_4_1_reflection_1",
             "lessonId": "lesson_1_4_1",
             "type": "reflectionPrompt",
-            "order": 3,
+            "order": 5,
             "xpReward": 20,
             "content": {
-                "prompt": "Who are the 'Krishnas' in your life—the wise guides you can turn to when confused? How often do you actually ask them for guidance?",
-                "promptHi": "आपके जीवन में 'कृष्ण' कौन हैं—वे बुद्धिमान मार्गदर्शक जिनकी ओर आप भ्रमित होने पर रुख कर सकते हैं? आप वास्तव में कितनी बार उनसे मार्गदर्शन मांगते हैं?",
-                "guidingQuestions": [
-                    "Who do you trust completely with your doubts?",
-                    "What stops you from asking for help?",
-                    "How can you become more open to guidance?"
-                ],
-                "guidingQuestionsHi": [
-                    "आप अपने संदेहों पर पूरी तरह किस पर भरोसा करते हैं?",
-                    "मदद मांगने से आपको क्या रोकता है?",
-                    "आप मार्गदर्शन के प्रति और अधिक खुले कैसे हो सकते हैं?"
-                ],
-                "krishnaWisdom": "The teacher appears when the student is ready. Readiness begins with the courage to say 'I don't know.'"
+                "prompt": "Is there an area in your life where you are trying to 'win' alone, but might need to 'surrender' and ask for help?",
+                "promptHi": "क्या आपके जीवन में कोई ऐसा क्षेत्र है जहाँ आप अकेले 'जीतने' की कोशिश कर रहे हैं, लेकिन 'समर्पण' करने और मदद मांगने की आवश्यकता हो सकती है?",
+                "krishnaWisdom": "You don't have to carry the weight of the world alone."
             }
         }
     ]
