@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../domain/models/chapter.dart';
+import '../../domain/models/journey.dart';
 import '../../domain/models/lesson.dart';
 import '../../domain/models/question.dart';
 import '../../core/constants/constants.dart';
@@ -15,6 +16,30 @@ class ContentRepository {
   final FirebaseFirestore _firestore;
 
   ContentRepository(this._firestore);
+
+  // JOURNEYS
+
+  /// Get all journeys ordered by journey number
+  Future<List<Journey>> getJourneys() async {
+    try {
+      final snapshot = await _firestore
+          .collection('journeys')
+          .orderBy('journeyNumber')
+          .get();
+      
+      final List<Journey> journeys = [];
+      for (final doc in snapshot.docs) {
+        try {
+          journeys.add(Journey.fromFirestore(doc));
+        } catch (e) {
+          print('❌ Error parsing journey ${doc.id}: $e');
+        }
+      }
+      return journeys;
+    } catch (e) {
+      throw Exception('Failed to get journeys: $e');
+    }
+  }
 
   // CHAPTERS
 

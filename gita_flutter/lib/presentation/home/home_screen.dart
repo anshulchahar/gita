@@ -7,6 +7,7 @@ import '../../data/repositories/auth_repository.dart';
 import '../../data/repositories/content_repository.dart';
 import '../../data/repositories/user_repository.dart';
 import '../../domain/models/chapter.dart';
+import '../../domain/models/journey.dart';
 import '../../domain/models/lesson.dart';
 import '../../domain/models/shloka.dart';
 import '../components/lesson_node_components.dart';
@@ -17,6 +18,7 @@ import 'sarthi_controller.dart';
 class HomeState {
   final bool isLoading;
   final String? error;
+  final List<Journey> journeys;
   final List<Chapter> chapters;
   final Map<String, List<Lesson>> chapterLessons;
   final Set<String> unlockedChapters;
@@ -30,6 +32,7 @@ class HomeState {
   const HomeState({
     this.isLoading = false,
     this.error,
+    this.journeys = const [],
     this.chapters = const [],
     this.chapterLessons = const {},
     this.unlockedChapters = const {},
@@ -44,6 +47,7 @@ class HomeState {
   HomeState copyWith({
     bool? isLoading,
     String? error,
+    List<Journey>? journeys,
     List<Chapter>? chapters,
     Map<String, List<Lesson>>? chapterLessons,
     Set<String>? unlockedChapters,
@@ -57,6 +61,7 @@ class HomeState {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
       error: error,
+      journeys: journeys ?? this.journeys,
       chapters: chapters ?? this.chapters,
       chapterLessons: chapterLessons ?? this.chapterLessons,
       unlockedChapters: unlockedChapters ?? this.unlockedChapters,
@@ -88,7 +93,8 @@ class HomeController extends StateNotifier<HomeState> {
     try {
       state = state.copyWith(isLoading: true, error: null);
 
-      // Load chapters
+      // Load journeys and chapters
+      final journeys = await _contentRepository.getJourneys();
       final chapters = await _contentRepository.getChapters();
 
       // Load lessons for each chapter
@@ -163,6 +169,7 @@ class HomeController extends StateNotifier<HomeState> {
 
       state = state.copyWith(
         isLoading: false,
+        journeys: journeys,
         chapters: chapters,
         chapterLessons: chapterLessons,
         unlockedChapters: unlockedChapters,
@@ -330,9 +337,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       children: [
         SizedBox(height: MediaQuery.of(context).padding.top + Spacing.space16),
 
-        // Chapters and lessons
-        for (var chapterIndex = 0; chapterIndex < state.chapters.length; chapterIndex++) ...[
-          _buildChapterSection(context, state, chapterIndex),
+        // Journey sections
+        if (state.journeys.isNotEmpty) ...[
+           for (final journey in state.journeys) ...[
+             _buildJourneySection(context, state, journey),
+           ],
+        ] else ...[
+          // Fallback if no journeys (legacy/admin mode)
+           for (var chapterIndex = 0; chapterIndex < state.chapters.length; chapterIndex++) ...[
+             _buildChapterSection(context, state, state.chapters[chapterIndex], chapterIndex),
+           ],
         ],
 
         const SizedBox(height: Spacing.space32),
@@ -340,8 +354,50 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildChapterSection(BuildContext context, HomeState state, int chapterIndex) {
-    final chapter = state.chapters[chapterIndex];
+  Widget _buildJourneySection(BuildContext context, HomeState state, Journey journey) {
+     // Filter chapters for this journey
+     final journeyChapters = state.chapters.where((c) => c.journeyId == journey.id).toList();
+     
+     if (journeyChapters.isEmpty) return const SizedBox.shrink();
+
+     return Column(
+       crossAxisAlignment: CrossAxisAlignment.start,
+       children: [
+         // Journey Header
+         Padding(
+           padding: const EdgeInsets.symmetric(vertical: Spacing.space16),
+           child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               Text(
+                 journey.title.toUpperCase(),
+                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                   color: Theme.of(context).colorScheme.primary,
+                   fontWeight: FontWeight.bold,
+                   letterSpacing: 1.2,
+                 ),
+               ),
+               if (journey.description.isNotEmpty)
+                 Text(
+                   journey.description,
+                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                   ),
+                 ),
+             ],
+           ),
+         ),
+         
+         // Chapters in this journey
+         for (int i = 0; i < journeyChapters.length; i++)
+           _buildChapterSection(context, state, journeyChapters[i], i),
+       ],
+     );
+  }
+
+  Widget _buildChapterSection(BuildContext context, HomeState state, Chapter chapter, int chapterIndex) {
+    // Note: chapterIndex is local loop index here, might need adjustment for animations if strictly relying on global index
+    // but sine wave is local to list, so it should be fine.
     final lessons = state.chapterLessons[chapter.chapterId] ?? [];
     
     return Column(
@@ -369,8 +425,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           },
         ),
         
-        if (chapterIndex < state.chapters.length - 1)
-          const SizedBox(height: Spacing.space48),
+        const SizedBox(height: Spacing.space48),
       ],
     );
   }

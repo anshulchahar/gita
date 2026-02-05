@@ -13,6 +13,7 @@ class Chapter {
   final bool isUnlocked;
   final String icon;
   final String color;
+  final String journeyId;
 
   const Chapter({
     this.chapterId = '',
@@ -26,6 +27,7 @@ class Chapter {
     this.isUnlocked = false,
     this.icon = '',
     this.color = '',
+    this.journeyId = '',
   });
 
   factory Chapter.fromFirestore(DocumentSnapshot doc) {
@@ -43,6 +45,7 @@ class Chapter {
         isUnlocked: data['isUnlocked'] == true,
         icon: _safeString(data, 'icon'),
         color: _safeString(data, 'color'),
+        journeyId: _safeString(data, 'journeyId'),
       );
     } catch (e, stack) {
       print('❌ Error parsing Chapter ${doc.id}: $e');
@@ -82,6 +85,7 @@ class Chapter {
       'isUnlocked': isUnlocked,
       'icon': icon,
       'color': color,
+      'journeyId': journeyId,
     };
   }
 
@@ -97,6 +101,7 @@ class Chapter {
     bool? isUnlocked,
     String? icon,
     String? color,
+    String? journeyId,
   }) {
     return Chapter(
       chapterId: chapterId ?? this.chapterId,
@@ -110,6 +115,7 @@ class Chapter {
       isUnlocked: isUnlocked ?? this.isUnlocked,
       icon: icon ?? this.icon,
       color: color ?? this.color,
+      journeyId: journeyId ?? this.journeyId,
     );
   }
 }
