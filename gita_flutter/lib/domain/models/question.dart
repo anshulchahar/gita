@@ -2,20 +2,37 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 /// Types of questions available in lessons
 enum QuestionType {
+  /// Animated story card with Krishna narrating context (10 XP)
+  storyCard,
+  /// Multiple choice comprehension questions (15 XP)
   multipleChoiceTranslation,
+  /// Fill in the blank for verse or teaching (15 XP)
   fillInBlank,
+  /// Journal-style personal reflection questions (20 XP)
+  reflectionPrompt,
+  /// Real-life dilemma solving scenarios (25 XP)
+  scenarioChallenge,
+  /// Sanskrit-English pair matching (5 XP - optional)
   wordMatching,
+  /// Contextual application questions
   contextualApplication,
+  /// True/False questions
   trueFalse,
 }
 
 extension QuestionTypeExtension on QuestionType {
   String get name {
     switch (this) {
+      case QuestionType.storyCard:
+        return 'STORY_CARD';
       case QuestionType.multipleChoiceTranslation:
         return 'MULTIPLE_CHOICE_TRANSLATION';
       case QuestionType.fillInBlank:
         return 'FILL_IN_BLANK';
+      case QuestionType.reflectionPrompt:
+        return 'REFLECTION_PROMPT';
+      case QuestionType.scenarioChallenge:
+        return 'SCENARIO_CHALLENGE';
       case QuestionType.wordMatching:
         return 'WORD_MATCHING';
       case QuestionType.contextualApplication:
@@ -25,12 +42,39 @@ extension QuestionTypeExtension on QuestionType {
     }
   }
 
+  /// XP rewards for each activity type (from plan.md)
+  int get xpReward {
+    switch (this) {
+      case QuestionType.storyCard:
+        return 10;
+      case QuestionType.multipleChoiceTranslation:
+      case QuestionType.fillInBlank:
+        return 15;
+      case QuestionType.reflectionPrompt:
+        return 20;
+      case QuestionType.scenarioChallenge:
+        return 25;
+      case QuestionType.wordMatching:
+        return 5;
+      case QuestionType.contextualApplication:
+        return 15;
+      case QuestionType.trueFalse:
+        return 10;
+    }
+  }
+
   static QuestionType fromString(String value) {
     switch (value) {
+      case 'STORY_CARD':
+        return QuestionType.storyCard;
       case 'MULTIPLE_CHOICE_TRANSLATION':
         return QuestionType.multipleChoiceTranslation;
       case 'FILL_IN_BLANK':
         return QuestionType.fillInBlank;
+      case 'REFLECTION_PROMPT':
+        return QuestionType.reflectionPrompt;
+      case 'SCENARIO_CHALLENGE':
+        return QuestionType.scenarioChallenge;
       case 'WORD_MATCHING':
         return QuestionType.wordMatching;
       case 'CONTEXTUAL_APPLICATION':
@@ -43,8 +87,9 @@ extension QuestionTypeExtension on QuestionType {
   }
 }
 
-/// Content of a question
+/// Content of a question or activity
 class QuestionContent {
+  // === Common fields ===
   final String shlokaSanskrit;
   final String shlokaTransliteration;
   final String shlokaNumber;
@@ -54,6 +99,26 @@ class QuestionContent {
   final String explanation;
   final String realLifeApplication;
   final List<String> keywords;
+
+  // === Story Card fields ===
+  /// The main story/context text for Story Card activities
+  final String storyText;
+  /// Krishna's narrative dialogue for Story Card
+  final String narratorDialogue;
+
+  // === Reflection Prompt fields ===
+  /// The reflection question for journal-style activities
+  final String reflectionQuestion;
+  /// Optional hint/guidance for reflection
+  final String reflectionHint;
+
+  // === Scenario Challenge fields ===
+  /// Description of the real-life dilemma scenario
+  final String scenarioDescription;
+  /// Context or backstory for the scenario
+  final String scenarioContext;
+  /// The wisdom teaching that applies to this scenario
+  final String scenarioTeaching;
 
   const QuestionContent({
     this.shlokaSanskrit = '',
@@ -65,6 +130,16 @@ class QuestionContent {
     this.explanation = '',
     this.realLifeApplication = '',
     this.keywords = const [],
+    // Story Card
+    this.storyText = '',
+    this.narratorDialogue = '',
+    // Reflection Prompt
+    this.reflectionQuestion = '',
+    this.reflectionHint = '',
+    // Scenario Challenge
+    this.scenarioDescription = '',
+    this.scenarioContext = '',
+    this.scenarioTeaching = '',
   });
 
   factory QuestionContent.fromMap(Map<String, dynamic> data) {
@@ -78,6 +153,16 @@ class QuestionContent {
       explanation: data['explanation'] ?? '',
       realLifeApplication: data['realLifeApplication'] ?? '',
       keywords: List<String>.from(data['keywords'] ?? []),
+      // Story Card
+      storyText: data['storyText'] ?? '',
+      narratorDialogue: data['narratorDialogue'] ?? '',
+      // Reflection Prompt
+      reflectionQuestion: data['reflectionQuestion'] ?? '',
+      reflectionHint: data['reflectionHint'] ?? '',
+      // Scenario Challenge
+      scenarioDescription: data['scenarioDescription'] ?? '',
+      scenarioContext: data['scenarioContext'] ?? '',
+      scenarioTeaching: data['scenarioTeaching'] ?? '',
     );
   }
 
@@ -92,6 +177,16 @@ class QuestionContent {
       'explanation': explanation,
       'realLifeApplication': realLifeApplication,
       'keywords': keywords,
+      // Story Card
+      'storyText': storyText,
+      'narratorDialogue': narratorDialogue,
+      // Reflection Prompt
+      'reflectionQuestion': reflectionQuestion,
+      'reflectionHint': reflectionHint,
+      // Scenario Challenge
+      'scenarioDescription': scenarioDescription,
+      'scenarioContext': scenarioContext,
+      'scenarioTeaching': scenarioTeaching,
     };
   }
 }

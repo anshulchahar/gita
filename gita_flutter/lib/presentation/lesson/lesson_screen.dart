@@ -13,6 +13,10 @@ import '../components/krishna_mascot.dart';
 import '../components/question_footer.dart';
 import '../home/sarthi_controller.dart';
 import '../home/home_screen.dart';
+// New activity widgets
+import 'activities/story_card_activity.dart';
+import 'activities/scenario_challenge_activity.dart';
+import 'activities/reflection_prompt_activity.dart';
 
 /// Lesson screen state
 class LessonState {
@@ -177,6 +181,33 @@ class LessonController extends StateNotifier<LessonState> {
     if (state.questions.isEmpty) return false;
     final currentQuestion = state.questions[state.currentQuestionIndex];
     return state.questionResults.containsKey(currentQuestion.questionId);
+  }
+
+  /// Mark a non-graded activity (like Story Card or Reflection) as complete
+  /// This is used for activities that don't have a right/wrong answer
+  void markStoryCardComplete(String questionId) {
+    final result = QuestionResult(
+      questionId: questionId,
+      isCorrect: true, // Non-graded activities are always "correct"
+      selectedAnswer: 0,
+      correctAnswer: 0,
+    );
+
+    final newResults = Map<String, QuestionResult>.from(state.questionResults);
+    newResults[questionId] = result;
+
+    // Award XP for completing the activity
+    final currentQuestion = state.questions.firstWhere(
+      (q) => q.questionId == questionId,
+      orElse: () => const Question(),
+    );
+    final xpEarned = currentQuestion.type.xpReward;
+
+    state = state.copyWith(
+      questionResults: newResults,
+      score: state.score + 1, // Count as completed
+      xpEarned: state.xpEarned + xpEarned,
+    );
   }
 
   int? getCorrectOptionForCurrentQuestion() {
@@ -487,6 +518,55 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
   }
 
   Widget _buildQuestionCard(BuildContext context, LessonState state) {
+    final currentQuestion = state.questions[state.currentQuestionIndex];
+    final controller = ref.read(lessonControllerProvider.notifier);
+    final selectedAnswer = controller.getSelectedOptionForCurrentQuestion();
+    final isAnswered = controller.isCurrentQuestionAnswered();
+    final correctAnswer = isAnswered ? controller.getCorrectOptionForCurrentQuestion() : null;
+
+    // Dispatch to appropriate activity widget based on question type
+    switch (currentQuestion.type) {
+      case QuestionType.storyCard:
+        return StoryCardActivity(
+          content: currentQuestion.content,
+          onComplete: () => controller.nextQuestion(),
+        );
+
+      case QuestionType.reflectionPrompt:
+        return ReflectionPromptActivity(
+          content: currentQuestion.content,
+          isSubmitted: isAnswered,
+          savedResponse: null, // TODO: Load from saved reflections
+          onSubmit: (response) {
+            // Save reflection and move to next question
+            // TODO: Save reflection to user's journal
+            controller.markStoryCardComplete(currentQuestion.questionId);
+            controller.nextQuestion();
+          },
+        );
+
+      case QuestionType.scenarioChallenge:
+        return ScenarioChallengeActivity(
+          content: currentQuestion.content,
+          selectedAnswer: selectedAnswer,
+          showFeedback: state.showFeedback,
+          onAnswer: (index, isCorrect) {
+            controller.selectAnswer(currentQuestion.questionId, index);
+          },
+        );
+
+      // Default multiple choice behavior for other question types
+      case QuestionType.multipleChoiceTranslation:
+      case QuestionType.fillInBlank:
+      case QuestionType.wordMatching:
+      case QuestionType.contextualApplication:
+      case QuestionType.trueFalse:
+        return _buildMultipleChoiceCard(context, state);
+    }
+  }
+
+  /// Build standard multiple choice question card
+  Widget _buildMultipleChoiceCard(BuildContext context, LessonState state) {
     final currentQuestion = state.questions[state.currentQuestionIndex];
     final controller = ref.read(lessonControllerProvider.notifier);
     final selectedAnswer = controller.getSelectedOptionForCurrentQuestion();
