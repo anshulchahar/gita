@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'badge.dart';
 
 /// Domain model representing a user in the app
 class AppUser {
@@ -99,7 +100,7 @@ class AppUser {
 
 /// Gamification data for a user
 class Gamification {
-  final int wisdomPoints;
+  final int wisdomPoints;  // Total XP
   final int gems;
   final int energy;
   final int maxEnergy;
@@ -109,6 +110,13 @@ class Gamification {
   final String lastCompletedDate;
   final int totalLessonsCompleted;
   final int perfectScores;
+  // New fields for enhanced gamification
+  final List<BadgeId> earnedBadges;           // IDs of earned badges
+  final Map<String, int> lessonStrength;       // Lesson ID -> strength (0-100)
+  final Map<String, DateTime> lastPracticed;   // Lesson ID -> last practice date
+  final int consecutivePerfects;               // For tracking perfect streaks
+  final int reflectionsCompleted;              // For Reflective Soul badge
+  final int scenariosCorrect;                  // For Scenario Sage badge
 
   const Gamification({
     this.wisdomPoints = 0,
@@ -121,7 +129,28 @@ class Gamification {
     this.lastCompletedDate = '',
     this.totalLessonsCompleted = 0,
     this.perfectScores = 0,
+    this.earnedBadges = const [],
+    this.lessonStrength = const {},
+    this.lastPracticed = const {},
+    this.consecutivePerfects = 0,
+    this.reflectionsCompleted = 0,
+    this.scenariosCorrect = 0,
   }) : lastEnergyRefill = lastEnergyRefill ?? const _DefaultDateTime();
+
+  /// Calculate user level from XP
+  int get level => calculateLevel(wisdomPoints);
+
+  /// Get level title
+  String get levelTitle => levelTitles[level - 1];
+
+  /// Get XP needed for next level
+  int get xpToNextLevel => xpForNextLevel(wisdomPoints);
+
+  /// Get progress to next level (0.0 - 1.0)
+  double get levelProgressPercent => levelProgress(wisdomPoints);
+
+  /// Check if user has earned a specific badge
+  bool hasBadge(BadgeId badge) => earnedBadges.contains(badge);
 
   factory Gamification.fromMap(Map<String, dynamic> data) {
     return Gamification(
@@ -135,6 +164,21 @@ class Gamification {
       lastCompletedDate: data['lastCompletedDate'] ?? '',
       totalLessonsCompleted: data['totalLessonsCompleted'] ?? 0,
       perfectScores: data['perfectScores'] ?? 0,
+      earnedBadges: (data['earnedBadges'] as List<dynamic>? ?? [])
+          .map((e) => BadgeId.values.firstWhere(
+                (b) => b.name == e,
+                orElse: () => BadgeId.firstStep,
+              ))
+          .toList(),
+      lessonStrength: Map<String, int>.from(data['lessonStrength'] ?? {}),
+      lastPracticed: (data['lastPracticed'] as Map<String, dynamic>? ?? {})
+          .map((key, value) => MapEntry(
+                key,
+                value is Timestamp ? value.toDate() : DateTime.parse(value),
+              )),
+      consecutivePerfects: data['consecutivePerfects'] ?? 0,
+      reflectionsCompleted: data['reflectionsCompleted'] ?? 0,
+      scenariosCorrect: data['scenariosCorrect'] ?? 0,
     );
   }
 
@@ -150,7 +194,53 @@ class Gamification {
       'lastCompletedDate': lastCompletedDate,
       'totalLessonsCompleted': totalLessonsCompleted,
       'perfectScores': perfectScores,
+      'earnedBadges': earnedBadges.map((e) => e.name).toList(),
+      'lessonStrength': lessonStrength,
+      'lastPracticed': lastPracticed.map(
+        (key, value) => MapEntry(key, Timestamp.fromDate(value)),
+      ),
+      'consecutivePerfects': consecutivePerfects,
+      'reflectionsCompleted': reflectionsCompleted,
+      'scenariosCorrect': scenariosCorrect,
     };
+  }
+
+  Gamification copyWith({
+    int? wisdomPoints,
+    int? gems,
+    int? energy,
+    int? maxEnergy,
+    DateTime? lastEnergyRefill,
+    int? currentStreak,
+    int? longestStreak,
+    String? lastCompletedDate,
+    int? totalLessonsCompleted,
+    int? perfectScores,
+    List<BadgeId>? earnedBadges,
+    Map<String, int>? lessonStrength,
+    Map<String, DateTime>? lastPracticed,
+    int? consecutivePerfects,
+    int? reflectionsCompleted,
+    int? scenariosCorrect,
+  }) {
+    return Gamification(
+      wisdomPoints: wisdomPoints ?? this.wisdomPoints,
+      gems: gems ?? this.gems,
+      energy: energy ?? this.energy,
+      maxEnergy: maxEnergy ?? this.maxEnergy,
+      lastEnergyRefill: lastEnergyRefill ?? this.lastEnergyRefill,
+      currentStreak: currentStreak ?? this.currentStreak,
+      longestStreak: longestStreak ?? this.longestStreak,
+      lastCompletedDate: lastCompletedDate ?? this.lastCompletedDate,
+      totalLessonsCompleted: totalLessonsCompleted ?? this.totalLessonsCompleted,
+      perfectScores: perfectScores ?? this.perfectScores,
+      earnedBadges: earnedBadges ?? this.earnedBadges,
+      lessonStrength: lessonStrength ?? this.lessonStrength,
+      lastPracticed: lastPracticed ?? this.lastPracticed,
+      consecutivePerfects: consecutivePerfects ?? this.consecutivePerfects,
+      reflectionsCompleted: reflectionsCompleted ?? this.reflectionsCompleted,
+      scenariosCorrect: scenariosCorrect ?? this.scenariosCorrect,
+    );
   }
 }
 
