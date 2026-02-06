@@ -91,7 +91,7 @@ class _StoryCardActivityState extends State<StoryCardActivity>
             // Krishna mascot
             const KrishnaMascot(
               emotion: KrishnaEmotion.happy,
-              animation: KrishnaAnimation.idleFloat,
+              animation: KrishnaAnimation.none,
               size: 120,
             ),
             

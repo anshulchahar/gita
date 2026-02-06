@@ -31,7 +31,7 @@
             "sectionNumber": 2,
             "sectionName": "The Art of Action",
             "sectionNameHi": "कर्म की कला",
-            "shlokaRange": "23-38",
+            "shlokaRange": "23-53",
             "keyTeaching": "Act without attachment to results",
             "order": 2
         },
@@ -49,8 +49,8 @@
             "id": "section_2_4",
             "unitId": "unit_2",
             "sectionNumber": 4,
-            "sectionName": "Sense Control",
-            "sectionNameHi": "इंद्रिय नियंत्रण",
+            "sectionName": "The Path to Peace",
+            "sectionNameHi": "शांति का मार्ग",
             "shlokaRange": "62-72",
             "keyTeaching": "Focus and self-control create lasting peace",
             "order": 4
@@ -145,47 +145,84 @@
             "prerequisite": "lesson_2_2_1"
         },
         {
-            "id": "lesson_2_3_1",
-            "sectionId": "section_2_3",
+            "id": "lesson_2_2_3",
+            "sectionId": "section_2_2",
             "unitId": "unit_2",
-            "lessonNumber": 1,
-            "lessonName": "The Person of Steady Wisdom",
-            "lessonNameHi": "स्थितप्रज्ञ व्यक्ति",
+            "lessonNumber": 3,
+            "lessonName": "Free from Anxiety",
+            "lessonNameHi": "चिंता से मुक्त",
             "order": 6,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
-                54,
-                55,
-                56
+                51,
+                52,
+                53
             ],
             "xpReward": 70,
             "prerequisite": "lesson_2_2_2"
+        },
+        {
+            "id": "lesson_2_3_1",
+            "sectionId": "section_2_3",
+            "unitId": "unit_2",
+            "lessonNumber": 1,
+            "lessonName": "Defining Wisdom",
+            "lessonNameHi": "ज्ञान को परिभाषित करना",
+            "order": 7,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                54,
+                55
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_3"
+        },
+        {
+            "id": "lesson_2_3_2",
+            "sectionId": "section_2_3",
+            "unitId": "unit_2",
+            "lessonNumber": 2,
+            "lessonName": "The Unshakable Mind",
+            "lessonNameHi": "अडिग मन",
+            "order": 8,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                56,
+                57
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_3_1"
+        },
+        {
+            "id": "lesson_2_3_3",
+            "sectionId": "section_2_3",
+            "unitId": "unit_2",
+            "lessonNumber": 3,
+            "lessonName": "The Turtle Technique",
+            "lessonNameHi": "कछुआ तकनीक",
+            "order": 9,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                58,
+                59,
+                60,
+                61
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_3_2"
         },
         {
             "id": "lesson_2_4_1",
             "sectionId": "section_2_4",
             "unitId": "unit_2",
             "lessonNumber": 1,
-            "lessonName": "The Turtle Technique",
-            "lessonNameHi": "कछुआ तकनीक",
-            "order": 7,
-            "estimatedTime": 300,
-            "difficulty": "intermediate",
-            "shlokasCovered": [
-                58
-            ],
-            "xpReward": 70,
-            "prerequisite": "lesson_2_3_1"
-        },
-        {
-            "id": "lesson_2_4_2",
-            "sectionId": "section_2_4",
-            "unitId": "unit_2",
-            "lessonNumber": 2,
-            "lessonName": "How Desires Chain Us",
-            "lessonNameHi": "इच्छाएं कैसे बांधती हैं",
-            "order": 8,
+            "lessonName": "The Ladder of Ruin",
+            "lessonNameHi": "विनाश की सीढ़ी",
+            "order": 10,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
@@ -194,7 +231,43 @@
                 64
             ],
             "xpReward": 70,
+            "prerequisite": "lesson_2_3_3"
+        },
+        {
+            "id": "lesson_2_4_2",
+            "sectionId": "section_2_4",
+            "unitId": "unit_2",
+            "lessonNumber": 2,
+            "lessonName": "No Peace Without Focus",
+            "lessonNameHi": "ध्यान के बिना शांति नहीं",
+            "order": 11,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                66,
+                67,
+                68
+            ],
+            "xpReward": 70,
             "prerequisite": "lesson_2_4_1"
+        },
+        {
+            "id": "lesson_2_4_3",
+            "sectionId": "section_2_4",
+            "unitId": "unit_2",
+            "lessonNumber": 3,
+            "lessonName": "Like the Ocean",
+            "lessonNameHi": "सागर की तरह",
+            "order": 12,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                70,
+                71,
+                72
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_4_2"
         }
     ],
     "questions": [
@@ -761,6 +834,18 @@
             }
         },
         {
+            "questionId": "q_2_2_3_placeholder",
+            "lessonId": "lesson_2_2_3",
+            "type": "reflectionPrompt",
+            "order": 1,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Placeholder for Lesson 2.2.3: Free from Anxiety",
+                "promptHi": "पाठ 2.2.3 के लिए स्थानधारक: चिंता से मुक्त",
+                "krishnaWisdom": "Wisdom born of karma yoga releases us from the bondage of rebirth."
+            }
+        },
+        {
             "questionId": "q_2_3_1_scenario_1",
             "lessonId": "lesson_2_3_1",
             "type": "scenarioChallenge",
@@ -872,8 +957,20 @@
             }
         },
         {
-            "questionId": "q_2_4_1_scenario_1",
-            "lessonId": "lesson_2_4_1",
+            "questionId": "q_2_3_2_placeholder",
+            "lessonId": "lesson_2_3_2",
+            "type": "reflectionPrompt",
+            "order": 1,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Placeholder for Lesson 2.3.2: The Unshakable Mind",
+                "promptHi": "पाठ 2.3.2 के लिए स्थानधारक: अडिग मन",
+                "krishnaWisdom": "He who is unmoved by good or evil fortune is firmly fixed in perfect knowledge."
+            }
+        },
+        {
+            "questionId": "q_2_3_3_scenario_1",
+            "lessonId": "lesson_2_3_3",
             "type": "scenarioChallenge",
             "order": 1,
             "xpReward": 25,
@@ -901,8 +998,8 @@
             }
         },
         {
-            "questionId": "q_2_4_1_story_1",
-            "lessonId": "lesson_2_4_1",
+            "questionId": "q_2_3_3_story_1",
+            "lessonId": "lesson_2_3_3",
             "type": "storyCard",
             "order": 2,
             "xpReward": 10,
@@ -915,8 +1012,8 @@
             }
         },
         {
-            "questionId": "q_2_4_1_mc_1",
-            "lessonId": "lesson_2_4_1",
+            "questionId": "q_2_3_3_mc_1",
+            "lessonId": "lesson_2_3_3",
             "type": "multipleChoice",
             "order": 3,
             "xpReward": 15,
@@ -942,8 +1039,8 @@
             }
         },
         {
-            "questionId": "q_2_4_1_scenario_2",
-            "lessonId": "lesson_2_4_1",
+            "questionId": "q_2_3_3_scenario_2",
+            "lessonId": "lesson_2_3_3",
             "type": "scenarioChallenge",
             "order": 4,
             "xpReward": 25,
@@ -971,8 +1068,8 @@
             }
         },
         {
-            "questionId": "q_2_4_1_reflection_1",
-            "lessonId": "lesson_2_4_1",
+            "questionId": "q_2_3_3_reflection_1",
+            "lessonId": "lesson_2_3_3",
             "type": "reflectionPrompt",
             "order": 5,
             "xpReward": 20,
@@ -983,8 +1080,8 @@
             }
         },
         {
-            "questionId": "q_2_4_2_scenario_1",
-            "lessonId": "lesson_2_4_2",
+            "questionId": "q_2_4_1_scenario_1",
+            "lessonId": "lesson_2_4_1",
             "type": "scenarioChallenge",
             "order": 1,
             "xpReward": 25,
@@ -1012,8 +1109,8 @@
             }
         },
         {
-            "questionId": "q_2_4_2_story_1",
-            "lessonId": "lesson_2_4_2",
+            "questionId": "q_2_4_1_story_1",
+            "lessonId": "lesson_2_4_1",
             "type": "storyCard",
             "order": 2,
             "xpReward": 10,
@@ -1026,8 +1123,8 @@
             }
         },
         {
-            "questionId": "q_2_4_2_mc_1",
-            "lessonId": "lesson_2_4_2",
+            "questionId": "q_2_4_1_mc_1",
+            "lessonId": "lesson_2_4_1",
             "type": "multipleChoice",
             "order": 3,
             "xpReward": 15,
@@ -1053,8 +1150,8 @@
             }
         },
         {
-            "questionId": "q_2_4_2_scenario_2",
-            "lessonId": "lesson_2_4_2",
+            "questionId": "q_2_4_1_scenario_2",
+            "lessonId": "lesson_2_4_1",
             "type": "scenarioChallenge",
             "order": 4,
             "xpReward": 25,
@@ -1082,8 +1179,8 @@
             }
         },
         {
-            "questionId": "q_2_4_2_reflection_1",
-            "lessonId": "lesson_2_4_2",
+            "questionId": "q_2_4_1_reflection_1",
+            "lessonId": "lesson_2_4_1",
             "type": "reflectionPrompt",
             "order": 5,
             "xpReward": 20,
@@ -1091,6 +1188,30 @@
                 "prompt": "What do you find yourself thinking about repeatedly? What 'sense objects' (material things, achievements, relationships) occupy your mind? Is this focus serving you or creating suffering?",
                 "promptHi": "आप किस बारे में बार-बार सोचते हैं? कौन से 'विषय' (भौतिक चीजें, उपलब्धियां, रिश्ते) आपके मन में रहते हैं? क्या यह ध्यान आपकी सेवा कर रहा है या दुख पैदा कर रहा है?",
                 "krishnaWisdom": "You become what you think about. Choose your mental diet wisely."
+            }
+        },
+        {
+            "questionId": "q_2_4_2_placeholder",
+            "lessonId": "lesson_2_4_2",
+            "type": "reflectionPrompt",
+            "order": 1,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Placeholder for Lesson 2.4.2: No Peace Without Focus",
+                "promptHi": "पाठ 2.4.2 के लिए स्थानधारक: ध्यान के बिना शांति नहीं",
+                "krishnaWisdom": "There is no intelligence where there is no concentration."
+            }
+        },
+        {
+            "questionId": "q_2_4_3_placeholder",
+            "lessonId": "lesson_2_4_3",
+            "type": "reflectionPrompt",
+            "order": 1,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Placeholder for Lesson 2.4.3: Like the Ocean",
+                "promptHi": "पाठ 2.4.3 के लिए स्थानधारक: सागर की तरह",
+                "krishnaWisdom": "As the ocean remains unmoved by entering rivers, so the wise remain unmoved by desires."
             }
         }
     ]
