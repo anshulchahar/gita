@@ -164,7 +164,7 @@ class QuestionContent {
       questionText: _safeString(data, 'questionText'),
       
       options: _extractOptions(data),
-      correctAnswerIndex: _safeInt(data, 'correctAnswerIndex'),
+      correctAnswerIndex: _findCorrectAnswerIndex(data),
       
       explanation: _safeString(data, 'explanation'),
       realLifeApplication: _safeString(data, 'realLifeApplication'),
@@ -229,6 +229,34 @@ class QuestionContent {
       if (o is Map) return o['text']?.toString() ?? '';
       return o?.toString() ?? '';
     }).toList().map((e) => e.toString()).toList();
+  }
+
+  /// Helper to find the correct answer index from options with isOptimal or isCorrect
+  static int _findCorrectAnswerIndex(Map<String, dynamic> data) {
+    // First check if there's an explicit correctAnswerIndex
+    final explicitIndex = data['correctAnswerIndex'];
+    if (explicitIndex is int) return explicitIndex;
+    if (explicitIndex != null) {
+      final parsed = int.tryParse(explicitIndex.toString());
+      if (parsed != null) return parsed;
+    }
+    
+    // Otherwise, find the option with isOptimal: true or isCorrect: true
+    final options = data['options'];
+    if (options is! List) return 0;
+    
+    for (int i = 0; i < options.length; i++) {
+      final option = options[i];
+      if (option is Map) {
+        // Check for isOptimal (scenario challenges)
+        if (option['isOptimal'] == true) return i;
+        // Check for isCorrect (multiple choice)
+        if (option['isCorrect'] == true) return i;
+      }
+    }
+    
+    // Default to 0 if no correct answer found
+    return 0;
   }
 
   Map<String, dynamic> toMap() {
