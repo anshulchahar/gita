@@ -127,4 +127,25 @@ class UserRepository {
       throw Exception('Failed to update streak: $e');
     }
   }
+
+  /// Update lesson practice data for spaced repetition
+  Future<void> updateLessonPractice(
+    String userId, 
+    String lessonId, 
+    DateTime practiceDate,
+    int score,
+  ) async {
+    try {
+      final dateString = practiceDate.toIso8601String();
+      await _firestore
+          .collection(Collections.users)
+          .doc(userId)
+          .update({
+        'gamification.lastPracticed.$lessonId': dateString,
+        'gamification.lessonStrength.$lessonId': score.clamp(0, 100),
+      });
+    } catch (e) {
+      throw Exception('Failed to update lesson practice: $e');
+    }
+  }
 }

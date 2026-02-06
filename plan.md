@@ -278,11 +278,11 @@ Cards    Exercises         Reflection Repetition
 
 | Activity Type | Description | XP | Purpose |
 |--------------|-------------|-----|---------|
+| **🧩 Scenario Challenge 1** | Real-life dilemma to start the lesson | 25 | Contextualize the problem immediately |
 | **📖 Story Card** | Animated context with Krishna narrating | 10 | Introduce concept & set context |
 | **🎯 Multiple Choice** | Comprehension questions | 15 | Test understanding |
-| **🔄 Fill in the Blank** | Complete the verse or teaching | 15 | Reinforce memorization |
-| **💭 Reflection Prompt** | Journal-style personal questions | 20 | Connect to real life |
-| **🧩 Scenario Challenge** | Real-life dilemma solving | 25 | Apply wisdom to modern situations |
+| **🧩 Scenario Challenge 2** | Another real-life application | 25 | Apply wisdom to modern situations |
+| **💭 Reflection Prompt** | Journal-style personal questions | 20 | Connect to real life (Optional) |
 
 #### � Optional Activities (Bonus Content)
 

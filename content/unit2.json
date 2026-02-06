@@ -1,0 +1,1986 @@
+{
+    "unit": {
+        "id": "unit_2",
+        "unitNumber": 2,
+        "unitName": "The Eternal You",
+        "unitNameHi": "शाश्वत आत्मा",
+        "chapterNumber": 2,
+        "theme": "Soul & Wisdom",
+        "difficulty": "beginner-intermediate",
+        "icon": "🧘",
+        "color": "#4A148C",
+        "description": "Discover the immortal soul within you and learn the art of wise action through Krishna's foundational teachings.",
+        "descriptionHi": "अपने भीतर अमर आत्मा की खोज करें और कृष्ण की मूलभूत शिक्षाओं के माध्यम से बुद्धिमत्तापूर्ण कर्म की कला सीखें।",
+        "journeyId": "journey_1",
+        "shlokasCovered": "11-72"
+    },
+    "sections": [
+        {
+            "id": "section_2_1",
+            "unitId": "unit_2",
+            "sectionNumber": 1,
+            "sectionName": "Beyond the Body",
+            "sectionNameHi": "शरीर से परे",
+            "shlokaRange": "11-22",
+            "keyTeaching": "You are not your body—the soul is eternal and unchanging",
+            "order": 1
+        },
+        {
+            "id": "section_2_2",
+            "unitId": "unit_2",
+            "sectionNumber": 2,
+            "sectionName": "The Art of Action",
+            "sectionNameHi": "कर्म की कला",
+            "shlokaRange": "23-53",
+            "keyTeaching": "Act without attachment to results",
+            "order": 2
+        },
+        {
+            "id": "section_2_3",
+            "unitId": "unit_2",
+            "sectionNumber": 3,
+            "sectionName": "Steady in Wisdom",
+            "sectionNameHi": "स्थितप्रज्ञ",
+            "shlokaRange": "54-61",
+            "keyTeaching": "Master your reactions to become truly wise",
+            "order": 3
+        },
+        {
+            "id": "section_2_4",
+            "unitId": "unit_2",
+            "sectionNumber": 4,
+            "sectionName": "The Path to Peace",
+            "sectionNameHi": "शांति का मार्ग",
+            "shlokaRange": "62-72",
+            "keyTeaching": "Focus and self-control create lasting peace",
+            "order": 4
+        }
+    ],
+    "lessons": [
+        {
+            "id": "lesson_2_1_1",
+            "sectionId": "section_2_1",
+            "unitId": "unit_2",
+            "lessonNumber": 1,
+            "lessonName": "The Indestructible Soul",
+            "lessonNameHi": "अविनाशी आत्मा",
+            "order": 1,
+            "estimatedTime": 300,
+            "difficulty": "beginner",
+            "shlokasCovered": [
+                11,
+                12,
+                13
+            ],
+            "xpReward": 60,
+            "prerequisite": null
+        },
+        {
+            "id": "lesson_2_1_2",
+            "sectionId": "section_2_1",
+            "unitId": "unit_2",
+            "lessonNumber": 2,
+            "lessonName": "The Eternal Witness",
+            "lessonNameHi": "शाश्वत साक्षी",
+            "order": 2,
+            "estimatedTime": 300,
+            "difficulty": "beginner",
+            "shlokasCovered": [
+                17,
+                18,
+                19,
+                20
+            ],
+            "xpReward": 60,
+            "prerequisite": "lesson_2_1_1"
+        },
+        {
+            "id": "lesson_2_1_3",
+            "sectionId": "section_2_1",
+            "unitId": "unit_2",
+            "lessonNumber": 3,
+            "lessonName": "Changing Clothes",
+            "lessonNameHi": "वस्त्र बदलना",
+            "order": 3,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                22
+            ],
+            "xpReward": 60,
+            "prerequisite": "lesson_2_1_2"
+        },
+        {
+            "id": "lesson_2_1_4",
+            "sectionId": "section_2_1",
+            "unitId": "unit_2",
+            "lessonNumber": 4,
+            "lessonName": "The Invincible Self",
+            "lessonNameHi": "अजेय आत्मा",
+            "difficulty": "intermediate",
+            "estimatedTime": 300,
+            "shlokasCovered": [
+                23,
+                24,
+                25
+            ],
+            "xpReward": 60,
+            "prerequisite": "lesson_2_1_3",
+            "order": 4
+        },
+        {
+            "id": "lesson_2_2_1",
+            "sectionId": "section_2_2",
+            "unitId": "unit_2",
+            "lessonNumber": 1,
+            "lessonName": "The Warrior's Duty",
+            "lessonNameHi": "योद्धा का कर्तव्य",
+            "order": 5,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                31,
+                32,
+                33,
+                34,
+                35,
+                36,
+                37
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_1_4"
+        },
+        {
+            "id": "lesson_2_2_2",
+            "sectionId": "section_2_2",
+            "unitId": "unit_2",
+            "lessonNumber": 2,
+            "lessonName": "The Science of Action",
+            "lessonNameHi": "कर्म का विज्ञान",
+            "order": 6,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                39,
+                40,
+                41
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_1"
+        },
+        {
+            "id": "lesson_2_2_focus",
+            "sectionId": "section_2_2",
+            "unitId": "unit_2",
+            "lessonNumber": 99,
+            "lessonName": "One-Pointed Focus",
+            "lessonNameHi": "एकाग्र मन",
+            "difficulty": "advanced",
+            "estimatedTime": 300,
+            "shlokasCovered": [
+                41,
+                44
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_2",
+            "order": 7
+        },
+        {
+            "id": "lesson_2_2_3",
+            "sectionId": "section_2_2",
+            "unitId": "unit_2",
+            "lessonNumber": 3,
+            "lessonName": "Your Right to Work",
+            "lessonNameHi": "कर्म का अधिकार",
+            "order": 8,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                47
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_focus"
+        },
+        {
+            "id": "lesson_2_2_4",
+            "sectionId": "section_2_2",
+            "unitId": "unit_2",
+            "lessonNumber": 4,
+            "lessonName": "Yoga is Skill in Action",
+            "lessonNameHi": "योग कर्म की कुशलता है",
+            "order": 9,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                48,
+                49,
+                50
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_3"
+        },
+        {
+            "id": "lesson_2_2_5",
+            "sectionId": "section_2_2",
+            "unitId": "unit_2",
+            "lessonNumber": 5,
+            "lessonName": "Free from Anxiety",
+            "lessonNameHi": "चिंता से मुक्त",
+            "order": 10,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                51,
+                52,
+                53
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_4"
+        },
+        {
+            "id": "lesson_2_3_1",
+            "sectionId": "section_2_3",
+            "unitId": "unit_2",
+            "lessonNumber": 1,
+            "lessonName": "Defining Wisdom",
+            "lessonNameHi": "ज्ञान को परिभाषित करना",
+            "order": 11,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                54,
+                55
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_5"
+        },
+        {
+            "id": "lesson_2_3_2",
+            "sectionId": "section_2_3",
+            "unitId": "unit_2",
+            "lessonNumber": 2,
+            "lessonName": "The Unshakable Mind",
+            "lessonNameHi": "अडिग मन",
+            "order": 12,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                56,
+                57
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_3_1"
+        },
+        {
+            "id": "lesson_2_3_3",
+            "sectionId": "section_2_3",
+            "unitId": "unit_2",
+            "lessonNumber": 3,
+            "lessonName": "The Turtle Technique",
+            "lessonNameHi": "कछुआ तकनीक",
+            "order": 13,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                58,
+                59,
+                60,
+                61
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_3_2"
+        },
+        {
+            "id": "lesson_2_4_1",
+            "sectionId": "section_2_4",
+            "unitId": "unit_2",
+            "lessonNumber": 1,
+            "lessonName": "The Ladder of Ruin",
+            "lessonNameHi": "विनाश की सीढ़ी",
+            "order": 14,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                62,
+                63,
+                64
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_3_3"
+        },
+        {
+            "id": "lesson_2_4_2",
+            "sectionId": "section_2_4",
+            "unitId": "unit_2",
+            "lessonNumber": 2,
+            "lessonName": "No Peace Without Focus",
+            "lessonNameHi": "ध्यान के बिना शांति नहीं",
+            "order": 15,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                66,
+                67,
+                68
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_4_1"
+        },
+        {
+            "id": "lesson_2_4_3",
+            "sectionId": "section_2_4",
+            "unitId": "unit_2",
+            "lessonNumber": 3,
+            "lessonName": "Like the Ocean",
+            "lessonNameHi": "सागर की तरह",
+            "order": 16,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                70,
+                71,
+                72
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_4_2"
+        }
+    ],
+    "questions": [
+        {
+            "questionId": "q_2_1_1_scenario_1",
+            "lessonId": "lesson_2_1_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Grief of Loss",
+                "scenarioTitleHi": "हानि का दुःख",
+                "scenario": "You lose a precious family heirloom that has been in your family for generations. You feel devastated, as if a part of you has died. What is the truest perspective?",
+                "scenarioHi": "आप एक कीमती पारिवारिक विरासत खो देते हैं जो पीढ़ियों से आपके परिवार में रही है। आप तबाह महसूस करते हैं, जैसे कि आपका एक हिस्सा मर गया हो। सबसे सही परिप्रेक्ष्य क्या है?",
+                "options": [
+                    {
+                        "text": "My identity is broken because the object is gone.",
+                        "textHi": "मेरी पहचान टूट गई है क्योंकि वह वस्तु चली गई है।",
+                        "feedback": "This is attachment to the temporary. Objects define us only if we let them.",
+                        "feedbackHi": "यह अस्थायी के प्रति आसक्ति है। वस्तुएं हमें तभी परिभाषित करती हैं जब हम उन्हें ऐसा करने देते हैं।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "The object is gone, but the love and memory—and I myself—remain untouched.",
+                        "textHi": "वस्तु चली गई है, लेकिन प्रेम और स्मृति—और मैं स्वयं—अछूते रहते हैं।",
+                        "feedback": "Correct. The essence is never lost, only the form changes.",
+                        "feedbackHi": "सही। सार कभी नहीं खोता, केवल रूप बदलता है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_1_1_story_1",
+            "lessonId": "lesson_2_1_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "Krishna Speaks",
+                "titleHi": "कृष्ण बोलते हैं",
+                "story": "With Arjuna sitting dejected in the chariot, Krishna smiled gently. 'You speak wise words,' Krishna said, 'yet you grieve for those who need no grief.' Arjuna looked up confused. 'The wise grieve neither for the living nor the dead,' Krishna continued. 'For there was never a time when you, or I, or any of these warriors did not exist. Nor will there ever be a time when we cease to exist.'",
+                "storyHi": "अर्जुन को रथ में उदास बैठा देख, कृष्ण मंद मुस्कुराए। 'तुम बुद्धिमानों जैसी बातें करते हो,' कृष्ण ने कहा, 'फिर भी तुम उनके लिए शोक करते हो जिनके लिए शोक नहीं करना चाहिए।' अर्जुन ने भ्रमित होकर ऊपर देखा। 'बुद्धिमान लोग न जीवितों के लिए और न मृतों के लिए शोक करते हैं,' कृष्ण ने जारी रखा। 'ऐसा कोई समय नहीं था जब तुम, या मैं, या ये सभी योद्धा नहीं थे। और न ऐसा कोई समय होगा जब हम नहीं होंगे।'",
+                "krishnaMessage": "Death is just a change of clothes for the eternal soul."
+            }
+        },
+        {
+            "questionId": "q_2_1_1_mc_1",
+            "lessonId": "lesson_2_1_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "According to Krishna, why should the wise not grieve?",
+                "questionTextHi": "कृष्ण के अनुसार, बुद्धिमान को शोक क्यों नहीं करना चाहिए?",
+                "options": [
+                    "Because grief is a sign of weakness",
+                    "Because the soul is eternal and never truly dies",
+                    "Because death is just bad luck",
+                    "Because they don't care about others"
+                ],
+                "optionsHi": [
+                    "क्योंकि शोक कमजोरी का संकेत है",
+                    "क्योंकि आत्मा शाश्वत है और कभी वास्तव में मरती नहीं",
+                    "क्योंकि मृत्यु बस दुर्भाग्य है",
+                    "क्योंकि उन्हें दूसरों की परवाह नहीं"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Krishna's core teaching is that our true self—the Atman or soul—is eternal. It was never born and will never die. When we understand this, fear of death loses its power over us.",
+                "explanationHi": "कृष्ण की मूल शिक्षा यह है कि हमारा वास्तविक स्व—आत्मा—शाश्वत है। यह कभी जन्मा नहीं और कभी मरेगा नहीं। जब हम इसे समझते हैं, मृत्यु का भय अपनी शक्ति खो देता है।",
+                "realLifeApplication": "When we understand that our essence is eternal, we approach life's challenges with more courage and less fear."
+            }
+        },
+        {
+            "questionId": "q_2_1_1_scenario_2",
+            "lessonId": "lesson_2_1_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Aging Gracefully",
+                "scenarioTitleHi": "शान से बूढ़ा होना",
+                "scenario": "You notice your first grey hairs and wrinkles. You feel a sudden panic about getting old. How does the soul perspective help?",
+                "scenarioHi": "आप अपने पहले सफेद बाल और झुर्रियां देखते हैं। आपको बूढ़े होने के बारे में अचानक घबराहट महसूस होती है। आत्मा का दृष्टिकोण कैसे मदद करता है?",
+                "options": [
+                    {
+                        "text": "It doesn't; getting old is terrible.",
+                        "textHi": "यह मदद नहीं करता; बूढ़ा होना भयानक है।",
+                        "feedback": "This view identifies you completely with the decaying body.",
+                        "feedbackHi": "यह दृष्टिकोण आपको पूरी तरह से क्षय होने वाले शरीर के साथ पहचानता है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "It helps me realize that while my body changes, the 'I' who observes it remains young and timeless.",
+                        "textHi": "यह मुझे यह महसूस करने में मदद करता है कि हालांकि मेरा शरीर बदलता है, लेकिन 'मैं' जो इसे देखता है वह युवा और कालातीत रहता है।",
+                        "feedback": "Yes! The observer (the soul) does not age. Only the vehicle (the body) does.",
+                        "feedbackHi": "हाँ! दर्शक (आत्मा) बूढ़ा नहीं होता। केवल वाहन (शरीर) होता है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_1_1_reflection_1",
+            "lessonId": "lesson_2_1_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "If you truly believed you had existed forever and would continue to exist forever, how would that change how you live today?",
+                "promptHi": "अगर आप सच में मानते कि आप हमेशा से थे और हमेशा रहेंगे, तो यह आज आपके जीने के तरीके को कैसे बदल देगा?",
+                "krishnaWisdom": "Fear of death is the root of most human suffering. Understanding your eternal nature frees you."
+            }
+        },
+        {
+            "questionId": "q_2_1_2_scenario_1",
+            "lessonId": "lesson_2_1_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Silent Observer",
+                "scenarioTitleHi": "मौन साक्षी",
+                "scenario": "You are sitting in a noisy cafe. Chaos is everywhere. Can you find a part of yourself that is just watching the noise without being the noise?",
+                "scenarioHi": "आप एक शोर-शराबे वाले कैफे में बैठे हैं। हर जगह अराजकता है। क्या आप अपने आप का एक हिस्सा पा सकते हैं जो केवल शोर को देख रहा है बिना शोर हुए?",
+                "options": [
+                    {
+                        "text": "No, I am the noise. It annoys me.",
+                        "textHi": "नहीं, मैं शोर हूं। यह मुझे परेशान करता है।",
+                        "feedback": "This is being lost in the experience.",
+                        "feedbackHi": "यह अनुभव में खो जाना है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Yes, I can observe the sounds coming and going while remaining still.",
+                        "textHi": "हाँ, मैं शांत रहते हुए ध्वनियों को आते और जाते देख सकता हूँ।",
+                        "feedback": "That stillness is the witness consciousness—the reflection of the soul.",
+                        "feedbackHi": "वह शांति साक्षी चेतना है—आत्मा का प्रतिबिंब।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_1_2_story_1",
+            "lessonId": "lesson_2_1_2",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "The Witness Consciousness",
+                "titleHi": "साक्षी चेतना",
+                "story": "Krishna teaches that the soul is not the doer, but the witness. Imagine a movie screen. Tragedies, comedies, wars, and romances play on it. The screen shows them all but is never burned by fire in the movie or wet by water. In the same way, your soul witnesses your life's drama without being damaged by it.",
+                "storyHi": "कृष्ण सिखाते हैं कि आत्मा कर्ता नहीं, बल्कि साक्षी है। एक फिल्म स्क्रीन की कल्पना करें। त्रासदियां, कॉमेडी, युद्ध और रोमांस उस पर चलते हैं। स्क्रीन उन सभी को दिखाती है लेकिन फिल्म में आग से कभी जलती नहीं या पानी से गीली नहीं होती। उसी तरह, आपकी आत्मा आपके जीवन के नाटक को देखती है बिना उससे क्षतिग्रस्त हुए।",
+                "krishnaMessage": "Be the screen, not the movie."
+            }
+        },
+        {
+            "questionId": "q_2_1_2_mc_1",
+            "lessonId": "lesson_2_1_2",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "The soul is compared to what in this lesson?",
+                "questionTextHi": "इस पाठ में आत्मा की तुलना किससे की गई है?",
+                "options": [
+                    "The movie character",
+                    "The screen that witnesses the movie",
+                    "The director",
+                    "The popcorn"
+                ],
+                "optionsHi": [
+                    "फिल्म के पात्र से",
+                    "स्क्रीन जो फिल्म का गवाह है",
+                    "निर्देशक से",
+                    "पॉपकॉर्न से"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "The witness (Sakshi) merely observes. It allows experience to happen but is not entangled in it.",
+                "explanationHi": "साक्षी (Witness) केवल अवलोकन करता है। यह अनुभव को होने देता है लेकिन उसमें उलझता नहीं है।",
+                "realLifeApplication": "Next time you are angry, try to 'watch' your anger instead of 'being' angry. That step back is the witness."
+            }
+        },
+        {
+            "questionId": "q_2_1_2_scenario_2",
+            "lessonId": "lesson_2_1_2",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Detaching form Pain",
+                "scenarioTitleHi": "दर्द से अलग होना",
+                "scenario": "You have a bad headache. It hurts a lot. How can the 'Witness' perspective help?",
+                "scenarioHi": "आपको बहुत तेज सिरदर्द है। बहुत दर्द हो रहा है। 'साक्षी' परिप्रेक्ष्य कैसे मदद कर सकता है?",
+                "options": [
+                    {
+                        "text": "By pretending the pain doesn't exist.",
+                        "textHi": "यह नाटक करके कि दर्द मौजूद नहीं है।",
+                        "feedback": "Denial isn't witnessing. Witnessing acknowledges reality.",
+                        "feedbackHi": "इनकार साक्षी होना नहीं है। साक्षी वास्तविकता को स्वीकार करता है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "By noticing 'There is a sensation of pain' rather than screaming 'I am in pain!'",
+                        "textHi": "'दर्द की अनुभूति हो रही है' यह ध्यान देकर, बजाय इसके कि 'मैं दर्द में हूँ!' चिल्लाएं।",
+                        "feedback": "Exactly. Creating subject-object separation reduces suffering.",
+                        "feedbackHi": "बिल्कुल। विषय-वस्तु पृथक्करण बनाने से पीड़ा कम हो जाती है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_1_2_reflection_1",
+            "lessonId": "lesson_2_1_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Try to sit quietly for one minute. Watch your thoughts pass by like clouds in the sky. Can you see that 'You' are the sky, not the clouds?",
+                "promptHi": "एक मिनट चुपचाप बैठने की कोशिश करें। अपने विचारों को आकाश में बादलों की तरह गुजरते हुए देखें। क्या आप देख सकते हैं कि 'आप' आकाश हैं, बादल नहीं?",
+                "krishnaWisdom": "Thoughts come and go. The One who knows the thoughts remains."
+            }
+        },
+        {
+            "questionId": "q_2_1_3_scenario_1",
+            "lessonId": "lesson_2_1_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Fear of Change",
+                "scenarioTitleHi": "बदलाव का डर",
+                "scenario": "You are moving to a new city and feel terrified of leaving your old life behind. How would Krishna advise you?",
+                "scenarioHi": "आप एक नए शहर में जा रहे हैं और अपने पुराने जीवन को पीछे छोड़ने से डरते हैं। कृष्ण आपको क्या सलाह देंगे?",
+                "options": [
+                    {
+                        "text": "Don't go if you are scared.",
+                        "textHi": "अगर आप डरे हुए हैं तो मत जाओ।",
+                        "feedback": "Growth requires change.",
+                        "feedbackHi": "विकास के लिए बदलाव की आवश्यकता होती है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "See it as changing clothes—the essence remains, only the setting changes.",
+                        "textHi": "इसे कपड़े बदलने के रूप में देखें—सार वही रहता है, केवल सेटिंग बदलती है।",
+                        "feedback": "Correct. We change roles and places, but the Soul continues its journey.",
+                        "feedbackHi": "सही। हम भूमिकाएँ और स्थान बदलते हैं, लेकिन आत्मा अपनी यात्रा जारी रखती है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_1_3_story_1",
+            "lessonId": "lesson_2_1_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "The Most Famous Verse",
+                "titleHi": "सबसे प्रसिद्ध श्लोक",
+                "story": "'Just as a person casts off worn-out clothes and puts on new ones,' Krishna explained, 'the soul casts off worn-out bodies and enters new ones.' This simple analogy has comforted millions for thousands of years. You don't mourn when you throw away old clothes—you look forward to new ones. Death is just the soul's wardrobe change.",
+                "storyHi": "'जैसे मनुष्य पुराने वस्त्र त्यागकर नए पहनता है,' कृष्ण ने समझाया, 'वैसे ही आत्मा पुराने शरीर त्यागकर नए में प्रवेश करती है।' इस सरल उपमा ने हजारों वर्षों से लाखों लोगों को सांत्वना दी है। जब आप पुराने कपड़े फेंकते हैं तो शोक नहीं करते—आप नए की प्रतीक्षा करते हैं। मृत्यु बस आत्मा का वस्त्र परिवर्तन है।",
+                "krishnaMessage": "You are not your body. You are the one wearing it."
+            }
+        },
+        {
+            "questionId": "q_2_1_3_mc_1",
+            "lessonId": "lesson_2_1_3",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "In Krishna's analogy, what is the body compared to?",
+                "questionTextHi": "कृष्ण की उपमा में, शरीर की तुलना किससे की गई है?",
+                "options": [
+                    "A house we live in",
+                    "Clothes that we wear and change",
+                    "A car we drive",
+                    "A prison we're trapped in"
+                ],
+                "optionsHi": [
+                    "एक घर जिसमें हम रहते हैं",
+                    "कपड़े जो हम पहनते और बदलते हैं",
+                    "एक कार जो हम चलाते हैं",
+                    "एक कारागार जिसमें हम फंसे हैं"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "This is Bhagavad Gita verse 2.22, one of the most quoted verses. Krishna uses the relatable example of changing clothes to explain reincarnation. Just as we don't cry when we change clothes, we shouldn't fear the soul's change of bodies.",
+                "explanationHi": "यह भगवद्गीता श्लोक 2.22 है। जैसे हम कपड़े बदलते समय रोते नहीं, वैसे ही आत्मा के शरीर परिवर्तन से डरना नहीं चाहिए।",
+                "realLifeApplication": "This perspective helps us approach both life transitions and eventual death with more peace."
+            }
+        },
+        {
+            "questionId": "q_2_1_3_scenario_2",
+            "lessonId": "lesson_2_1_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Loss of Status",
+                "scenarioTitleHi": "प्रतिष्ठा की हानि",
+                "scenario": "You lose your title at work. You feel 'naked' without it. What is the truth?",
+                "scenarioHi": "आप काम पर अपना पद खो देते हैं। आप इसके बिना 'नग्न' महसूस करते हैं। सच क्या है?",
+                "options": [
+                    {
+                        "text": "I am nothing without my title.",
+                        "textHi": "मैं अपनी उपाधि के बिना कुछ भी नहीं हूँ।",
+                        "feedback": "That was just a coat you were wearing.",
+                        "feedbackHi": "वह बस एक कोट था जो आपने पहना था।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "The title was just a garment. I am still whole.",
+                        "textHi": "उपाधि सिर्फ एक वस्त्र थी। मैं अभी भी पूर्ण हूँ।",
+                        "feedback": "Yes. Roles are garments the soul wears for a time.",
+                        "feedbackHi": "हाँ। भूमिकाएँ वे वस्त्र हैं जिन्हें आत्मा कुछ समय के लिए पहनती है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_1_3_reflection_1",
+            "lessonId": "lesson_2_1_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "What 'clothes' (roles, titles, appearances) are you most attached to? How would it feel to take them off?",
+                "promptHi": "आप किन 'कपड़ों' (भूमिकाओं, उपाधियों, दिखावे) से सबसे अधिक जुड़े हैं? उन्हें उतारना कैसा लगेगा?",
+                "krishnaWisdom": "We are often most attached to the costumes that fit us least."
+            }
+        },
+        {
+            "questionId": "q_2_2_1_scenario_1",
+            "lessonId": "lesson_2_2_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Job Interview",
+                "scenarioTitleHi": "नौकरी का साक्षात्कार",
+                "scenario": "You have a job interview for your dream position. You've prepared for weeks and really need this job. How should you approach it according to the Gita's teaching?",
+                "scenarioHi": "आपके सपनों की नौकरी के लिए साक्षात्कार है। आपने हफ्तों तैयारी की है और आपको वाकई इस नौकरी की जरूरत है। गीता की शिक्षा के अनुसार आपको कैसे जाना चाहिए?",
+                "options": [
+                    {
+                        "text": "Don't care about the outcome at all—whatever happens, happens",
+                        "textHi": "परिणाम की बिल्कुल परवाह न करें—जो होगा होगा",
+                        "feedback": "This sounds like detachment but is actually apathy. Krishna never said don't care—he said don't be obsessed with controlling what you can't control.",
+                        "feedbackHi": "यह अनासक्ति जैसा लगता है लेकिन वास्तव में उदासीनता है। कृष्ण ने कभी नहीं कहा परवाह न करो—उन्होंने कहा जो नियंत्रित नहीं कर सकते उसके प्रति आसक्त न हो।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Focus on giving your absolute best in the interview, accept whatever result comes",
+                        "textHi": "साक्षात्कार में अपना सर्वश्रेष्ठ देने पर ध्यान दें, जो भी परिणाम आए स्वीकार करें",
+                        "feedback": "Perfect! This is Karma Yoga in action. You control your preparation and performance. The hiring decision involves factors beyond your control. Do your best, then release attachment to the outcome.",
+                        "feedbackHi": "बिल्कुल सही! यह कर्मयोग है। आप अपनी तैयारी और प्रदर्शन को नियंत्रित करते हैं। भर्ती का निर्णय आपके नियंत्रण से बाहर के कारकों पर निर्भर करता है। अपना सर्वश्रेष्ठ दें, फिर परिणाम से आसक्ति छोड़ दें।",
+                        "isOptimal": true
+                    },
+                    {
+                        "text": "Visualize getting the job constantly to manifest it",
+                        "textHi": "नौकरी मिलने की लगातार कल्पना करें ताकि वह सच हो",
+                        "feedback": "Constant focus on the result creates anxiety and pressure. Krishna teaches us to focus on our action, not obsess over outcomes.",
+                        "feedbackHi": "परिणाम पर लगातार ध्यान चिंता और दबाव पैदा करता है। कृष्ण हमें अपने कर्म पर ध्यान देना सिखाते हैं, परिणामों के प्रति आसक्त होना नहीं।",
+                        "isOptimal": false
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_2_1_story_1",
+            "lessonId": "lesson_2_2_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "The Secret of Work",
+                "titleHi": "कर्म का रहस्य",
+                "story": "Krishna now reveals one of the Gita's most practical teachings—how to work without stress. 'You have the right to work only,' he says, 'but never to its fruits. Let not the fruits of action be your motive, nor let your attachment be to inaction.' In other words: Do your best, but don't be obsessed with results. And don't use non-attachment as an excuse to do nothing!",
+                "storyHi": "कृष्ण अब गीता की सबसे व्यावहारिक शिक्षाओं में से एक प्रकट करते हैं—बिना तनाव के कैसे काम करें। 'कर्म पर ही तुम्हारा अधिकार है,' वे कहते हैं, 'फलों पर कभी नहीं। कर्म का फल तुम्हारा उद्देश्य न हो, और न ही अकर्म में आसक्ति हो।' दूसरे शब्दों में: अपना सर्वश्रेष्ठ करो, लेकिन परिणामों के प्रति आसक्त मत हो। और गैर-आसक्ति को कुछ न करने का बहाना मत बनाओ!",
+                "krishnaMessage": "Excellence comes when we focus on the process, not just the prize."
+            }
+        },
+        {
+            "questionId": "q_2_2_1_mc_1",
+            "lessonId": "lesson_2_2_3",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "According to verse 2.47, what is our right?",
+                "questionTextHi": "श्लोक 2.47 के अनुसार, हमारा अधिकार किस पर है?",
+                "options": [
+                    "Only to the fruits of our actions",
+                    "Only to work, never to its fruits",
+                    "To control others' actions",
+                    "To avoid all work"
+                ],
+                "optionsHi": [
+                    "केवल हमारे कर्मों के फलों पर",
+                    "केवल कर्म पर, फलों पर कभी नहीं",
+                    "दूसरों के कार्यों को नियंत्रित करने का",
+                    "सभी कार्यों से बचने का"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Verse 2.47 is perhaps the Gita's most famous teaching. We can control our effort but not outcomes. This isn't passive acceptance—it's freedom from the anxiety of results while still giving our best.",
+                "explanationHi": "श्लोक 2.47 शायद गीता की सबसे प्रसिद्ध शिक्षा है। हम अपने प्रयास को नियंत्रित कर सकते हैं लेकिन परिणामों को नहीं।",
+                "realLifeApplication": "Students stress about grades. Athletes stress about winning. This teaching helps us focus on what we can control—our effort and attitude."
+            }
+        },
+        {
+            "questionId": "q_2_2_1_scenario_2",
+            "lessonId": "lesson_2_2_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Creative Block",
+                "scenarioTitleHi": "रचनात्मक अवरोध",
+                "scenario": "You are writing a book but you're stuck because you keep worrying if people will like it. What is the solution?",
+                "scenarioHi": "आप एक किताब लिख रहे हैं लेकिन आप अटक गए हैं क्योंकि आप चिंता करते रहते हैं कि क्या लोग इसे पसंद करेंगे। समाधान क्या है?",
+                "options": [
+                    {
+                        "text": "Stop writing until you know it will sell.",
+                        "textHi": "लिखना बंद कर दें जब तक आपको पता न चले कि यह बिकेगा।",
+                        "feedback": "Attachment to inaction.",
+                        "feedbackHi": "अकर्म के प्रति आसक्ति।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Write for the joy of writing, letting go of the audience's reaction.",
+                        "textHi": "लिखने की खुशी के लिए लिखें, दर्शकों की प्रतिक्रिया को छोड़ दें।",
+                        "feedback": "Yes. When you remove the pressure of the 'fruit', the work flows naturally.",
+                        "feedbackHi": "हाँ। जब आप 'फल' का दबाव हटा देते हैं, तो काम स्वाभाविक रूप से बहता है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_2_1_reflection_1",
+            "lessonId": "lesson_2_2_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "What work or project is stressing you out right now? How much of that stress comes from worrying about the result versus doing the work itself?",
+                "promptHi": "अभी कौन सा काम या प्रोजेक्ट आपको तनाव दे रहा है? उस तनाव का कितना हिस्सा परिणाम की चिंता से आता है बनाम काम करने से?",
+                "krishnaWisdom": "Work done with anxiety is toil. Work done with detachment is worship."
+            }
+        },
+        {
+            "questionId": "q_2_2_2_scenario_1",
+            "lessonId": "lesson_2_2_4",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Multitasking Chaos",
+                "scenarioTitleHi": "मल्टीटास्किंग अराजकता",
+                "scenario": "You are doing three things at once, doing none of them well, and feeling frantic. Is this Yoga?",
+                "scenarioHi": "आप एक साथ तीन काम कर रहे हैं, उनमें से कोई भी ठीक से नहीं कर रहे हैं, और उन्मत्त महसूस कर रहे हैं। क्या यह योग है?",
+                "options": [
+                    {
+                        "text": "Yes, I am being very productive.",
+                        "textHi": "हाँ, मैं बहुत उत्पादक हूँ।",
+                        "feedback": "Activity helps, but frantic activity is not skill.",
+                        "feedbackHi": "गतिविधि मदद करती है, लेकिन उन्मत्त गतिविधि कौशल नहीं है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "No, Yoga is 'Skill in Action'—doing one thing with full presence and mastery.",
+                        "textHi": "नहीं, योग 'कर्म में कुशलता' है—एक काम को पूरी उपस्थिति और महारत के साथ करना।",
+                        "feedback": "Correct. Scattering energy is the opposite of Yoga.",
+                        "feedbackHi": "सही। ऊर्जा बिखेरना योग के विपरीत है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_2_2_story_1",
+            "lessonId": "lesson_2_2_4",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "What Is Yoga, Really?",
+                "titleHi": "योग वास्तव में क्या है?",
+                "story": "Many people think yoga means physical postures. But Krishna gives a revolutionary definition: 'Yoga is skill in action.' It's not about running away from the world—it's about mastering how you engage with it. A person who works with full focus, without anxiety about results, without ego claiming credit—that person is a true yogi, even while living a normal life.",
+                "storyHi": "बहुत लोग सोचते हैं योग का मतलब शारीरिक आसन हैं। लेकिन कृष्ण क्रांतिकारी परिभाषा देते हैं: 'योग कर्म में कुशलता है।' यह दुनिया से भागने के बारे में नहीं है—यह है कि आप इसके साथ कैसे जुड़ते हैं। जो पूर्ण ध्यान से काम करता है, परिणामों की चिंता के बिना, श्रेय लेने के अहंकार के बिना—वह व्यक्ति सच्चा योगी है, सामान्य जीवन जीते हुए भी।",
+                "krishnaMessage": "You don't need to leave the world to find peace. Transform how you act within it."
+            }
+        },
+        {
+            "questionId": "q_2_2_2_mc_1",
+            "lessonId": "lesson_2_2_4",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "According to the Gita, what is 'Yoga'?",
+                "questionTextHi": "गीता के अनुसार 'योग' क्या है?",
+                "options": [
+                    "Physical exercise poses",
+                    "Skill in action",
+                    "Living in a cave",
+                    "Chanting mantras only"
+                ],
+                "optionsHi": [
+                    "शारीरिक व्यायाम आसन",
+                    "कर्म में कुशलता",
+                    "गुफा में रहना",
+                    "केवल मंत्र जाप करना"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "'Yogah karmasu kaushalam' (2.50)—Yoga is skill in action. This means performing your duties with excellence while maintaining inner balance.",
+                "explanationHi": "'योगः कर्मसु कौशलम्' (2.50)—योग कर्म में कुशलता है। इसका मतलब है आंतरिक संतुलन बनाए रखते हुए उत्कृष्टता के साथ अपने कर्तव्यों का पालन करना।",
+                "realLifeApplication": "You practice yoga every time you work with full attention, do your best, and let go of obsessive anxiety about results."
+            }
+        },
+        {
+            "questionId": "q_2_2_2_scenario_2",
+            "lessonId": "lesson_2_2_4",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Difficult Conversation",
+                "scenarioTitleHi": "कठिन बातचीत",
+                "scenario": "You need to give critical feedback to a sensitive colleague. How does a Yogi approach this?",
+                "scenarioHi": "आपको एक संवेदनशील सहकर्मी को आलोचनात्मक प्रतिक्रिया देने की आवश्यकता है। एक योगी इसके लिए कैसे दृष्टिकोण रखता है?",
+                "options": [
+                    {
+                        "text": "Avoid it to keep peace.",
+                        "textHi": "शांति बनाए रखने के लिए इससे बचें।",
+                        "feedback": "Avoidance is fear, not yoga.",
+                        "feedbackHi": "परिहार भय है, योग नहीं।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Deliver the truth with compassion and without anger, detached from their reaction.",
+                        "textHi": "करुणा के साथ और क्रोध के बिना, उनकी प्रतिक्रिया से अलग होकर सच बोलें।",
+                        "feedback": "Yes. Skill in action means doing the hard thing with the right mindstate.",
+                        "feedbackHi": "हाँ। कर्म में कुशलता का अर्थ है सही मनःस्थिति के साथ कठिन कार्य करना।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_2_2_reflection_1",
+            "lessonId": "lesson_2_2_4",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Pick one mundane task you do every day (washing dishes, walking, typing). Try doing it today as 'Yoga'—with total focus and no mind-wandering. How does it feel different?",
+                "promptHi": "एक सांसारिक कार्य चुनें जो आप हर दिन करते हैं (बर्तन धोना, चलना, टाइप करना)। इसे आज 'योग' के रूप में करने का प्रयास करें—पूर्ण ध्यान के साथ और मन भटकने के बिना। यह कैसे अलग लगता है?",
+                "krishnaWisdom": "Even the smallest act becomes sacred when done with full awareness."
+            }
+        },
+        {
+            "questionId": "q_2_3_1_scenario_1",
+            "lessonId": "lesson_2_3_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Praise and the Insult",
+                "scenarioTitleHi": "प्रशंसा और अपमान",
+                "scenario": "In the morning meeting, your boss praises you. In the afternoon, a client yells at you. How does the 'Sthitaprajna' react?",
+                "scenarioHi": "सुबह की बैठक में, आपका बॉस आपकी प्रशंसा करता है। दोपहर में, एक ग्राहक आप पर चिल्लाता है। 'स्थितप्रज्ञ' कैसे प्रतिक्रिया करता है?",
+                "options": [
+                    {
+                        "text": "High in the morning, crushed in the afternoon.",
+                        "textHi": "सुबह ऊंचा, दोपहर में कुचला हुआ।",
+                        "feedback": "This is being a slave to external events.",
+                        "feedbackHi": "यह बाहरी घटनाओं का गुलाम होना है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Accepts praise without arrogance and criticism without depression.",
+                        "textHi": "अहंकार के बिना प्रशंसा और अवसाद के बिना आलोचना स्वीकार करता है।",
+                        "feedback": "Correct. Steady wisdom implies an internal anchor that storms don't move.",
+                        "feedbackHi": "सही। स्थिर ज्ञान का तात्पर्य एक आंतरिक लंगर से है जिसे तूफान नहीं हिलाते।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_3_1_story_1",
+            "lessonId": "lesson_2_3_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "What Does Wisdom Look Like?",
+                "titleHi": "ज्ञान कैसा दिखता है?",
+                "story": "Arjuna asks a practical question: 'Krishna, how can I recognize a truly wise person? How do they sit? How do they walk? How do they speak?' Krishna's answer defines the 'Sthitaprajna'—one who is stable in wisdom. Such a person is not moved by pleasure or pain. They have no cravings, no fear, no attachment. They are like a lamp that doesn't flicker in a windless place.",
+                "storyHi": "अर्जुन एक व्यावहारिक प्रश्न पूछते हैं: 'कृष्ण, मैं सच्चे ज्ञानी को कैसे पहचानूं? वे कैसे बैठते हैं? कैसे चलते हैं? कैसे बोलते हैं?' कृष्ण का उत्तर 'स्थितप्रज्ञ' को परिभाषित करता है—जो ज्ञान में स्थिर है। ऐसा व्यक्ति सुख-दुख से विचलित नहीं होता। उनमें कोई लालसा नहीं, कोई भय नहीं, कोई आसक्ति नहीं। वे वायुरहित स्थान में दीपक की तरह हैं जो हिलता नहीं।",
+                "krishnaMessage": "Wisdom isn't about knowing more—it's about being unshakeable."
+            }
+        },
+        {
+            "questionId": "q_2_3_1_mc_1",
+            "lessonId": "lesson_2_3_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "What is a 'Sthitaprajna'?",
+                "questionTextHi": "'स्थितप्रज्ञ' क्या है?",
+                "options": [
+                    "A person who knows scripture",
+                    "A person stable in wisdom, unmoved by pleasure or pain",
+                    "A person who never speaks",
+                    "A person who lives in forest"
+                ],
+                "optionsHi": [
+                    "जो शास्त्र जानता है",
+                    "जो ज्ञान में स्थिर है, सुख-दुख से अविचलित",
+                    "जो कभी नहीं बोलता",
+                    "जो जंगल में रहता है"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Sthitaprajna literally means 'steady-minded'. Such a person has emotional stability—not because they don't feel, but because they're not controlled by feelings.",
+                "explanationHi": "स्थितप्रज्ञ का शाब्दिक अर्थ है 'स्थिर बुद्धि'। ऐसे व्यक्ति में भावनात्मक स्थिरता होती है—इसलिए नहीं कि वे महसूस नहीं करते, बल्कि इसलिए कि वे भावनाओं से नियंत्रित नहीं होते।",
+                "realLifeApplication": "This is emotional intelligence at its highest—feeling emotions without being ruled by them."
+            }
+        },
+        {
+            "questionId": "q_2_3_1_scenario_2",
+            "lessonId": "lesson_2_3_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Winning the Lottery",
+                "scenarioTitleHi": "लॉटरी जीतना",
+                "scenario": "You suddenly win a huge amount of money. What is the danger?",
+                "scenarioHi": "आप अचानक बहुत सारा पैसा जीत जाते हैं। खतरा क्या है?",
+                "options": [
+                    {
+                        "text": "That I will lose it.",
+                        "textHi": "कि मैं इसे खो दूंगा।",
+                        "feedback": "Fear accompanies attachment.",
+                        "feedbackHi": "भय आसक्ति के साथ होता है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "That the extreme excitement will unbalance my mind and lead to bad decisions.",
+                        "textHi": "कि अत्यधिक उत्साह मेरे दिमाग को असंतुलित कर देगा और बुरे निर्णयों की ओर ले जाएगा।",
+                        "feedback": "Yes. Extreme pleasure can be as destabilizing as extreme pain. The wise stay centered.",
+                        "feedbackHi": "हाँ। अत्यधिक सुख अत्यधिक दर्द की तरह ही अस्थिर करने वाला हो सकता है। समझदार केंद्रित रहते हैं।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_3_1_reflection_1",
+            "lessonId": "lesson_2_3_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Recall a time you were 'knocked off balance' by strong emotion. What would have helped you stay steady like a lamp in a windless place?",
+                "promptHi": "उस समय को याद करें जब आप मजबूत भावना से 'असंतुलित' हो गए थे। हवा रहित जगह में दीपक की तरह स्थिर रहने में आपको किस चीज़ ने मदद की होती?",
+                "krishnaWisdom": "Balance is power. Adaptation is strength."
+            }
+        },
+        {
+            "questionId": "q_2_3_3_scenario_1",
+            "lessonId": "lesson_2_3_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Buffet Table",
+                "scenarioTitleHi": "बुफे टेबल",
+                "scenario": "You are at a feast. You are full, but the dessert looks amazing. Your senses say 'eat', your intelligence says 'stop'. What do you do?",
+                "scenarioHi": "आप दावत में हैं। आपका पेट भरा है, लेकिन मिठाई अद्भुत लग रही है। आपकी इंद्रियां कहती हैं 'खाओ', आपकी बुद्धि कहती है 'रुको'। आप क्या करेंगे?",
+                "options": [
+                    {
+                        "text": "Eat it anyway, life is short.",
+                        "textHi": "इसे वैसे भी खाओ, जीवन छोटा है।",
+                        "feedback": "This is slavery to the senses.",
+                        "feedbackHi": "यह इंद्रियों की गुलामी है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Withdraw my desire like a turtle warming its limbs.",
+                        "textHi": "कछुए की तरह अपनी इच्छा को वापस खींच लें जो अपने अंगों को गर्म करता है।",
+                        "feedback": "Correct. Mastering the urge is sweeter than the dessert.",
+                        "feedbackHi": "सही। आग्रह पर महारत हासिल करना मिठाई से ज्यादा मधुर है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_3_3_story_1",
+            "lessonId": "lesson_2_3_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "The Turtle Wisdom",
+                "titleHi": "कछुए की बुद्धि",
+                "story": "Krishna gives a beautiful metaphor: 'As a tortoise withdraws its limbs into its shell, so the wise person withdraws their senses from sense objects.' This isn't about suppressing your senses forever—it's about having the ability to pull them back when needed. A turtle doesn't cut off its limbs; it simply knows when to pull them in.",
+                "storyHi": "कृष्ण एक सुंदर रूपक देते हैं: 'जैसे कछुआ अपने अंगों को कवच में समेट लेता है, वैसे ही बुद्धिमान व्यक्ति अपनी इंद्रियों को विषयों से खींच लेता है।' यह इंद्रियों को हमेशा के लिए दबाने के बारे में नहीं है—यह जरूरत पड़ने पर उन्हें वापस खींचने की क्षमता के बारे में है। कछुआ अपने अंग काटता नहीं; वह बस जानता है कि उन्हें कब समेटना है।",
+                "krishnaMessage": "Mastery is not about never experiencing pleasure. It's about not being enslaved by it."
+            }
+        },
+        {
+            "questionId": "q_2_3_3_mc_1",
+            "lessonId": "lesson_2_3_3",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "Why does Krishna use the turtle metaphor?",
+                "questionTextHi": "कृष्ण कछुए के रूपक का उपयोग क्यों करते हैं?",
+                "options": [
+                    "To teach us to move slowly",
+                    "To show how to hide from problems",
+                    "To illustrate withdrawing senses at will",
+                    "To teach us to carry heavy loads"
+                ],
+                "optionsHi": [
+                    "हमें धीरे चलने के लिए सिखाने को",
+                    "समस्याओं से कैसे छिपना है यह दिखाने को",
+                    "इच्छानुसार इंद्रियों को वापस लेने का चित्रण करने को",
+                    "हमें भारी बोझ उठाने के लिए सिखाने को"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "Verse 2.58's turtle metaphor is about conscious control. It's not repression; it's the ability to disengage from sensory stimulation when it's harmful or distracting.",
+                "explanationHi": "श्लोक 2.58 का कछुआ रूपक सचेत नियंत्रण के बारे में है। यह दमन नहीं है; यह हानिकारक या विचलित करने वाले संवेदी उत्तेजना से अलग होने की क्षमता है।",
+                "realLifeApplication": "Putting your phone in 'Do Not Disturb' mode is a modern act of the Turtle."
+            }
+        },
+        {
+            "questionId": "q_2_3_3_scenario_2",
+            "lessonId": "lesson_2_3_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Digital Detox",
+                "scenarioTitleHi": "डिजिटल डिटॉक्स",
+                "scenario": "You plan to study, but your phone keeps buzzing. You feel the urge to check it. What is the Turtle move?",
+                "scenarioHi": "आप पढ़ाई की योजना बना रहे हैं, लेकिन आपका फोन बजता रहता है। आपको इसे चेक करने की इच्छा होती है। कछुआ चाल क्या है?",
+                "options": [
+                    {
+                        "text": "Check it quickly so I can focus.",
+                        "textHi": "ध्यान केंद्रित करने के लिए इसे जल्दी से जांचें।",
+                        "feedback": "Feeding the distraction usually grows it.",
+                        "feedbackHi": "विकर्षण को खिलाना आमतौर पर इसे बढ़ाता है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Turn it off and put it in another room.",
+                        "textHi": "इसे बंद करें और दूसरे कमरे में रख दें।",
+                        "feedback": "Yes. Physically withdrawing the sense object makes mental withdrawal easier.",
+                        "feedbackHi": "हाँ। इंद्रिय वस्तु को शारीरिक रूप से हटाने से मानसिक वापसी आसान हो जाती है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_3_3_reflection_1",
+            "lessonId": "lesson_2_3_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "What is your 'kryptonite'—the one thing you have trouble withdrawing from? Food, phone, gossip? Imagine putting a 'shell' around yourself next time you face it.",
+                "promptHi": "आपकी 'कमजोरी' क्या है—वह एक चीज़ जिससे आप वापस नहीं हट पाते? भोजन, फोन, गपशप? कल्पना करें कि अगली बार जब आप इसका सामना करेंगे तो अपने चारों ओर एक 'कवच' डालेंगे।",
+                "krishnaWisdom": "Strength is the ability to say 'no' to yourself."
+            }
+        },
+        {
+            "questionId": "q_2_4_1_scenario_1",
+            "lessonId": "lesson_2_4_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Social Media Spiral",
+                "scenarioTitleHi": "सोशल मीडिया का चक्र",
+                "scenario": "You've been scrolling through social media and seeing friends' vacation photos. You start feeling inadequate and angry. According to Krishna's teaching about the chain of desire, what is the wisest response?",
+                "scenarioHi": "आप सोशल मीडिया पर दोस्तों की छुट्टियों की तस्वीरें देख रहे हैं। आप अपर्याप्त और नाराज़ महसूस करने लगते हैं। कृष्ण की इच्छा श्रृंखला की शिक्षा के अनुसार, सबसे बुद्धिमान प्रतिक्रिया क्या है?",
+                "options": [
+                    {
+                        "text": "Keep scrolling to distract yourself",
+                        "textHi": "खुद को विचलित करने के लिए स्क्रॉल करते रहें",
+                        "feedback": "This feeds the cycle. Comparison -> Desire -> Anger.",
+                        "feedbackHi": "यह चक्र को खिलाता है। तुलना -> इच्छा -> क्रोध।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Recognize the trigger, put down the phone, refocus on your own path",
+                        "textHi": "ट्रिगर को पहचानें, फोन रखें, अपने मार्ग पर फिर से ध्यान दें",
+                        "feedback": "This breaks the chain at the link of 'contemplation'.",
+                        "feedbackHi": "यह 'चिंतन' की कड़ी पर श्रृंखला को तोड़ता है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_4_1_story_1",
+            "lessonId": "lesson_2_4_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "The Chain of Destruction",
+                "titleHi": "विनाश की श्रृंखला",
+                "story": "Krishna reveals the dangerous chain reaction that starts with unchecked desire: 'When you constantly think about something, attachment arises. From attachment comes desire. From desire comes anger (when blocked). From anger comes delusion. From delusion comes loss of memory. From memory loss, intelligence is destroyed. And when intelligence is destroyed, one perishes.' It's a domino effect that starts with what we allow our minds to dwell on.",
+                "storyHi": "कृष्ण अनियंत्रित इच्छा से शुरू होने वाली खतरनाक श्रृंखला प्रतिक्रिया प्रकट करते हैं: 'जब तुम लगातार किसी चीज़ के बारे में सोचते हो, आसक्ति पैदा होती है। आसक्ति से काम। काम से (बाधित होने पर) क्रोध। क्रोध से मोह। मोह से स्मृति भ्रंश। स्मृति भ्रंश से बुद्धि नाश। और बुद्धि नष्ट होने पर व्यक्ति नष्ट होता है।' यह डोमिनो प्रभाव है जो इससे शुरू होता है कि हम अपने मन को किस पर टिकने देते हैं।",
+                "krishnaMessage": "Guard the gate of your mind. What you let in, grows."
+            }
+        },
+        {
+            "questionId": "q_2_4_1_mc_1",
+            "lessonId": "lesson_2_4_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 15,
+            "content": {
+                "questionText": "According to verses 2.62-63, what is the first step in the chain that leads to destruction?",
+                "questionTextHi": "श्लोक 2.62-63 के अनुसार, विनाश की ओर ले जाने वाली श्रृंखला में पहला कदम क्या है?",
+                "options": [
+                    "Anger",
+                    "Constantly thinking about sense objects",
+                    "Losing your job",
+                    "Bad friends"
+                ],
+                "optionsHi": [
+                    "क्रोध",
+                    "विषयों के बारे में लगातार सोचना",
+                    "नौकरी खोना",
+                    "बुरे मित्र"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "It all starts with what we choose to focus on (Dhyayato vishayan). When we constantly dwell on something, attachment forms.",
+                "explanationHi": "सब कुछ इससे शुरू होता है कि हम किस पर ध्यान देना चुनते हैं (ध्यायतो विषयान्)। जब हम लगातार किसी चीज़ पर ध्यान केंद्रित करते हैं, आसक्ति बनती है।",
+                "realLifeApplication": "This is why social media can be dangerous—constant exposure to curated images creates desired comparison."
+            }
+        },
+        {
+            "questionId": "q_2_4_1_scenario_2",
+            "lessonId": "lesson_2_4_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Online Crush",
+                "scenarioTitleHi": "ऑनलाइन क्रश",
+                "scenario": "You keep checking the profile of someone you like, fantasizing about a future with them. You notice you're getting jealous seeing them with others. What stage of the chain are you in?",
+                "scenarioHi": "आप किसी ऐसे व्यक्ति की प्रोफ़ाइल चेक करते रहते हैं जिसे आप पसंद करते हैं, उनके साथ भविष्य की कल्पना करते हैं। आप देखते हैं कि आप उन्हें दूसरों के साथ देखकर ईर्ष्यालु हो रहे हैं। आप श्रृंखला के किस चरण में हैं?",
+                "options": [
+                    {
+                        "text": "Just harmless fun.",
+                        "textHi": "बस हानिरहित मज़ा।",
+                        "feedback": "Denial. The jealousy proves attachment has already formed.",
+                        "feedbackHi": "इनकार। ईर्ष्या साबित करती है कि आसक्ति पहले ही बन चुकी है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Attachment turning into Desire and potential Anger.",
+                        "textHi": "आसक्ति जो इच्छा और संभावित क्रोध में बदल रही है।",
+                        "feedback": "Correct. You are dangerously close to the 'crash'. Time to step back.",
+                        "feedbackHi": "सही। आप 'दुर्घटना' के खतरनाक रूप से करीब हैं। पीछे हटने का समय।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_2_4_1_reflection_1",
+            "lessonId": "lesson_2_4_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "What do you find yourself thinking about repeatedly? What 'sense objects' (material things, achievements, relationships) occupy your mind? Is this focus serving you or creating suffering?",
+                "promptHi": "आप किस बारे में बार-बार सोचते हैं? कौन से 'विषय' (भौतिक चीजें, उपलब्धियां, रिश्ते) आपके मन में रहते हैं? क्या यह ध्यान आपकी सेवा कर रहा है या दुख पैदा कर रहा है?",
+                "krishnaWisdom": "You become what you think about. Choose your mental diet wisely."
+            }
+        },
+        {
+            "questionId": "lesson_2_1_4_scenarioChallenge_1",
+            "lessonId": "lesson_2_1_4",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Facing Physical Danger",
+                "scenarioTitleHi": "शारीरिक खतरे का सामना",
+                "scenario": "You are in a situation where you feel physically threatened or fragile. How does this verse change your mindset?",
+                "scenarioHi": "आप ऐसी स्थिति में हैं जहां आप शारीरिक रूप से खतरा या नाजुक महसूस करते हैं। यह श्लोक आपकी मानसिकता को कैसे बदलता है?",
+                "options": [
+                    {
+                        "text": "I am weak and breakable.",
+                        "textHi": "मैं कमजोर और टूटने योग्य हूं।",
+                        "feedback": "That is the body speaking.",
+                        "feedbackHi": "यह शरीर बोल रहा है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "My body can be hurt, but the 'I' within is unbreakable.",
+                        "textHi": "मेरे शरीर को चोट लग सकती है, लेकिन भीतर का 'मैं' अटूट है।",
+                        "feedback": "Yes. Weapons cannot cut the soul, fire cannot burn it.",
+                        "feedbackHi": "हाँ। शस्त्र आत्मा को काट नहीं सकते, आग उसे जला नहीं सकती।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_1_4_storyCard_2",
+            "lessonId": "lesson_2_1_4",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "Nainam Chindanti Shastrani",
+                "titleHi": "नैनं छिन्दन्ति शस्त्राणि",
+                "story": "Krishna declares: 'Weapons cannot cut the soul, fire cannot burn it, water cannot wet it, and wind cannot dry it.' He uses the four elements of nature to show that the Soul is beyond the reach of physical destruction. It is safe, forever.",
+                "storyHi": "कृष्ण घोषित करते हैं: 'शस्त्र आत्मा को काट नहीं सकते, आग इसे जला नहीं सकती, पानी इसे भिगो नहीं सकता, और हवा इसे सूखा नहीं सकती।' वे यह दिखाने के लिए प्रकृति के चार तत्वों का उपयोग करते हैं कि आत्मा भौतिक विनाश की पहुंच से परे है। यह सुरक्षित है, हमेशा के लिए।",
+                "krishnaMessage": "You are safer than you think."
+            }
+        },
+        {
+            "questionId": "lesson_2_1_4_multipleChoice_3",
+            "lessonId": "lesson_2_1_4",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Which element can destroy the soul?",
+                "questionTextHi": "कौन सा तत्व आत्मा को नष्ट कर सकता है?",
+                "options": [
+                    "Fire",
+                    "Water",
+                    "Wind",
+                    "None of them"
+                ],
+                "optionsHi": [
+                    "आग",
+                    "पानी",
+                    "हवा",
+                    "इनमें से कोई नहीं"
+                ],
+                "correctAnswerIndex": 3,
+                "explanation": "The soul is immutable and beyond the reach of physical elements.",
+                "explanationHi": "आत्मा अपरिवर्तनीय है और भौतिक तत्वों की पहुंच से परे है।",
+                "realLifeApplication": "This gives us immense courage in the face of physical threats or illness."
+            }
+        },
+        {
+            "questionId": "lesson_2_1_4_scenarioChallenge_4",
+            "lessonId": "lesson_2_1_4",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "fear of surgery",
+                "scenarioTitleHi": "सर्जरी का डर",
+                "scenario": "You need a medical surgery and are terrified. What is the truth?",
+                "scenarioHi": "आपको मेडिकल सर्जरी की जरूरत है और आप बहुत डरे हुए हैं। सच क्या है?",
+                "options": [
+                    {
+                        "text": "My existence is at risk.",
+                        "textHi": "मेरा अस्तित्व खतरे में है।",
+                        "feedback": "Only the vehicle is being repaired.",
+                        "feedbackHi": "केवल वाहन की मरम्मत की जा रही है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "The doctors operate on my body, but they cannot touch my Soul.",
+                        "textHi": "डॉक्टर मेरे शरीर का ऑपरेशन करते हैं, लेकिन वे मेरी आत्मा को छू नहीं सकते।",
+                        "feedback": "Correct. The Soul is witness to the surgery, not the victim.",
+                        "feedbackHi": "सही। आत्मा सर्जरी की गवाह है, शिकार नहीं।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_1_4_reflectionPrompt_5",
+            "lessonId": "lesson_2_1_4",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Repeat to yourself: 'I am unbreakable.' How does that make you feel?",
+                "promptHi": "अपने आप से दोहराएं: 'मैं अटूट हूं।' यह आपको कैसा महसूस कराता है?",
+                "krishnaWisdom": "The Soul is eternal, Sarvagatah (all-pervading), Sthanur (stable), and Acalo (immovable)."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_focus_scenarioChallenge_1",
+            "lessonId": "lesson_2_2_focus",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Too Many Goals",
+                "scenarioTitleHi": "बहुत सारे लक्ष्य",
+                "scenario": "You want to learn guitar, code, swim, and Spanish all at once. You make no progress. Why?",
+                "scenarioHi": "आप एक साथ गिटार, कोडिंग, तैराकी और स्पेनिश सीखना चाहते हैं। आप कोई प्रगति नहीं करते हैं। क्यों?",
+                "options": [
+                    {
+                        "text": "I just need to work harder.",
+                        "textHi": "मुझे बस और कड़ी मेहनत करनी है।",
+                        "feedback": "Effort without focus is waste.",
+                        "feedbackHi": "बिना ध्यान के प्रयास बर्बादी है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "My intelligence is 'many-branched' (bahu-shakha). I need one-pointed focus.",
+                        "textHi": "मेरी बुद्धि 'बहु-शाखा' वाली है। मुझे एकाग्रता की आवश्यकता है।",
+                        "feedback": "Yes. Vyavasayatmika Buddhi means single-pointed resolve.",
+                        "feedbackHi": "हाँ। व्यवसायात्मिका बुद्धि का अर्थ है एकनिष्ठ संकल्प।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_2_focus_storyCard_2",
+            "lessonId": "lesson_2_2_focus",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "The Many-Branched Intellect",
+                "titleHi": "बहु-शाखा वाली बुद्धि",
+                "story": "Krishna warns against the 'irresolute mind' which has endless branches. Like a tree spreading in all directions, such a mind chases every new desire, ritual, or fad, never going deep. The resolute mind is like a laser beam—focused on one goal.",
+                "storyHi": "कृष्ण 'अस्थिर मन' के खिलाफ चेतावनी देते हैं जिसकी अनंत शाखाएं होती हैं। जैसे एक पेड़ सभी दिशाओं में फैलता है, ऐसा मन हर नई इच्छा, अनुष्ठान या सनक का पीछा करता है, कभी गहरा नहीं जाता। दृढ़ मन एक लेजर बीम की तरह होता है—एक लक्ष्य पर केंद्रित।",
+                "krishnaMessage": "Focus is the key to depth."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_focus_multipleChoice_3",
+            "lessonId": "lesson_2_2_focus",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "What is 'Vyavasayatmika Buddhi'?",
+                "questionTextHi": "'व्यवसायात्मिका बुद्धि' क्या है?",
+                "options": [
+                    "Confused mind",
+                    "Resolute, one-pointed intellect",
+                    "Angry mind",
+                    "Sleepy mind"
+                ],
+                "optionsHi": [
+                    "भ्रमित मन",
+                    "दृढ़, एकनिष्ठ बुद्धि",
+                    "क्रोधित मन",
+                    "नींद वाला मन"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "It refers to the intellect that has a single, determined aim. Without it, the mind is scattered.",
+                "explanationHi": "यह उस बुद्धि को संदर्भित करता है जिसका एक ही, निर्धारित लक्ष्य है। इसके बिना, मन बिखरा हुआ होता है।",
+                "realLifeApplication": "Multitasking is often a myth. Success comes from deep work on one thing at a time."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_focus_scenarioChallenge_4",
+            "lessonId": "lesson_2_2_focus",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Chasing Followers",
+                "scenarioTitleHi": "फॉलोअर्स का पीछा करना",
+                "scenario": "You create art but constantly change your style to get more likes. You feel empty. Why?",
+                "scenarioHi": "आप कला बनाते हैं लेकिन अधिक लाइक पाने के लिए अपनी शैली बदलते रहते हैं। आप खाली महसूस करते हैं। क्यों?",
+                "options": [
+                    {
+                        "text": "I am chasing external floral words (likes) instead of inner truth.",
+                        "textHi": "मैं आंतरिक सत्य के बजाय बाहरी पुष्प शब्दों (लाइक्स) का पीछा कर रहा हूं।",
+                        "feedback": "Krishna warns against being misled by 'flowery words' of praise or rituals.",
+                        "feedbackHi": "कृष्ण प्रशंसा या अनुष्ठानों के 'पुष्प शब्दों' से गुमराह होने के खिलाफ चेतावनी देते हैं।",
+                        "isOptimal": true
+                    },
+                    {
+                        "text": "I haven't found the right trend yet.",
+                        "textHi": "मुझे अभी तक सही प्रवृत्ति नहीं मिली है।",
+                        "feedback": "Trends are endless branches.",
+                        "feedbackHi": "प्रवृत्तियाँ अनंत शाखाएँ हैं।",
+                        "isOptimal": false
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_2_focus_reflectionPrompt_5",
+            "lessonId": "lesson_2_2_focus",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "What is the ONE thing you truly want to achieve this year? Are you focused on it, or are you chasing 10 other things?",
+                "promptHi": "वह एक चीज़ क्या है जिसे आप वास्तव में इस वर्ष प्राप्त करना चाहते हैं? क्या आप उस पर केंद्रित हैं, या आप 10 अन्य चीज़ों का पीछा कर रहे हैं?",
+                "krishnaWisdom": "Those who are undecided have infinite, many-branched thoughts."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_5_scenarioChallenge_1",
+            "lessonId": "lesson_2_2_5",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Result Trap",
+                "scenarioTitleHi": "परिणाम जाल",
+                "scenario": "You study hard but panic during the exam thinking 'What if I fail?'. This panic makes you forget answers. What happened?",
+                "scenarioHi": "आप कड़ी मेहनत से पढ़ाई करते हैं लेकिन परीक्षा के दौरान यह सोचकर घबरा जाते हैं 'अगर मैं फेल हो गया तो क्या होगा?'। यह घबराहट आपको उत्तर भुला देती है। क्या हुआ?",
+                "options": [
+                    {
+                        "text": "I didn't study enough.",
+                        "textHi": "मैंने पर्याप्त पढ़ाई नहीं की।",
+                        "feedback": "No, you did. The anxiety blocked you.",
+                        "feedbackHi": "नहीं, आपने की। चिंता ने आपको रोक दिया।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "My attachment to the result (passing) ruined the action (taking the test).",
+                        "textHi": "परिणाम (पास होना) के प्रति मेरी आसक्ति ने क्रिया (परीक्षा देना) को बर्बाद कर दिया।",
+                        "feedback": "Yes. When we obsess over the fruit, we drop the ball.",
+                        "feedbackHi": "हाँ। जब हम फल को लेकर जुनूनी होते हैं, तो हम गेंद छोड़ देते हैं।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_2_5_storyCard_2",
+            "lessonId": "lesson_2_2_5",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "Work as Worship",
+                "titleHi": "पूजा के रूप में काम",
+                "story": "Krishna advises: 'Abandoning all attachment to the results, perform your duties, O Arjuna.' This doesn't mean you don't care. It means you care so much about the WORK that you don't let the fear of the RESULT distract you. It is the secret to total focus.",
+                "storyHi": "कृष्ण सलाह देते हैं: 'परिणामों के प्रति सभी आसक्ति को त्यागकर, अपने कर्तव्यों का पालन करो, हे अर्जुन।' इसका मतलब यह नहीं है कि आप परवाह नहीं करते। इसका मतलब है कि आप काम की इतनी परवाह करते हैं कि आप परिणाम के डर को आपको विचलित नहीं करने देते। यह पूर्ण ध्यान का रहस्य है।",
+                "krishnaMessage": "Focus on the step, not the summit."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_5_multipleChoice_3",
+            "lessonId": "lesson_2_2_5",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "What creates anxiety according to Karma Yoga?",
+                "questionTextHi": "कर्म योग के अनुसार चिंता क्या पैदा करती है?",
+                "options": [
+                    "Hard work",
+                    "Attachment to outcomes",
+                    "Lazy people",
+                    "Bad luck"
+                ],
+                "optionsHi": [
+                    "कड़ी मेहनत",
+                    "परिणामों के प्रति आसक्ति",
+                    "आलसी लोग",
+                    "बुरी किस्मत"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Anxiety is simply fear of a future result we cannot control.",
+                "explanationHi": "चिंता बस भविष्य के परिणाम का डर है जिसे हम नियंत्रित नहीं कर सकते।",
+                "realLifeApplication": "Release the need to control the future, and you release anxiety."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_5_scenarioChallenge_4",
+            "lessonId": "lesson_2_2_5",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Sales Call",
+                "scenarioTitleHi": "बिक्री कॉल",
+                "scenario": "You are making a sales call. If you need the sale desperately to pay rent, do you perform better or worse?",
+                "scenarioHi": "आप एक बिक्री कॉल कर रहे हैं। यदि आपको किराया देने के लिए बिक्री की सख्त जरूरत है, तो क्या आप बेहतर या बदतर प्रदर्शन करते हैं?",
+                "options": [
+                    {
+                        "text": "Better, because I am motivated.",
+                        "textHi": "बेहतर, क्योंकि मैं प्रेरित हूँ।",
+                        "feedback": "Desperation often smells like fear.",
+                        "feedbackHi": "हताशा अक्सर डर जैसी महकती है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Worse, because my desperation makes me pushy and nervous.",
+                        "textHi": "बदतर, क्योंकि मेरी हताशा मुझे आक्रामक और नर्वस बनाती है।",
+                        "feedback": "Correct. Detachment ('I will offer value regardless of if they buy') actually often leads to better sales.",
+                        "feedbackHi": "सही। अनासक्ति ('मैं मूल्य प्रदान करूंगा भले ही वे खरीदें या नहीं') वास्तव में अक्सर बेहतर बिक्री की ओर ले जाती है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_2_5_reflectionPrompt_5",
+            "lessonId": "lesson_2_2_5",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Where are you 'gripping' the bat too tight? Where can you relax into the action?",
+                "promptHi": "आप बल्ले को कहाँ बहुत जोर से 'पकड़' रहे हैं? आप कहाँ कार्रवाई में आराम कर सकते हैं?",
+                "krishnaWisdom": "Relaxed focus is stronger than tense effort."
+            }
+        },
+        {
+            "questionId": "lesson_2_3_2_scenarioChallenge_1",
+            "lessonId": "lesson_2_3_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Rollercoaster",
+                "scenarioTitleHi": "रोलरकोस्टर",
+                "scenario": "Life gives you a promotion on Monday and a flat tire on Tuesday. How does your mind react?",
+                "scenarioHi": "जीवन आपको सोमवार को पदोन्नति देता है और मंगलवार को टायर पंचर। आपका मन कैसे प्रतिक्रिया करता है?",
+                "options": [
+                    {
+                        "text": "I ride the highs and lows screaming.",
+                        "textHi": "मैं चिल्लाते हुए उतार-चढ़ाव की सवारी करता हूं।",
+                        "feedback": "Exhausting.",
+                        "feedbackHi": "थकाऊ।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "I maintain an inner equilibrium.",
+                        "textHi": "मैं एक आंतरिक संतुलन बनाए रखता हूं।",
+                        "feedback": "This is Sthitaprajna stability.",
+                        "feedbackHi": "यह स्थितप्रज्ञ स्थिरता है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_3_2_storyCard_2",
+            "lessonId": "lesson_2_3_2",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "The Ocean and the Rivers",
+                "titleHi": "सागर और नदियां",
+                "story": "Krishna compares the wise mind to the ocean. Rivers (desires/events) flow into it constantly. But the ocean does not overflow; it remains deep and still. The undisturbed person is not one who has no desires, but one who is not disturbed by the flow of desires.",
+                "storyHi": "कृष्ण बुद्धिमान मन की तुलना सागर से करते हैं। नदियां (इच्छाएं/घटनाएं) उसमें लगातार बहती रहती हैं। लेकिन सागर उफनता नहीं है; वह गहरा और स्थिर रहता है। अव्यवस्थित व्यक्ति वह नहीं है जिसकी कोई इच्छा नहीं है, बल्कि वह है जो इच्छाओं के प्रवाह से विचलित नहीं होता है।",
+                "krishnaMessage": "Peace is not an empty room; it is a calm heart in a crowded room."
+            }
+        },
+        {
+            "questionId": "lesson_2_3_2_multipleChoice_3",
+            "lessonId": "lesson_2_3_2",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "What harms the wise person's peace?",
+                "questionTextHi": "बुद्धिमान व्यक्ति की शांति को क्या नुकसान पहुंचाता है?",
+                "options": [
+                    "Bad weather",
+                    "Insults",
+                    "Nothing",
+                    "Loud noises"
+                ],
+                "optionsHi": [
+                    "खराब मौसम",
+                    "अपमान",
+                    "कुछ नहीं",
+                    "तेज आवाजें"
+                ],
+                "correctAnswerIndex": 2,
+                "explanation": "For the truly established soul (Prajahati), external events cannot shake their inner joy.",
+                "explanationHi": "सच्ची स्थापित आत्मा (प्रजहाति) के लिए, बाहरी घटनाएं उनके आंतरिक आनंद को नहीं हिला सकतीं।",
+                "realLifeApplication": "Aim to be weather-proof."
+            }
+        },
+        {
+            "questionId": "lesson_2_3_2_scenarioChallenge_4",
+            "lessonId": "lesson_2_3_2",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Bad Review",
+                "scenarioTitleHi": "बुरी समीक्षा",
+                "scenario": "Someone leaves a nasty comment on your post. You feel the heat rise in your chest. What do you do?",
+                "scenarioHi": "कोई आपकी पोस्ट पर भद्दी टिप्पणी करता है। आप अपनी छाती में गर्मी बढ़ती हुई महसूस करते हैं। आप क्या करते हैं?",
+                "options": [
+                    {
+                        "text": "Reply with insults.",
+                        "textHi": "अपमान के साथ जवाब दें।",
+                        "feedback": "Reactive.",
+                        "feedbackHi": "प्रतिक्रियाशील।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Observe the anger reaction, breathe, and let it pass without acting on it.",
+                        "textHi": "क्रोध की प्रतिक्रिया का निरीक्षण करें, सांस लें, और उस पर कार्रवाई किए बिना उसे गुजरने दें।",
+                        "feedback": "Mastery.",
+                        "feedbackHi": "महारत।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_3_2_reflectionPrompt_5",
+            "lessonId": "lesson_2_3_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "What triggers you instantly? What if you decided today that this trigger no longer has permission to control you?",
+                "promptHi": "आपको तुरंत क्या ट्रिगर करता है? क्या होगा यदि आपने आज फैसला किया कि इस ट्रिगर को अब आपको नियंत्रित करने की अनुमति नहीं है?",
+                "krishnaWisdom": "He who is master of his impulses is the true Yogi."
+            }
+        },
+        {
+            "questionId": "lesson_2_4_2_scenarioChallenge_1",
+            "lessonId": "lesson_2_4_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Scattered Mind",
+                "scenarioTitleHi": "बिखरा हुआ मन",
+                "scenario": "You try to meditate but check your watch every 30 seconds. Are you at peace?",
+                "scenarioHi": "आप ध्यान करने की कोशिश करते हैं लेकिन हर 30 सेकंड में अपनी घड़ी चेक करते हैं। क्या आप शांत हैं?",
+                "options": [
+                    {
+                        "text": "No.",
+                        "textHi": "नहीं।",
+                        "feedback": "Where there is no concentration, there is no peace.",
+                        "feedbackHi": "जहां एकाग्रता नहीं है, वहां शांति नहीं है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_4_2_storyCard_2",
+            "lessonId": "lesson_2_4_2",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "Nasti Buddhir Ayuktasya",
+                "titleHi": "नास्ति बुद्धिरयुक्तस्य",
+                "story": "Krishna states plainly: 'For the uncontrolled, there is no wisdom, and no meditation. For the unmeditative, there is no peace. And for the peaceless, how can there be happiness?' Focus -> Peace -> Happiness. The order matters.",
+                "storyHi": "कृष्ण स्पष्ट रूप से कहते हैं: 'असंयमित व्यक्ति के लिए न तो ज्ञान है, और न ही ध्यान। ध्यान रहित व्यक्ति के लिए शांति नहीं है। और अशांत व्यक्ति के लिए सुख कैसे हो सकता है?' एकाग्रता -> शांति -> सुख। क्रम मायने रखता है।",
+                "krishnaMessage": "Happiness is a byproduct of a peaceful, focused mind."
+            }
+        },
+        {
+            "questionId": "lesson_2_4_2_multipleChoice_3",
+            "lessonId": "lesson_2_4_2",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Can you be happy without peace?",
+                "questionTextHi": "क्या आप शांति के बिना खुश रह सकते हैं?",
+                "options": [
+                    "Yes, if I have money",
+                    "No",
+                    "Maybe",
+                    "Only on weekends"
+                ],
+                "optionsHi": [
+                    "हाँ, अगर मेरे पास पैसा है",
+                    "नहीं",
+                    "शायद",
+                    "केवल सप्ताहांत पर"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Ashantasya kutah sukham? How can the peaceless be happy? Agitation kills joy.",
+                "explanationHi": "अशांतस्य कुतः सुखम्? अशांत व्यक्ति सुखी कैसे हो सकता है? उत्तेजना खुशी को मार देती है।",
+                "realLifeApplication": "Prioritize peace of mind over excitement."
+            }
+        },
+        {
+            "questionId": "lesson_2_4_2_scenarioChallenge_4",
+            "lessonId": "lesson_2_4_2",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Chasing the Next High",
+                "scenarioTitleHi": "अगले नशे का पीछा",
+                "scenario": "You go from party to party seeking fun, but feel empty when alone. Why?",
+                "scenarioHi": "आप मजे की तलाश में पार्टी-दर-पार्टी जाते हैं, लेकिन अकेले होने पर खाली महसूस करते हैं। क्यों?",
+                "options": [
+                    {
+                        "text": "Refusal to sit with oneself blocks peace.",
+                        "textHi": "खुद के साथ बैठने से इनकार शांति को रोकता है।",
+                        "feedback": "True happiness requires the ability to sit still.",
+                        "feedbackHi": "सच्ची खुशी के लिए शांत बैठने की क्षमता की आवश्यकता होती है।",
+                        "isOptimal": true
+                    },
+                    {
+                        "text": "Bad parties.",
+                        "textHi": "बुरी पार्टियां।",
+                        "feedback": "Unlikely.",
+                        "feedbackHi": "इसकी संभावना कम है।",
+                        "isOptimal": false
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_4_2_reflectionPrompt_5",
+            "lessonId": "lesson_2_4_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "When was the last time you felt truly peaceful? What were you doing (or NOT doing)?",
+                "promptHi": "पिछली बार आपने कब वास्तव में शांति महसूस की थी? आप क्या कर रहे थे (या क्या नहीं कर रहे थे)?",
+                "krishnaWisdom": "Control the senses, and peace follows."
+            }
+        },
+        {
+            "questionId": "lesson_2_4_3_scenarioChallenge_1",
+            "lessonId": "lesson_2_4_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Desires Entering",
+                "scenarioTitleHi": "इच्छाओं का प्रवेश",
+                "scenario": "Imagine desires are rivers flowing into you. 'I want pizza,' 'I want fame,' 'I want sleep.' Do you flood?",
+                "scenarioHi": "कल्पना कीजिए कि इच्छाएं आप में बहने वाली नदियां हैं। 'मुझे पिज्जा चाहिए,' 'मुझे शोहरत चाहिए,' 'मुझे नींद चाहिए।' क्या आप बाढ़ में डूब जाते हैं?",
+                "options": [
+                    {
+                        "text": "I chase every river upstream.",
+                        "textHi": "मैं हर नदी का ऊपर की ओर पीछा करता हूं।",
+                        "feedback": "Exhausting.",
+                        "feedbackHi": "थकाऊ।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "I contain them like the ocean.",
+                        "textHi": "मैं उन्हें सागर की तरह समाहित करता हूं।",
+                        "feedback": "You remain filled and unmoving (Acalapratishtham).",
+                        "feedbackHi": "आप भरे हुए और अचल (अचलप्रतिष्ठम्) रहते हैं।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_4_3_storyCard_2",
+            "lessonId": "lesson_2_4_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "Acalapratishtham",
+                "titleHi": "अचलप्रतिष्ठम्",
+                "story": "The Gita ends this chapter with a promise of 'Brahmi-sthitih'—the state of the Divine. One who lives like the ocean, ignoring the 'this is mine' and 'I am the doer' thoughts, attains peace. Even at the moment of death, such a person is liberated.",
+                "storyHi": "गीता इस अध्याय का अंत 'ब्राह्मी-स्थिति'—दिव्य स्थिति—के वादे के साथ करती है। जो सागर की तरह जीता है, 'यह मेरा है' और 'मैं कर्ता हूं' विचारों की अनदेखी करता है, वह शांति प्राप्त करता है। मृत्यु के क्षण में भी, ऐसा व्यक्ति मुक्त हो जाता है।",
+                "krishnaMessage": "Live in the world, but don't let the world disturb your depths."
+            }
+        },
+        {
+            "questionId": "lesson_2_4_3_multipleChoice_3",
+            "lessonId": "lesson_2_4_3",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "What leads to peace according to the final verses?",
+                "questionTextHi": "अंतिम श्लोकों के अनुसार शांति की ओर क्या ले जाता है?",
+                "options": [
+                    "Fulfilling all desires",
+                    "Abandoning all desires",
+                    "Talking about desires",
+                    "Hiding desires"
+                ],
+                "optionsHi": [
+                    "सभी इच्छाओं को पूरा करना",
+                    "सभी इच्छाओं को त्यागना",
+                    "इच्छाओं के बारे में बात करना",
+                    "इच्छाओं को छिपाना"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Vihaya kaman (abandoning desires) and living without 'mineness' (nirmama) leads to peace.",
+                "explanationHi": "विहाय कामान् (इच्छाओं को त्यागकर) और 'ममत्व' (निर्मम) के बिना जीने से शांति मिलती है।",
+                "realLifeApplication": "Try saying 'I desire nothing right now' and feel the immediate relief."
+            }
+        },
+        {
+            "questionId": "lesson_2_4_3_scenarioChallenge_4",
+            "lessonId": "lesson_2_4_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Mine vs. Ours",
+                "scenarioTitleHi": "मेरा बनाम हमारा",
+                "scenario": "You fight over a parking spot. 'It's MINE!' What is the root cause of this stress?",
+                "scenarioHi": "आप पार्किंग स्थल के लिए लड़ते हैं। 'यह मेरा है!' इस तनाव का मूल कारण क्या है?",
+                "options": [
+                    {
+                        "text": "The other driver.",
+                        "textHi": "दूसरा ड्राइवर।",
+                        "feedback": "External blame.",
+                        "feedbackHi": "बाहरी दोष।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "My sense of possessiveness (Nirmama).",
+                        "textHi": "मेरा स्वामित्व का भाव (निर्मम)।",
+                        "feedback": "Correct. The spot is just asphalt.",
+                        "feedbackHi": "सही। जगह सिर्फ डामर है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_4_3_reflectionPrompt_5",
+            "lessonId": "lesson_2_4_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Take a deep breath. Release the need for anything to be different than it is right now. That is peace.",
+                "promptHi": "गहरी सांस लें। किसी भी चीज़ के अभी जैसी है उससे अलग होने की आवश्यकता को छोड़ दें। वही शांति है।",
+                "krishnaWisdom": "This is the state of Brahman. Having attained it, one is not deluded."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_1_scenarioChallenge_1",
+            "lessonId": "lesson_2_2_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "The Unpopular Choice",
+                "scenarioTitleHi": "अलोकप्रिय विकल्प",
+                "scenario": "You have to make a decision that is right but will make people angry. You face 'social disgrace'. What do you do?",
+                "scenarioHi": "आपको एक ऐसा निर्णय लेना है जो सही है लेकिन लोगों को नाराज करेगा। आप 'सामाजिक अपमान' का सामना करते हैं। आप क्या करते हैं?",
+                "options": [
+                    {
+                        "text": "Avoid it to be liked.",
+                        "textHi": "पसंद किए जाने के लिए इससे बचें।",
+                        "feedback": "Krishna warns Arjuna that running away brings infamy worse than death.",
+                        "feedbackHi": "कृष्ण अर्जुन को चेतावनी देते हैं कि भागने से मौत से भी बदतर बदनामी होती है।",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Do my duty regardless of opinion.",
+                        "textHi": "राय की परवाह किए बिना अपना कर्तव्य करें।",
+                        "feedback": "Correct. Swadharma (own duty) comes first.",
+                        "feedbackHi": "सही। स्वधर्म (अपना कर्तव्य) पहले आता है।",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "lesson_2_2_1_storyCard_2",
+            "lessonId": "lesson_2_2_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "Worse Than Death",
+                "titleHi": "मौत से भी बदतर",
+                "story": "Arjuna thought running away was noble. Krishna corrects him: 'People will speak of your everlasting dishonor; and for one who has been honored, dishonor is worse than death.' (2.34). Doing your duty isn't just about fighting; it's about integrity.",
+                "storyHi": "अर्जुन को लगा कि भागना नेक काम है। कृष्ण उसे सुधारते हैं: 'लोग तुम्हारे अनंत अपमान की बात करेंगे; और सम्मानित व्यक्ति के लिए अपमान मृत्यु से भी बदतर है।' (2.34)। अपना कर्तव्य करना केवल लड़ने के बारे में नहीं है; यह अखंडता के बारे में है।",
+                "krishnaMessage": "Integrity means standing your ground when it counts."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_1_multipleChoice_3",
+            "lessonId": "lesson_2_2_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "If you abandon your duty due to fear, what is the result?",
+                "questionTextHi": "यदि आप भय के कारण अपने कर्तव्य का त्याग करते हैं, तो इसका परिणाम क्या होगा?",
+                "options": [
+                    "Peace",
+                    "Sin and Dishonor",
+                    "Happiness",
+                    "Freedom"
+                ],
+                "optionsHi": [
+                    "शांति",
+                    "पाप और अपमान",
+                    "खुशी",
+                    "स्वतंत्रता"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Krishna is harsh here: abandoning duty (Swadharma) brings sin (Papa) and loss of reputation (Akirti).",
+                "explanationHi": "कृष्ण यहाँ कठोर हैं: कर्तव्य (स्वधर्म) का त्याग करने से पाप और प्रतिष्ठा की हानि (अकीर्ति) होती है।",
+                "realLifeApplication": "Don't drop your responsibilities just because they get hard."
+            }
+        },
+        {
+            "questionId": "lesson_2_2_1_reflectionPrompt_5",
+            "lessonId": "lesson_2_2_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Is there a responsibility you are avoiding because you are afraid of what people will say?",
+                "promptHi": "क्या कोई ऐसी जिम्मेदारी है जिससे आप बच रहे हैं क्योंकि आप डरते हैं कि लोग क्या कहेंगे?",
+                "krishnaWisdom": "Do your duty. Hesitation is the enemy."
+            }
+        }
+    ]
+}

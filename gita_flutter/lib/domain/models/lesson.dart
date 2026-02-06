@@ -13,6 +13,7 @@ class Lesson {
   final List<int> shlokasCovered;
   final int xpReward;
   final String? prerequisite;
+  final String sectionId;
 
   const Lesson({
     this.lessonId = '',
@@ -26,23 +27,70 @@ class Lesson {
     this.shlokasCovered = const [],
     this.xpReward = 0,
     this.prerequisite,
+    this.sectionId = '',
   });
 
   factory Lesson.fromFirestore(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>? ?? {};
-    return Lesson(
-      lessonId: doc.id,
-      chapterId: data['chapterId'] ?? '',
-      lessonNumber: data['lessonNumber'] ?? 0,
-      lessonName: data['lessonName'] ?? '',
-      lessonNameEn: data['lessonNameEn'] ?? '',
-      order: data['order'] ?? 0,
-      estimatedTime: data['estimatedTime'] ?? 0,
-      difficulty: data['difficulty'] ?? 'beginner',
-      shlokasCovered: List<int>.from(data['shlokasCovered'] ?? []),
-      xpReward: data['xpReward'] ?? 0,
-      prerequisite: data['prerequisite'],
-    );
+    try {
+      final data = doc.data() as Map<String, dynamic>? ?? {};
+      
+      // STRICT ENGLISH ONLY & TYPE SAFETY
+      // Map 'lessonName' (from DB, which is English) to both lessonName and lessonNameEn
+      
+      String name = _safeString(data, 'lessonName');
+      // If empty, try lessonNameEn just in case
+      if (name.isEmpty) {
+        name = _safeString(data, 'lessonNameEn');
+      }
+      
+      // Safe extraction of shlokasCovered
+      List<int> shlokas = [];
+      if (data['shlokasCovered'] is List) {
+        shlokas = (data['shlokasCovered'] as List).map((e) {
+          if (e is int) return e;
+          return int.tryParse(e.toString()) ?? 0;
+        }).toList();
+      }
+      
+      return Lesson(
+        lessonId: doc.id,
+        chapterId: _safeString(data, 'chapterId'),
+        lessonNumber: _safeInt(data, 'lessonNumber'),
+        lessonName: name, // Force English
+        lessonNameEn: name, // Force English
+        order: _safeInt(data, 'order'),
+        estimatedTime: _safeInt(data, 'estimatedTime'),
+        difficulty: _safeString(data, 'difficulty', fallback: 'beginner'),
+        shlokasCovered: shlokas,
+        xpReward: _safeInt(data, 'xpReward'),
+        prerequisite: data['prerequisite']?.toString(), // nullable
+        sectionId: _safeString(data, 'sectionId'),
+      );
+    } catch (e, stack) {
+      print('❌ Error parsing Lesson ${doc.id}: $e');
+      print(stack);
+      // Return dummy lesson
+      return Lesson(
+        lessonId: doc.id,
+        lessonName: 'Error loading lesson',
+      );
+    }
+  }
+
+  // --- Type Safety Helpers ---
+
+  static String _safeString(Map<String, dynamic> data, String key, {String fallback = ''}) {
+    final val = data[key];
+    if (val is String) return val;
+    if (val != null) return val.toString();
+    return fallback;
+  }
+
+  static int _safeInt(Map<String, dynamic> data, String key) {
+    final val = data[key];
+    if (val is int) return val;
+    if (val != null) return int.tryParse(val.toString()) ?? 0;
+    return 0;
   }
 
   Map<String, dynamic> toFirestore() {

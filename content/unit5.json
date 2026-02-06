@@ -1,0 +1,1648 @@
+{
+    "unit": {
+        "id": "unit_5",
+        "unitNumber": 5,
+        "unitName": "Karma Sanyasa Yoga",
+        "unitNameHi": "कर्म संन्यास योग",
+        "chapterNumber": 5,
+        "theme": "Renunciation",
+        "difficulty": "intermediate",
+        "icon": "🕊️",
+        "color": "#00695C",
+        "description": "Chapter 5: Karma Sanyasa Yoga - Renunciation",
+        "descriptionHi": "अध्याय 5: कर्म संन्यास योग - Renunciation",
+        "journeyId": "journey_1",
+        "shlokasCovered": "1-29",
+        "shlokaCount": 29
+    },
+    "sections": [
+        {
+            "id": "section_5_1",
+            "unitId": "unit_5",
+            "sectionNumber": 1,
+            "sectionName": "Section 1 Name",
+            "sectionNameHi": "खंड 1 नाम",
+            "shlokaRange": "1-7",
+            "keyTeaching": "Key teaching for this section",
+            "order": 1
+        },
+        {
+            "id": "section_5_2",
+            "unitId": "unit_5",
+            "sectionNumber": 2,
+            "sectionName": "Section 2 Name",
+            "sectionNameHi": "खंड 2 नाम",
+            "shlokaRange": "8-14",
+            "keyTeaching": "Key teaching for this section",
+            "order": 2
+        },
+        {
+            "id": "section_5_3",
+            "unitId": "unit_5",
+            "sectionNumber": 3,
+            "sectionName": "Section 3 Name",
+            "sectionNameHi": "खंड 3 नाम",
+            "shlokaRange": "15-21",
+            "keyTeaching": "Key teaching for this section",
+            "order": 3
+        },
+        {
+            "id": "section_5_4",
+            "unitId": "unit_5",
+            "sectionNumber": 4,
+            "sectionName": "Section 4 Name",
+            "sectionNameHi": "खंड 4 नाम",
+            "shlokaRange": "22-29",
+            "keyTeaching": "Key teaching for this section",
+            "order": 4
+        }
+    ],
+    "lessons": [
+        {
+            "id": "lesson_5_1_1",
+            "sectionId": "section_5_1",
+            "unitId": "unit_5",
+            "lessonNumber": 1,
+            "lessonName": "Lesson 1 of Section 1",
+            "lessonNameHi": "पाठ 1 (खंड 1)",
+            "order": 1,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": null
+        },
+        {
+            "id": "lesson_5_1_2",
+            "sectionId": "section_5_1",
+            "unitId": "unit_5",
+            "lessonNumber": 2,
+            "lessonName": "Lesson 2 of Section 1",
+            "lessonNameHi": "पाठ 2 (खंड 1)",
+            "order": 2,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_1_1"
+        },
+        {
+            "id": "lesson_5_1_3",
+            "sectionId": "section_5_1",
+            "unitId": "unit_5",
+            "lessonNumber": 3,
+            "lessonName": "Lesson 3 of Section 1",
+            "lessonNameHi": "पाठ 3 (खंड 1)",
+            "order": 3,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_1_2"
+        },
+        {
+            "id": "lesson_5_2_1",
+            "sectionId": "section_5_2",
+            "unitId": "unit_5",
+            "lessonNumber": 1,
+            "lessonName": "Lesson 1 of Section 2",
+            "lessonNameHi": "पाठ 1 (खंड 2)",
+            "order": 4,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_1_3"
+        },
+        {
+            "id": "lesson_5_2_2",
+            "sectionId": "section_5_2",
+            "unitId": "unit_5",
+            "lessonNumber": 2,
+            "lessonName": "Lesson 2 of Section 2",
+            "lessonNameHi": "पाठ 2 (खंड 2)",
+            "order": 5,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_2_1"
+        },
+        {
+            "id": "lesson_5_2_3",
+            "sectionId": "section_5_2",
+            "unitId": "unit_5",
+            "lessonNumber": 3,
+            "lessonName": "Lesson 3 of Section 2",
+            "lessonNameHi": "पाठ 3 (खंड 2)",
+            "order": 6,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_2_2"
+        },
+        {
+            "id": "lesson_5_3_1",
+            "sectionId": "section_5_3",
+            "unitId": "unit_5",
+            "lessonNumber": 1,
+            "lessonName": "Lesson 1 of Section 3",
+            "lessonNameHi": "पाठ 1 (खंड 3)",
+            "order": 7,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_2_3"
+        },
+        {
+            "id": "lesson_5_3_2",
+            "sectionId": "section_5_3",
+            "unitId": "unit_5",
+            "lessonNumber": 2,
+            "lessonName": "Lesson 2 of Section 3",
+            "lessonNameHi": "पाठ 2 (खंड 3)",
+            "order": 8,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_3_1"
+        },
+        {
+            "id": "lesson_5_3_3",
+            "sectionId": "section_5_3",
+            "unitId": "unit_5",
+            "lessonNumber": 3,
+            "lessonName": "Lesson 3 of Section 3",
+            "lessonNameHi": "पाठ 3 (खंड 3)",
+            "order": 9,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_3_2"
+        },
+        {
+            "id": "lesson_5_4_1",
+            "sectionId": "section_5_4",
+            "unitId": "unit_5",
+            "lessonNumber": 1,
+            "lessonName": "Lesson 1 of Section 4",
+            "lessonNameHi": "पाठ 1 (खंड 4)",
+            "order": 10,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_3_3"
+        },
+        {
+            "id": "lesson_5_4_2",
+            "sectionId": "section_5_4",
+            "unitId": "unit_5",
+            "lessonNumber": 2,
+            "lessonName": "Lesson 2 of Section 4",
+            "lessonNameHi": "पाठ 2 (खंड 4)",
+            "order": 11,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_4_1"
+        },
+        {
+            "id": "lesson_5_4_3",
+            "sectionId": "section_5_4",
+            "unitId": "unit_5",
+            "lessonNumber": 3,
+            "lessonName": "Lesson 3 of Section 4",
+            "lessonNameHi": "पाठ 3 (खंड 4)",
+            "order": 12,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                1,
+                2
+            ],
+            "xpReward": 50,
+            "prerequisite": "lesson_5_4_2"
+        }
+    ],
+    "questions": [
+        {
+            "questionId": "q_5_1_1_scenarioChallenge_1",
+            "lessonId": "lesson_5_1_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_1_1_storyCard_2",
+            "lessonId": "lesson_5_1_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_1_1_multipleChoice_3",
+            "lessonId": "lesson_5_1_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_1_1_scenarioChallenge_4",
+            "lessonId": "lesson_5_1_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_1_1_reflectionPrompt_5",
+            "lessonId": "lesson_5_1_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_1_2_scenarioChallenge_1",
+            "lessonId": "lesson_5_1_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_1_2_storyCard_2",
+            "lessonId": "lesson_5_1_2",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_1_2_multipleChoice_3",
+            "lessonId": "lesson_5_1_2",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_1_2_scenarioChallenge_4",
+            "lessonId": "lesson_5_1_2",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_1_2_reflectionPrompt_5",
+            "lessonId": "lesson_5_1_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_1_3_scenarioChallenge_1",
+            "lessonId": "lesson_5_1_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_1_3_storyCard_2",
+            "lessonId": "lesson_5_1_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_1_3_multipleChoice_3",
+            "lessonId": "lesson_5_1_3",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_1_3_scenarioChallenge_4",
+            "lessonId": "lesson_5_1_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_1_3_reflectionPrompt_5",
+            "lessonId": "lesson_5_1_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_2_1_scenarioChallenge_1",
+            "lessonId": "lesson_5_2_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_2_1_storyCard_2",
+            "lessonId": "lesson_5_2_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_2_1_multipleChoice_3",
+            "lessonId": "lesson_5_2_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_2_1_scenarioChallenge_4",
+            "lessonId": "lesson_5_2_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_2_1_reflectionPrompt_5",
+            "lessonId": "lesson_5_2_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_2_2_scenarioChallenge_1",
+            "lessonId": "lesson_5_2_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_2_2_storyCard_2",
+            "lessonId": "lesson_5_2_2",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_2_2_multipleChoice_3",
+            "lessonId": "lesson_5_2_2",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_2_2_scenarioChallenge_4",
+            "lessonId": "lesson_5_2_2",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_2_2_reflectionPrompt_5",
+            "lessonId": "lesson_5_2_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_2_3_scenarioChallenge_1",
+            "lessonId": "lesson_5_2_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_2_3_storyCard_2",
+            "lessonId": "lesson_5_2_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_2_3_multipleChoice_3",
+            "lessonId": "lesson_5_2_3",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_2_3_scenarioChallenge_4",
+            "lessonId": "lesson_5_2_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_2_3_reflectionPrompt_5",
+            "lessonId": "lesson_5_2_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_3_1_scenarioChallenge_1",
+            "lessonId": "lesson_5_3_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_3_1_storyCard_2",
+            "lessonId": "lesson_5_3_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_3_1_multipleChoice_3",
+            "lessonId": "lesson_5_3_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_3_1_scenarioChallenge_4",
+            "lessonId": "lesson_5_3_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_3_1_reflectionPrompt_5",
+            "lessonId": "lesson_5_3_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_3_2_scenarioChallenge_1",
+            "lessonId": "lesson_5_3_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_3_2_storyCard_2",
+            "lessonId": "lesson_5_3_2",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_3_2_multipleChoice_3",
+            "lessonId": "lesson_5_3_2",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_3_2_scenarioChallenge_4",
+            "lessonId": "lesson_5_3_2",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_3_2_reflectionPrompt_5",
+            "lessonId": "lesson_5_3_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_3_3_scenarioChallenge_1",
+            "lessonId": "lesson_5_3_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_3_3_storyCard_2",
+            "lessonId": "lesson_5_3_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_3_3_multipleChoice_3",
+            "lessonId": "lesson_5_3_3",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_3_3_scenarioChallenge_4",
+            "lessonId": "lesson_5_3_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_3_3_reflectionPrompt_5",
+            "lessonId": "lesson_5_3_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_4_1_scenarioChallenge_1",
+            "lessonId": "lesson_5_4_1",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_4_1_storyCard_2",
+            "lessonId": "lesson_5_4_1",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_4_1_multipleChoice_3",
+            "lessonId": "lesson_5_4_1",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_4_1_scenarioChallenge_4",
+            "lessonId": "lesson_5_4_1",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_4_1_reflectionPrompt_5",
+            "lessonId": "lesson_5_4_1",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_4_2_scenarioChallenge_1",
+            "lessonId": "lesson_5_4_2",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_4_2_storyCard_2",
+            "lessonId": "lesson_5_4_2",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_4_2_multipleChoice_3",
+            "lessonId": "lesson_5_4_2",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_4_2_scenarioChallenge_4",
+            "lessonId": "lesson_5_4_2",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_4_2_reflectionPrompt_5",
+            "lessonId": "lesson_5_4_2",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        },
+        {
+            "questionId": "q_5_4_3_scenarioChallenge_1",
+            "lessonId": "lesson_5_4_3",
+            "type": "scenarioChallenge",
+            "order": 1,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_4_3_storyCard_2",
+            "lessonId": "lesson_5_4_3",
+            "type": "storyCard",
+            "order": 2,
+            "xpReward": 10,
+            "content": {
+                "title": "A Story from the Chapter",
+                "titleHi": "अध्याय से एक कहानी",
+                "story": "A short story illustrating the lesson.",
+                "storyHi": "पाठ को समझाने वाली एक छोटी कहानी।",
+                "krishnaMessage": "Core wisdom from the story."
+            }
+        },
+        {
+            "questionId": "q_5_4_3_multipleChoice_3",
+            "lessonId": "lesson_5_4_3",
+            "type": "multipleChoice",
+            "order": 3,
+            "xpReward": 25,
+            "content": {
+                "questionText": "Question about the lesson?",
+                "questionTextHi": "पाठ के बारे में प्रश्न?",
+                "options": [
+                    "Answer A",
+                    "Answer B",
+                    "Answer C",
+                    "Answer D"
+                ],
+                "optionsHi": [
+                    "उत्तर A",
+                    "उत्तर B",
+                    "उत्तर C",
+                    "उत्तर D"
+                ],
+                "correctAnswerIndex": 1,
+                "explanation": "Why B is correct.",
+                "explanationHi": "B क्यों सही है।",
+                "realLifeApplication": "Apply this to daily life."
+            }
+        },
+        {
+            "questionId": "q_5_4_3_scenarioChallenge_4",
+            "lessonId": "lesson_5_4_3",
+            "type": "scenarioChallenge",
+            "order": 4,
+            "xpReward": 25,
+            "content": {
+                "scenarioTitle": "Practice Scenario",
+                "scenarioTitleHi": "अभ्यास परिदृश्य",
+                "scenario": "A situation to apply Gita wisdom.",
+                "scenarioHi": "गीता ज्ञान लागू करने की स्थिति।",
+                "options": [
+                    {
+                        "text": "Option A (Incorrect)",
+                        "textHi": "विकल्प A",
+                        "feedback": "Feedback A",
+                        "feedbackHi": "प्रतिक्रिया A",
+                        "isOptimal": false
+                    },
+                    {
+                        "text": "Option B (Correct)",
+                        "textHi": "विकल्प B",
+                        "feedback": "Feedback B",
+                        "feedbackHi": "प्रतिक्रिया B",
+                        "isOptimal": true
+                    }
+                ]
+            }
+        },
+        {
+            "questionId": "q_5_4_3_reflectionPrompt_5",
+            "lessonId": "lesson_5_4_3",
+            "type": "reflectionPrompt",
+            "order": 5,
+            "xpReward": 25,
+            "content": {
+                "prompt": "Reflect on how this applies to you.",
+                "promptHi": "विचार करें कि यह आप पर कैसे लागू होता है।",
+                "guidingQuestions": [
+                    "Question 1?",
+                    "Question 2?"
+                ],
+                "krishnaWisdom": "Concluding wisdom."
+            }
+        }
+    ]
+}

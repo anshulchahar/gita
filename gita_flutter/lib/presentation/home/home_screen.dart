@@ -7,6 +7,8 @@ import '../../data/repositories/auth_repository.dart';
 import '../../data/repositories/content_repository.dart';
 import '../../data/repositories/user_repository.dart';
 import '../../domain/models/chapter.dart';
+import '../../domain/models/journey.dart';
+import '../../domain/models/section.dart';
 import '../../domain/models/lesson.dart';
 import '../../domain/models/shloka.dart';
 import '../components/lesson_node_components.dart';
@@ -17,7 +19,9 @@ import 'sarthi_controller.dart';
 class HomeState {
   final bool isLoading;
   final String? error;
+  final List<Journey> journeys;
   final List<Chapter> chapters;
+  final Map<String, List<Section>> chapterSections;
   final Map<String, List<Lesson>> chapterLessons;
   final Set<String> unlockedChapters;
   final Set<String> unlockedLessons;
@@ -30,7 +34,9 @@ class HomeState {
   const HomeState({
     this.isLoading = false,
     this.error,
+    this.journeys = const [],
     this.chapters = const [],
+    this.chapterSections = const {},
     this.chapterLessons = const {},
     this.unlockedChapters = const {},
     this.unlockedLessons = const {},
@@ -44,7 +50,9 @@ class HomeState {
   HomeState copyWith({
     bool? isLoading,
     String? error,
+    List<Journey>? journeys,
     List<Chapter>? chapters,
+    Map<String, List<Section>>? chapterSections,
     Map<String, List<Lesson>>? chapterLessons,
     Set<String>? unlockedChapters,
     Set<String>? unlockedLessons,
@@ -57,7 +65,9 @@ class HomeState {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
       error: error,
+      journeys: journeys ?? this.journeys,
       chapters: chapters ?? this.chapters,
+      chapterSections: chapterSections ?? this.chapterSections,
       chapterLessons: chapterLessons ?? this.chapterLessons,
       unlockedChapters: unlockedChapters ?? this.unlockedChapters,
       unlockedLessons: unlockedLessons ?? this.unlockedLessons,
@@ -88,13 +98,18 @@ class HomeController extends StateNotifier<HomeState> {
     try {
       state = state.copyWith(isLoading: true, error: null);
 
-      // Load chapters
+      // Load journeys and chapters
+      final journeys = await _contentRepository.getJourneys();
       final chapters = await _contentRepository.getChapters();
 
-      // Load lessons for each chapter
+      // Load sections and lessons for each chapter
+      final chapterSections = <String, List<Section>>{};
       final chapterLessons = <String, List<Lesson>>{};
       for (final chapter in chapters) {
+        final sections = await _contentRepository.getSections(chapter.chapterId);
         final lessons = await _contentRepository.getLessons(chapter.chapterId);
+        
+        chapterSections[chapter.chapterId] = sections;
         chapterLessons[chapter.chapterId] = lessons;
       }
 
@@ -163,7 +178,9 @@ class HomeController extends StateNotifier<HomeState> {
 
       state = state.copyWith(
         isLoading: false,
+        journeys: journeys,
         chapters: chapters,
+        chapterSections: chapterSections,
         chapterLessons: chapterLessons,
         unlockedChapters: unlockedChapters,
         unlockedLessons: unlockedLessons,
@@ -330,9 +347,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       children: [
         SizedBox(height: MediaQuery.of(context).padding.top + Spacing.space16),
 
-        // Chapters and lessons
-        for (var chapterIndex = 0; chapterIndex < state.chapters.length; chapterIndex++) ...[
-          _buildChapterSection(context, state, chapterIndex),
+        // Journey sections
+        if (state.journeys.isNotEmpty) ...[
+           for (final journey in state.journeys) ...[
+             _buildJourneySection(context, state, journey),
+           ],
+        ] else ...[
+          // Fallback if no journeys (legacy/admin mode)
+           for (var chapterIndex = 0; chapterIndex < state.chapters.length; chapterIndex++) ...[
+             _buildChapterSection(context, state, state.chapters[chapterIndex], chapterIndex),
+           ],
         ],
 
         const SizedBox(height: Spacing.space32),
@@ -340,39 +364,191 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     );
   }
 
-  Widget _buildChapterSection(BuildContext context, HomeState state, int chapterIndex) {
-    final chapter = state.chapters[chapterIndex];
+  Widget _buildJourneySection(BuildContext context, HomeState state, Journey journey) {
+     // Filter chapters for this journey
+     final journeyChapters = state.chapters.where((c) => c.journeyId == journey.id).toList();
+     
+     if (journeyChapters.isEmpty) return const SizedBox.shrink();
+
+     return Column(
+       crossAxisAlignment: CrossAxisAlignment.start,
+       children: [
+         // Journey Header
+         Padding(
+           padding: const EdgeInsets.symmetric(vertical: Spacing.space16),
+           child: Column(
+             crossAxisAlignment: CrossAxisAlignment.start,
+             children: [
+               Text(
+                 journey.title.toUpperCase(),
+                 style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                   color: Theme.of(context).colorScheme.primary,
+                   fontWeight: FontWeight.bold,
+                   letterSpacing: 1.2,
+                 ),
+               ),
+               if (journey.description.isNotEmpty)
+                 Text(
+                   journey.description,
+                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                     color: Theme.of(context).colorScheme.onSurface.withOpacity(0.6),
+                   ),
+                 ),
+             ],
+           ),
+         ),
+         
+         // Chapters in this journey
+         for (int i = 0; i < journeyChapters.length; i++)
+           _buildChapterSection(context, state, journeyChapters[i], i),
+       ],
+     );
+  }
+
+  Widget _buildChapterSection(BuildContext context, HomeState state, Chapter chapter, int chapterIndex) {
+    // Note: chapterIndex is local loop index here, might need adjustment for animations if strictly relying on global index
+    // but sine wave is local to list, so it should be fine.
     final lessons = state.chapterLessons[chapter.chapterId] ?? [];
+    final sections = state.chapterSections[chapter.chapterId] ?? [];
     
     return Column(
       children: [
-        // Section header
-        SectionHeader(
-          sectionNumber: chapter.chapterNumber,
-          unitNumber: chapter.chapterNumber,
+        // Chapter header
+        ChapterHeader(
+          chapterNumber: chapter.chapterNumber,
           description: chapter.chapterNameEn,
           onInfoTap: () => _showShlokasDialog(context, chapter, lessons),
         ),
         
         const SizedBox(height: Spacing.space8),
 
-        // Lessons with Snake Layout
+        if (sections.isNotEmpty) ...[
+          // Group by Section
+          for (final section in sections) ...[
+             _buildSectionGroup(context, state, chapter, section, lessons),
+          ],
+          
+          // Fallback for lessons without section (if any)
+          // We can check if any lessons have no sectionId matching known sections
+           _buildOrphanLessons(context, state, chapter, lessons, sections),
+        ] else ...[
+          // Legacy/No Section mode
+          ListView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: lessons.length,
+            itemBuilder: (context, index) {
+              final lesson = lessons[index];
+              final nextLesson = index < lessons.length - 1 ? lessons[index + 1] : null;
+              
+              return _buildSnakeItem(
+                  context, state, chapter, lesson, index, nextLesson);
+            },
+          ),
+        ],
+        
+        const SizedBox(height: Spacing.space48),
+      ],
+    );
+  }
+
+  Widget _buildSectionGroup(
+    BuildContext context, 
+    HomeState state, 
+    Chapter chapter, 
+    Section section, 
+    List<Lesson> allLessons
+  ) {
+    // Filter lessons for this section
+    // Use unitId mapping? Or assume sectionId match.
+    // In DB, Lesson has 'sectionId'.
+    final sectionLessons = allLessons.where((l) => l.sectionId == section.id).toList();
+    
+    if (sectionLessons.isEmpty) return const SizedBox.shrink();
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        // Section Header
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: Spacing.space24, 
+            vertical: Spacing.space12
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'SECTION ${section.sectionNumber}',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                  color: Theme.of(context).colorScheme.primary,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.0,
+                ),
+              ),
+              Text(
+                section.sectionNameEn,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Lessons list for this section
         ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: lessons.length,
+          itemCount: sectionLessons.length,
           itemBuilder: (context, index) {
-            final lesson = lessons[index];
-            final nextLesson = index < lessons.length - 1 ? lessons[index + 1] : null;
+            final lesson = sectionLessons[index];
+            // Find next lesson to link to. 
+            // Ideally we link to next lesson in THIS section, or first of NEXT section?
+            // Simple approach: Next in this list. Cross-section linking might be tricky with snake path visually unless lists join.
+            // SnakePathPainter is relative to X offset. If we break listview, we break the continuous path?
+            // YES. Standard snake view usually is one continuous list.
+            // If we break it with Section Headers, the path will break.
+            // We should interrupt the path or make the header overlay?
+            // Let's interrupt path for sections. It's cleaner.
             
+            final nextLesson = index < sectionLessons.length - 1 ? sectionLessons[index + 1] : null;
+            
+            // Adjust index for sine wave continuity?
+            // Or reset sine wave for each section? Resetting is easier.
             return _buildSnakeItem(
                 context, state, chapter, lesson, index, nextLesson);
           },
         ),
         
-        if (chapterIndex < state.chapters.length - 1)
-          const SizedBox(height: Spacing.space48),
+        const SizedBox(height: Spacing.space16),
       ],
+    );
+  }
+
+  Widget _buildOrphanLessons(
+    BuildContext context, 
+    HomeState state, 
+    Chapter chapter, 
+    List<Lesson> allLessons, 
+    List<Section> sections
+  ) {
+    // Find lessons not in any section
+    final sectionIds = sections.map((s) => s.id).toSet();
+    final orphanLessons = allLessons.where((l) => !sectionIds.contains(l.sectionId)).toList();
+    
+    if (orphanLessons.isEmpty) return const SizedBox.shrink();
+    
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: orphanLessons.length,
+      itemBuilder: (context, index) {
+        final lesson = orphanLessons[index];
+        final nextLesson = index < orphanLessons.length - 1 ? orphanLessons[index + 1] : null;
+        return _buildSnakeItem(
+            context, state, chapter, lesson, index, nextLesson);
+      },
     );
   }
 
