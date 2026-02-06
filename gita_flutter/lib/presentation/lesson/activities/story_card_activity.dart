@@ -88,14 +88,6 @@ class _StoryCardActivityState extends State<StoryCardActivity>
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            // Krishna mascot
-            const KrishnaMascot(
-              emotion: KrishnaEmotion.happy,
-              animation: KrishnaAnimation.none,
-              size: 120,
-            ),
-            
-            const SizedBox(height: Spacing.space16),
             
             // Krishna's narration dialogue
             AnimatedOpacity(

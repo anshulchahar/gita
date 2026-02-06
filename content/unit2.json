@@ -115,13 +115,16 @@
             "sectionId": "section_2_2",
             "unitId": "unit_2",
             "lessonNumber": 1,
-            "lessonName": "Your Right to Work",
-            "lessonNameHi": "कर्म का अधिकार",
+            "lessonName": "Why Grieve?",
+            "lessonNameHi": "शोक क्यों?",
             "order": 4,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
-                47
+                31,
+                32,
+                33,
+                34
             ],
             "xpReward": 70,
             "prerequisite": "lesson_2_1_3"
@@ -131,15 +134,15 @@
             "sectionId": "section_2_2",
             "unitId": "unit_2",
             "lessonNumber": 2,
-            "lessonName": "Yoga is Skill in Action",
-            "lessonNameHi": "योग कर्म की कुशलता है",
+            "lessonName": "The Science of Action",
+            "lessonNameHi": "कर्म का विज्ञान",
             "order": 5,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
-                48,
-                49,
-                50
+                39,
+                40,
+                41
             ],
             "xpReward": 70,
             "prerequisite": "lesson_2_2_1"
@@ -149,9 +152,43 @@
             "sectionId": "section_2_2",
             "unitId": "unit_2",
             "lessonNumber": 3,
+            "lessonName": "Your Right to Work",
+            "lessonNameHi": "कर्म का अधिकार",
+            "order": 6,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                47
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_2"
+        },
+        {
+            "id": "lesson_2_2_4",
+            "sectionId": "section_2_2",
+            "unitId": "unit_2",
+            "lessonNumber": 4,
+            "lessonName": "Yoga is Skill in Action",
+            "lessonNameHi": "योग कर्म की कुशलता है",
+            "order": 7,
+            "estimatedTime": 300,
+            "difficulty": "intermediate",
+            "shlokasCovered": [
+                48,
+                49,
+                50
+            ],
+            "xpReward": 70,
+            "prerequisite": "lesson_2_2_3"
+        },
+        {
+            "id": "lesson_2_2_5",
+            "sectionId": "section_2_2",
+            "unitId": "unit_2",
+            "lessonNumber": 5,
             "lessonName": "Free from Anxiety",
             "lessonNameHi": "चिंता से मुक्त",
-            "order": 6,
+            "order": 8,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
@@ -160,7 +197,7 @@
                 53
             ],
             "xpReward": 70,
-            "prerequisite": "lesson_2_2_2"
+            "prerequisite": "lesson_2_2_4"
         },
         {
             "id": "lesson_2_3_1",
@@ -169,7 +206,7 @@
             "lessonNumber": 1,
             "lessonName": "Defining Wisdom",
             "lessonNameHi": "ज्ञान को परिभाषित करना",
-            "order": 7,
+            "order": 9,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
@@ -177,7 +214,7 @@
                 55
             ],
             "xpReward": 70,
-            "prerequisite": "lesson_2_2_3"
+            "prerequisite": "lesson_2_2_5"
         },
         {
             "id": "lesson_2_3_2",
@@ -186,7 +223,7 @@
             "lessonNumber": 2,
             "lessonName": "The Unshakable Mind",
             "lessonNameHi": "अडिग मन",
-            "order": 8,
+            "order": 10,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
@@ -203,7 +240,7 @@
             "lessonNumber": 3,
             "lessonName": "The Turtle Technique",
             "lessonNameHi": "कछुआ तकनीक",
-            "order": 9,
+            "order": 11,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
@@ -222,7 +259,7 @@
             "lessonNumber": 1,
             "lessonName": "The Ladder of Ruin",
             "lessonNameHi": "विनाश की सीढ़ी",
-            "order": 10,
+            "order": 12,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
@@ -240,7 +277,7 @@
             "lessonNumber": 2,
             "lessonName": "No Peace Without Focus",
             "lessonNameHi": "ध्यान के बिना शांति नहीं",
-            "order": 11,
+            "order": 13,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
@@ -258,7 +295,7 @@
             "lessonNumber": 3,
             "lessonName": "Like the Ocean",
             "lessonNameHi": "सागर की तरह",
-            "order": 12,
+            "order": 14,
             "estimatedTime": 300,
             "difficulty": "intermediate",
             "shlokasCovered": [
@@ -605,8 +642,32 @@
             }
         },
         {
-            "questionId": "q_2_2_1_scenario_1",
+            "questionId": "q_2_2_1_new_placeholder",
             "lessonId": "lesson_2_2_1",
+            "type": "reflectionPrompt",
+            "order": 1,
+            "xpReward": 20,
+            "content": {
+                "prompt": "Think of a time when you grieved over something that was inevitable. How did that grief affect your ability to act? What would you do differently now?",
+                "promptHi": "किसी ऐसे समय के बारे में सोचें जब आपने किसी अपरिहार्य चीज़ पर शोक किया। उस शोक ने आपकी कार्य करने की क्षमता को कैसे प्रभावित किया? अब आप क्या अलग करेंगे?",
+                "krishnaWisdom": "The wise grieve neither for the living nor the dead."
+            }
+        },
+        {
+            "questionId": "q_2_2_2_new_placeholder",
+            "lessonId": "lesson_2_2_2",
+            "type": "reflectionPrompt",
+            "order": 1,
+            "xpReward": 20,
+            "content": {
+                "prompt": "In what area of your life do you currently feel paralyzed by indecision? How might understanding Buddhi Yoga (wisdom in action) help you move forward?",
+                "promptHi": "आपके जीवन के किस क्षेत्र में आप वर्तमान में अनिर्णय से पंगु महसूस करते हैं? बुद्धि योग (कर्म में ज्ञान) को समझना आपको आगे बढ़ने में कैसे मदद कर सकता है?",
+                "krishnaWisdom": "Steadfast in Yoga, perform actions abandoning attachment."
+            }
+        },
+        {
+            "questionId": "q_2_2_1_scenario_1",
+            "lessonId": "lesson_2_2_3",
             "type": "scenarioChallenge",
             "order": 1,
             "xpReward": 25,
@@ -642,7 +703,7 @@
         },
         {
             "questionId": "q_2_2_1_story_1",
-            "lessonId": "lesson_2_2_1",
+            "lessonId": "lesson_2_2_3",
             "type": "storyCard",
             "order": 2,
             "xpReward": 10,
@@ -656,7 +717,7 @@
         },
         {
             "questionId": "q_2_2_1_mc_1",
-            "lessonId": "lesson_2_2_1",
+            "lessonId": "lesson_2_2_3",
             "type": "multipleChoice",
             "order": 3,
             "xpReward": 15,
@@ -683,7 +744,7 @@
         },
         {
             "questionId": "q_2_2_1_scenario_2",
-            "lessonId": "lesson_2_2_1",
+            "lessonId": "lesson_2_2_3",
             "type": "scenarioChallenge",
             "order": 4,
             "xpReward": 25,
@@ -712,7 +773,7 @@
         },
         {
             "questionId": "q_2_2_1_reflection_1",
-            "lessonId": "lesson_2_2_1",
+            "lessonId": "lesson_2_2_3",
             "type": "reflectionPrompt",
             "order": 5,
             "xpReward": 20,
@@ -724,7 +785,7 @@
         },
         {
             "questionId": "q_2_2_2_scenario_1",
-            "lessonId": "lesson_2_2_2",
+            "lessonId": "lesson_2_2_4",
             "type": "scenarioChallenge",
             "order": 1,
             "xpReward": 25,
@@ -753,7 +814,7 @@
         },
         {
             "questionId": "q_2_2_2_story_1",
-            "lessonId": "lesson_2_2_2",
+            "lessonId": "lesson_2_2_4",
             "type": "storyCard",
             "order": 2,
             "xpReward": 10,
@@ -767,7 +828,7 @@
         },
         {
             "questionId": "q_2_2_2_mc_1",
-            "lessonId": "lesson_2_2_2",
+            "lessonId": "lesson_2_2_4",
             "type": "multipleChoice",
             "order": 3,
             "xpReward": 15,
@@ -794,7 +855,7 @@
         },
         {
             "questionId": "q_2_2_2_scenario_2",
-            "lessonId": "lesson_2_2_2",
+            "lessonId": "lesson_2_2_4",
             "type": "scenarioChallenge",
             "order": 4,
             "xpReward": 25,
@@ -823,7 +884,7 @@
         },
         {
             "questionId": "q_2_2_2_reflection_1",
-            "lessonId": "lesson_2_2_2",
+            "lessonId": "lesson_2_2_4",
             "type": "reflectionPrompt",
             "order": 5,
             "xpReward": 20,
@@ -835,7 +896,7 @@
         },
         {
             "questionId": "q_2_2_3_placeholder",
-            "lessonId": "lesson_2_2_3",
+            "lessonId": "lesson_2_2_5",
             "type": "reflectionPrompt",
             "order": 1,
             "xpReward": 20,
