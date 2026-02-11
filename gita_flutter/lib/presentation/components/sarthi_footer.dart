@@ -85,13 +85,16 @@ class SarthiFooter extends ConsumerWidget {
             ),
           ),
           
-          // Sarthi button floating above the curve
+          // Sarthi button floating above the curve (temporarily disabled)
           Positioned(
             bottom: 25, // Position above the footer
-            child: CharioteerButton(
-              onPressed: () {
-                ref.read(sarthiProvider.notifier).toggleSession();
-              },
+            child: Opacity(
+              opacity: 0.5,
+              child: IgnorePointer(
+                child: CharioteerButton(
+                  onPressed: null,
+                ),
+              ),
             ),
           ),
         ],

@@ -18,6 +18,9 @@ import 'sarthi_controller.dart';
 /// Home screen state
 class HomeState {
   final bool isLoading;
+  final bool isLoadingMore;
+  final bool hasMoreChapters;
+  final int loadedChapterCount;
   final String? error;
   final List<Journey> journeys;
   final List<Chapter> chapters;
@@ -33,6 +36,9 @@ class HomeState {
 
   const HomeState({
     this.isLoading = false,
+    this.isLoadingMore = false,
+    this.hasMoreChapters = false,
+    this.loadedChapterCount = 0,
     this.error,
     this.journeys = const [],
     this.chapters = const [],
@@ -49,6 +55,9 @@ class HomeState {
 
   HomeState copyWith({
     bool? isLoading,
+    bool? isLoadingMore,
+    bool? hasMoreChapters,
+    int? loadedChapterCount,
     String? error,
     List<Journey>? journeys,
     List<Chapter>? chapters,
@@ -64,6 +73,9 @@ class HomeState {
   }) {
     return HomeState(
       isLoading: isLoading ?? this.isLoading,
+      isLoadingMore: isLoadingMore ?? this.isLoadingMore,
+      hasMoreChapters: hasMoreChapters ?? this.hasMoreChapters,
+      loadedChapterCount: loadedChapterCount ?? this.loadedChapterCount,
       error: error,
       journeys: journeys ?? this.journeys,
       chapters: chapters ?? this.chapters,
@@ -94,41 +106,43 @@ class HomeController extends StateNotifier<HomeState> {
     loadData();
   }
 
+  /// Number of chapters to load per batch
+  static const int _chaptersPerBatch = 2;
+
   Future<void> loadData() async {
     try {
       state = state.copyWith(isLoading: true, error: null);
 
-      // Load journeys and chapters
-      final journeys = await _contentRepository.getJourneys();
-      final chapters = await _contentRepository.getChapters();
+      // Load journeys and all chapter metadata (lightweight)
+      final results = await Future.wait([
+        _contentRepository.getJourneys(),
+        _contentRepository.getChapters(),
+      ]);
+      final journeys = results[0] as List<Journey>;
+      final chapters = results[1] as List<Chapter>;
 
-      // Load sections and lessons for each chapter
+      // Load sections and lessons only for the first batch of chapters (parallel)
+      final initialCount = chapters.length < _chaptersPerBatch
+          ? chapters.length
+          : _chaptersPerBatch;
+      final initialChapters = chapters.take(initialCount).toList();
+
       final chapterSections = <String, List<Section>>{};
       final chapterLessons = <String, List<Lesson>>{};
-      for (final chapter in chapters) {
-        final sections = await _contentRepository.getSections(chapter.chapterId);
-        final lessons = await _contentRepository.getLessons(chapter.chapterId);
-        
-        chapterSections[chapter.chapterId] = sections;
-        chapterLessons[chapter.chapterId] = lessons;
-      }
+      await _loadChapterDetails(initialChapters, chapterSections, chapterLessons);
 
-      // Calculate unlocked chapters and lessons
-      final unlockedChapters = <String>{};
-      final unlockedLessons = <String>{};
+      // Get user data if logged in
       var completedLessons = <String>{};
       var lessonScores = <String, int>{};
       var currentStreak = 0;
       var gems = 0;
       var energy = 5;
 
-      // Get user data if logged in
       final userId = _authRepository.currentUser?.uid;
       if (userId != null) {
         final user = await _userRepository.getUser(userId);
         if (user != null) {
           completedLessons = user.progress.keys.toSet();
-          // Extract scores from progress
           lessonScores = user.progress.map((key, value) => MapEntry(key, value.score));
           currentStreak = user.gamification.currentStreak;
           gems = user.gamification.gems;
@@ -136,45 +150,13 @@ class HomeController extends StateNotifier<HomeState> {
         }
       }
 
-      // First chapter is always unlocked
-      if (chapters.isNotEmpty) {
-        unlockedChapters.add(chapters.first.chapterId);
-      }
-
-      // Unlock lessons based on completion
-      for (int i = 0; i < chapters.length; i++) {
-        final chapter = chapters[i];
-        final lessons = chapterLessons[chapter.chapterId] ?? [];
-        
-        // First lesson of first chapter is always unlocked
-        if (i == 0 && lessons.isNotEmpty) {
-          unlockedLessons.add(lessons.first.lessonId);
-          unlockedChapters.add(chapter.chapterId);
-        }
-
-        // Unlock subsequent lessons based on completion
-        for (int j = 0; j < lessons.length; j++) {
-          final lesson = lessons[j];
-          if (j == 0 && i == 0) continue; // Already handled
-
-          // Check if previous lesson is completed
-          if (j > 0) {
-            final prevLesson = lessons[j - 1];
-            if (completedLessons.contains(prevLesson.lessonId)) {
-              unlockedLessons.add(lesson.lessonId);
-            }
-          } else if (i > 0) {
-            // First lesson of new chapter - check if previous chapter is complete
-            final prevChapter = chapters[i - 1];
-            final prevLessons = chapterLessons[prevChapter.chapterId] ?? [];
-            if (prevLessons.isNotEmpty &&
-                completedLessons.contains(prevLessons.last.lessonId)) {
-              unlockedLessons.add(lesson.lessonId);
-              unlockedChapters.add(chapter.chapterId);
-            }
-          }
-        }
-      }
+      // Calculate unlocked chapters and lessons for loaded chapters
+      final unlockedChapters = <String>{};
+      final unlockedLessons = <String>{};
+      _calculateUnlocks(
+        chapters, chapterLessons, completedLessons,
+        unlockedChapters, unlockedLessons,
+      );
 
       state = state.copyWith(
         isLoading: false,
@@ -189,9 +171,111 @@ class HomeController extends StateNotifier<HomeState> {
         currentStreak: currentStreak,
         gems: gems,
         energy: energy,
+        loadedChapterCount: initialCount,
+        hasMoreChapters: initialCount < chapters.length,
       );
     } catch (e) {
       state = state.copyWith(isLoading: false, error: e.toString());
+    }
+  }
+
+  /// Load more chapters on demand (called when user scrolls)
+  Future<void> loadMoreChapters() async {
+    if (state.isLoadingMore || !state.hasMoreChapters) return;
+
+    try {
+      state = state.copyWith(isLoadingMore: true);
+
+      final loaded = state.loadedChapterCount;
+      final remaining = state.chapters.length - loaded;
+      final batchSize = remaining < _chaptersPerBatch ? remaining : _chaptersPerBatch;
+      final nextChapters = state.chapters.skip(loaded).take(batchSize).toList();
+
+      // Copy existing maps and add new data
+      final chapterSections = Map<String, List<Section>>.from(state.chapterSections);
+      final chapterLessons = Map<String, List<Lesson>>.from(state.chapterLessons);
+      await _loadChapterDetails(nextChapters, chapterSections, chapterLessons);
+
+      // Recalculate unlocks with all loaded data
+      final unlockedChapters = <String>{};
+      final unlockedLessons = <String>{};
+      _calculateUnlocks(
+        state.chapters, chapterLessons, state.completedLessons,
+        unlockedChapters, unlockedLessons,
+      );
+
+      final newLoadedCount = loaded + batchSize;
+      state = state.copyWith(
+        isLoadingMore: false,
+        chapterSections: chapterSections,
+        chapterLessons: chapterLessons,
+        unlockedChapters: unlockedChapters,
+        unlockedLessons: unlockedLessons,
+        loadedChapterCount: newLoadedCount,
+        hasMoreChapters: newLoadedCount < state.chapters.length,
+      );
+    } catch (e) {
+      state = state.copyWith(isLoadingMore: false, error: e.toString());
+    }
+  }
+
+  /// Fetch sections + lessons for a list of chapters in parallel
+  Future<void> _loadChapterDetails(
+    List<Chapter> chapters,
+    Map<String, List<Section>> sectionsMap,
+    Map<String, List<Lesson>> lessonsMap,
+  ) async {
+    await Future.wait(chapters.map((chapter) async {
+      final results = await Future.wait([
+        _contentRepository.getSections(chapter.chapterId),
+        _contentRepository.getLessons(chapter.chapterId),
+      ]);
+      sectionsMap[chapter.chapterId] = results[0] as List<Section>;
+      lessonsMap[chapter.chapterId] = results[1] as List<Lesson>;
+    }));
+  }
+
+  /// Calculate which chapters and lessons are unlocked
+  void _calculateUnlocks(
+    List<Chapter> chapters,
+    Map<String, List<Lesson>> chapterLessons,
+    Set<String> completedLessons,
+    Set<String> unlockedChapters,
+    Set<String> unlockedLessons,
+  ) {
+    // First chapter is always unlocked
+    if (chapters.isNotEmpty) {
+      unlockedChapters.add(chapters.first.chapterId);
+    }
+
+    for (int i = 0; i < chapters.length; i++) {
+      final chapter = chapters[i];
+      final lessons = chapterLessons[chapter.chapterId] ?? [];
+
+      if (i == 0 && lessons.isNotEmpty) {
+        unlockedLessons.add(lessons.first.lessonId);
+        unlockedChapters.add(chapter.chapterId);
+      }
+
+      for (int j = 0; j < lessons.length; j++) {
+        final lesson = lessons[j];
+        if (j == 0 && i == 0) continue;
+
+        if (j > 0) {
+          final prevLesson = lessons[j - 1];
+          if (completedLessons.contains(prevLesson.lessonId)) {
+            unlockedLessons.add(lesson.lessonId);
+          }
+        } else if (i > 0) {
+          final prevChapter = chapters[i - 1];
+          final prevLessons = chapterLessons[prevChapter.chapterId] ?? [];
+          if (prevLessons.isNotEmpty &&
+              completedLessons.contains(prevLessons.last.lessonId)) {
+            unlockedLessons.add(lesson.lessonId);
+            unlockedChapters.add(chapter.chapterId);
+          }
+        }
+      }
     }
   }
 
@@ -219,6 +303,7 @@ class HomeScreen extends ConsumerStatefulWidget {
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
   int _adminClickCount = 0;
+  final ScrollController _scrollController = ScrollController();
 
   @override
   void initState() {
@@ -227,15 +312,21 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       ref.read(sarthiProvider.notifier).initializeSession(isHomepageMode: true);
     });
+    // Listen for scroll to trigger lazy loading
+    _scrollController.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    if (_scrollController.position.pixels >=
+        _scrollController.position.maxScrollExtent - 200) {
+      ref.read(homeControllerProvider.notifier).loadMoreChapters();
+    }
   }
 
   @override
   void dispose() {
-    // Close Sarthi session when leaving the screen
-    // Use a try-catch in case the provider is already disposed
-    try {
-      // We don't call closeSession here as the provider may be disposed
-    } catch (_) {}
+    _scrollController.removeListener(_onScroll);
+    _scrollController.dispose();
     super.dispose();
   }
 
@@ -338,7 +429,11 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       );
     }
 
+    // Only show chapters that have been loaded
+    final loadedChapters = state.chapters.take(state.loadedChapterCount).toList();
+
     return ListView(
+      controller: _scrollController,
       padding: const EdgeInsets.only(
         left: Spacing.space16,
         right: Spacing.space16,
@@ -350,23 +445,41 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         // Journey sections
         if (state.journeys.isNotEmpty) ...[
            for (final journey in state.journeys) ...[
-             _buildJourneySection(context, state, journey),
+             _buildJourneySection(context, state, journey, loadedChapters),
            ],
         ] else ...[
           // Fallback if no journeys (legacy/admin mode)
-           for (var chapterIndex = 0; chapterIndex < state.chapters.length; chapterIndex++) ...[
-             _buildChapterSection(context, state, state.chapters[chapterIndex], chapterIndex),
+           for (var chapterIndex = 0; chapterIndex < loadedChapters.length; chapterIndex++) ...[
+             _buildChapterSection(context, state, loadedChapters[chapterIndex], chapterIndex),
            ],
         ],
+
+        // Loading indicator for more chapters
+        if (state.isLoadingMore)
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: Spacing.space24),
+            child: Center(child: CircularProgressIndicator()),
+          )
+        else if (state.hasMoreChapters)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: Spacing.space16),
+            child: Center(
+              child: TextButton.icon(
+                onPressed: () => ref.read(homeControllerProvider.notifier).loadMoreChapters(),
+                icon: const Icon(Icons.expand_more),
+                label: const Text('Load more chapters'),
+              ),
+            ),
+          ),
 
         const SizedBox(height: Spacing.space32),
       ],
     );
   }
 
-  Widget _buildJourneySection(BuildContext context, HomeState state, Journey journey) {
-     // Filter chapters for this journey
-     final journeyChapters = state.chapters.where((c) => c.journeyId == journey.id).toList();
+  Widget _buildJourneySection(BuildContext context, HomeState state, Journey journey, List<Chapter> loadedChapters) {
+     // Filter to only loaded chapters for this journey
+     final journeyChapters = loadedChapters.where((c) => c.journeyId == journey.id).toList();
      
      if (journeyChapters.isEmpty) return const SizedBox.shrink();
 
